@@ -69,23 +69,44 @@
 						@elseif (!$purchase->participants->isEmpty())
 							@foreach ($purchase->participants as $participant)
 								<tr>
-									<td>
-										{{ $participant->ticket->name }} for {{ $participant->event->display_name }}
-									</td>
+								<td>
+									@if($participant->ticket)
+								        {{ $participant->ticket->name }} for {{ $participant->event->display_name }}
+								    @endif
+								    @php
+								        $labels = [];
+								        if ($participant->free == 1) {
+								            $labels[] = 'Freebie Ticket';
+								        }
+								        if ($participant->staff == 1) {
+								            $labels[] = 'Staff Ticket';
+								        }
+								    @endphp
+								    @if (!empty($labels))
+								        {{ implode(', ', $labels) }} for 
+										{{ $participant->event->display_name }}
+								    @endif
+								</td>
+
 									<td>
 										1
 									</td>
 									<td>
-										@if ($participant->ticket->price != null)
-											{{ Settings::getCurrencySymbol() }}{{ $participant->ticket->price }}
-											@if ($participant->ticket->price_credit != null && Settings::isCreditEnabled())
-												/
-											@endif
-										@endif
-										@if ($participant->ticket->price_credit != null && Settings::isCreditEnabled())
-											{{ $item->price_credit }} Credits
-										@endif
+									    @if($participant->ticket)
+									        @if ($participant->ticket->price != null)
+									            {{ Settings::getCurrencySymbol() }}{{ $participant->ticket->price }}
+									            @if ($participant->ticket->price_credit != null && Settings::isCreditEnabled())
+									                /
+									            @endif
+									        @endif
+									        @if ($participant->ticket->price_credit != null && Settings::isCreditEnabled())
+									            {{ $participant->ticket->price_credit }} Credits
+									        @endif
+									    @else
+									        0,- {{ Settings::getCurrencySymbol() }}
+									    @endif
 									</td>
+
 								</tr>
 							@endforeach
 						@endif
