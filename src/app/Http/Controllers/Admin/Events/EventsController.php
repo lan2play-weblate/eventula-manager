@@ -99,6 +99,8 @@ class EventsController extends Controller
         $event->online_event  = ($request->online_event ? true : false);
         $event->private_participants  = ($request->private_participants ? true : false);
         $event->matchmaking_enabled  = ($request->matchmaking_enabled ? true : false);
+        $event->matchmaking_reebies  = ($request->matchmaking_freebies ? true : false);
+        $event->matchmaking_staff  = ($request->matchmaking_staff ? true : false);
 
         if (!$event->save()) {
             Session::flash('alert-danger', 'Cannot Save Event!');
@@ -194,6 +196,8 @@ class EventsController extends Controller
         $event->online_event  = ($request->online_event ? true : false);
         $event->private_participants  = ($request->private_participants ? true : false);
         $event->matchmaking_enabled  = ($request->matchmaking_enabled ? true : false);
+        $event->matchmaking_freebies  = ($request->matchmaking_freebies ? true : false);
+        $event->matchmaking_staff  = ($request->matchmaking_staff ? true : false);
 
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;

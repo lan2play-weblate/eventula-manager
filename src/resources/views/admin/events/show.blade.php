@@ -139,6 +139,20 @@
 								</label>
 						</div>
 					</div>
+					<div class="form-group">
+						<div class="form-check">
+								<label class="form-check-label">
+									{{ Form::checkbox('matchmaking_staff', null, $event->matchmaking_staff, array('id'=>'matchmaking_staff')) }} Allow Matchmaking for Staff
+								</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-check">
+								<label class="form-check-label">
+									{{ Form::checkbox('matchmaking_freebies', null, $event->matchmaking_freebies, array('id'=>'matchmaking_freebies')) }} Allow Matchmaking for Freebies
+								</label>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col-12">
 							<div class="form-group">
