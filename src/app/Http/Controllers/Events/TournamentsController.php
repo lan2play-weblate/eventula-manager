@@ -72,6 +72,8 @@ class TournamentsController extends Controller
             Session::flash('alert-danger', __('events.tournament_signups_not_permitted'));
             return Redirect::back();
         }
+        
+
 
         if (!$tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()) {
             Session::flash('alert-danger', __('events.tournament_not_signed_in'));
@@ -80,18 +82,6 @@ class TournamentsController extends Controller
 
         if ($tournament->getParticipant($request->event_participant_id)) {
             Session::flash('alert-danger', __('events.tournament_already_signed_up'));
-            return Redirect::back();
-        }
-
-        // Check if staff is trying to register
-        if ($tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()->staff && !$event->tournaments_staff) {
-            Session::flash('alert-danger', __('events.staff_not_permitted_for_matchmaking'));
-            return Redirect::back();
-        }
-    
-        // Check if a freebie is trying to register
-        if ($tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()->freebie && !$event->tournaments_freebie) {
-            Session::flash('alert-danger', __('events.freebie_not_permitted_for_matchmaking'));
             return Redirect::back();
         }
 
@@ -113,6 +103,20 @@ class TournamentsController extends Controller
                 return Redirect::back();
             }
 
+        }
+
+        // Get the EventParticipant only Once is better?
+        $eventParticipant = $event->eventParticipants()->where('id', $request->event_participant_id)->first();
+        // Check if staff is trying to register
+        if ($eventParticipant->staff && !$event->tournaments_staff) {
+            Session::flash('alert-danger', __('events.tournament_staff_not_permitted'));
+            return Redirect::back();
+        }
+    
+        // Check if a freebie is trying to register
+        if ($eventParticipant->free && !$event->tournaments_freebie) {
+            Session::flash('alert-danger', __('events.tournament_freebie_not_permitted'));
+            return Redirect::back();
         }
 
         // TODO - Refactor

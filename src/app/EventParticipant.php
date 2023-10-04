@@ -34,6 +34,8 @@ class EventParticipant extends Model
         'event_id',
         'ticket_id',
         'purchase_id',
+        'staff',
+        'free',
     ];
 
     public static function boot()

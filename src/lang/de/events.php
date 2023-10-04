@@ -117,6 +117,8 @@ return [
     'tournament_cannot_remove' => 'Löschvorgang konnte nicht abgeschlossen werden. Bitte versuch es erneut.',
     'tournament_sucessfully_removed' => 'Du wurdest erfolgreich vom Turnier abgemeldet.',
     'tournament_cannot_join_thirdparty' => 'Du kannst dich für dieses Turnier nicht anmelden, da die notwendige Authentifizierung zu einem Drittherstellerdienst in deinem Konto nicht hergestellt ist. Prüfe die Single Sign-On Einstellungen in deinem Profil',
+    'tournament_staff_not_permitted' => 'Die Teilnahme an Turnieren von Orgas ist auf diesem Event nicht erlaubt',
+    'tournament_freebie_not_permitted' => 'Die Teilnahme an Turnieren von Freebies ist auf diesem Event nicht erlaubt',
     /* Ticket Partial*/
     'remove_seating' => 'Sitzplatz entfernen',
 ];
