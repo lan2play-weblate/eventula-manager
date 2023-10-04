@@ -1,5 +1,8 @@
 <div class="card mb-3">
 	<div class="card-header  bg-success-light text-success">
+		<strong>
+		{{ $participant->event->display_name }}
+		</strong>
 		@if ($participant->ticket)
 		<strong>{{ $participant->ticket->name }} @if ($participant->ticket && $participant->ticket->seatable) - @lang('events.seat'): @if ($participant->seat) {{$participant->seat->seat}} <small>in {{$participant->seat->seatingPlan->name}}</small> @else @lang('events.notseated') @endif @endif</strong>
 		@else
