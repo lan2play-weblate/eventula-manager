@@ -12,6 +12,7 @@ use App\Event;
 use App\EventParticipant;
 use App\EventTicket;
 use App\EventAnnouncement;
+use App\Purchase;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -98,6 +99,8 @@ class EventsController extends Controller
         $event->online_event  = ($request->online_event ? true : false);
         $event->private_participants  = ($request->private_participants ? true : false);
         $event->matchmaking_enabled  = ($request->matchmaking_enabled ? true : false);
+        $event->matchmaking_reebies  = ($request->matchmaking_freebies ? true : false);
+        $event->matchmaking_staff  = ($request->matchmaking_staff ? true : false);
 
         if (!$event->save()) {
             Session::flash('alert-danger', 'Cannot Save Event!');
@@ -193,6 +196,8 @@ class EventsController extends Controller
         $event->online_event  = ($request->online_event ? true : false);
         $event->private_participants  = ($request->private_participants ? true : false);
         $event->matchmaking_enabled  = ($request->matchmaking_enabled ? true : false);
+        $event->matchmaking_freebies  = ($request->matchmaking_freebies ? true : false);
+        $event->matchmaking_staff  = ($request->matchmaking_staff ? true : false);
 
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;
@@ -236,13 +241,28 @@ class EventsController extends Controller
      */
     public function freeGift(Request $request, Event $event)
     {
+        $purchase                               = new Purchase();
+        $purchase->user_id                      = $request->user_id;
+        $purchase->type                         = 'free';
+        $purchase->status                       = "Success";
+        $purchase->transaction_id               = "Granted by ". $request->user()->username;
+
+        ;
+        $purchase->setSuccess();
+
+        if (!$purchase->save()) {
+            Session::flash('alert-danger', 'Could not save "free" purchase!');
+        }
+
         $participant                            = new EventParticipant();
         $participant->user_id                   = $request->user_id;
         $participant->event_id                  = $event->id;
         $participant->free                      = 1;
         $participant->staff_free_assigned_by    = Auth::id();
+        $participant->purchase_id               = $purchase->id;
         $participant->generateQRCode();
-
+        
+        
         if (!$participant->save()) {
             Session::flash('alert-danger', 'Could not add Gift!');
             return Redirect::to('admin/events/' . $event->slug . '/tickets');
@@ -260,12 +280,20 @@ class EventsController extends Controller
      */
     public function freeStaff(Request $request, Event $event)
     {
+        $purchase                             = new Purchase();
+        $purchase->user_id                    = $request->user_id;
+        $purchase->type                       = 'free';
+        $purchase->status                     = "Success";
+        $purchase->transaction_id             = "Appointed by ". $request->user()->username;
+
+        $purchase->setSuccess();
         $participant = new EventParticipant();
 
         $participant->user_id                = $request->user_id;
         $participant->event_id               = $event->id;
         $participant->staff                  = 1;
         $participant->staff_free_assigned_by = Auth::id();
+        $participant->purchase_id            = $purchase->id;
         $participant->generateQRCode();
 
         if (!$participant->save()) {

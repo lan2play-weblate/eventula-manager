@@ -37,7 +37,11 @@ class Event extends Model
         'seating_cap',
         'spectator_cap',
         'ticket_spectator',
-        'ticket_weekend'
+        'ticket_weekend',
+        'private_participants',
+        'matchmaking_enabled',
+        'matchmaking_freebies',
+        'matchmaking_staff'
     ];
 
     /**

@@ -90,10 +90,26 @@
 									<td>
 										@if (!$purchase->participants->isEmpty())
 											@foreach ($purchase->participants as $participant)
-												{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
-												@if (!$loop->last)
-													<hr>
-												@endif
+											    {{ $participant->event->display_name }} - 
+											    @php
+											        $labels = [];
+											        if ($participant->ticket) {
+											            $labels[] = $participant->ticket->name;
+											        }
+											        if ($participant->free == 1) {
+											            $labels[] = 'Freebie';
+											        }
+											        if ($participant->staff == 1) {
+											            $labels[] = 'Admin';
+											        }
+											        if (empty($labels)) {
+											            $labels[] = 'No Ticket!';
+											        }
+											    @endphp
+											    {{ implode(', ', $labels) }}
+											    @if (!$loop->last)
+											        <hr>
+											    @endif
 											@endforeach
 										@elseif ($purchase->order != null)
 											@foreach ($purchase->order->items as $item)
