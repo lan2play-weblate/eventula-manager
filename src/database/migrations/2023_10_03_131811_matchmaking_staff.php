@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->boolean('matchmaking_staff')->after('private_participants')->default(false);
+            $table->boolean('matchmaking_staff')->after('matchmaking_enabled')->default(false);
 
         });
     }
