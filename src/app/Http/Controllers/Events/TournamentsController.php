@@ -83,14 +83,14 @@ class TournamentsController extends Controller
             return Redirect::back();
         }
 
-        // Check if staff is trying to register and tournaments_staff is set to 0
+        // Check if staff is trying to register
         if ($tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()->staff && !$event->tournaments_staff) {
             Session::flash('alert-danger', __('events.staff_not_permitted_for_matchmaking'));
             return Redirect::back();
         }
     
-        // Check if a freebie is trying to register and matchmaking_freebie is set to 0
-        if ($tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()->freebie && !$event->matchmaking_freebie) {
+        // Check if a freebie is trying to register
+        if ($tournament->event->eventParticipants()->where('id', $request->event_participant_id)->first()->freebie && !$event->tournaments_freebie) {
             Session::flash('alert-danger', __('events.freebie_not_permitted_for_matchmaking'));
             return Redirect::back();
         }

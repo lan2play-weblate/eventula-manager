@@ -117,6 +117,8 @@ return [
     'tournament_cannot_remove' => 'Cannot remove. Please try again.',
     'tournament_sucessfully_removed' => 'You have been successfully removed from the Tournament.',
     'tournament_cannot_join_thirdparty' => 'you cannot sign up for this tournament because the nessecary third party account link on your user is missing. Please check your signle sign-on settings in your profile.',
+    'tornament_staff_not_permitted' => 'Tournament participation of staff members is not allowed at this event.',
+    'tornament_freebies_not_permitted' => 'Tournament participation of freebies is not allowed at this event.',
     /* Ticket Partial*/
     'remove_seating' => 'Remove Seating',
 ];

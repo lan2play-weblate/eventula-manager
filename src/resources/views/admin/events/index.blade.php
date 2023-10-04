@@ -137,6 +137,14 @@
 									{{ Form::checkbox('private_participants', null, false, array('id'=>'private_participants')) }} Private participants (show participants only to participants)
 								</label>
 						</div>
+						
+						<div class="form-group">
+							<div class="form-check">
+									<label class="form-check-label">
+										{{ Form::checkbox('matchmaking_enabled', null, false, array('id'=>'matchmaking_enabled')) }} Show Matchmaking (on the redirected home of the event)
+									</label>
+							</div>
+						</div>
 						<div class="form-check">
 								<label class="form-check-label">
 									{{ Form::checkbox('tournaments_staff', null, false, array('id'=>'tournaments_staff')) }} Allow Tournaments for Staff (Allow Staff to sign into Tournaments)
@@ -147,14 +155,6 @@
 									{{ Form::checkbox('tournaments_freebie', null, false, array('id'=>'tournaments_freebies')) }} Allow Tournaments for Freebies (Allow Freebies to sign into Tournaments)
 								</label>
 						</div>
-						<div class="form-group">
-							<div class="form-check">
-									<label class="form-check-label">
-										{{ Form::checkbox('matchmaking_enabled', null, false, array('id'=>'matchmaking_enabled')) }} Show Matchmaking (on the redirected home of the event)
-									</label>
-							</div>
-						</div>
-
 						@if ($eventTags)
 							<div class="form-group">
 								<label>Eventula Tags</label>

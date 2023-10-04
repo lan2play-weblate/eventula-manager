@@ -99,7 +99,7 @@ class EventsController extends Controller
         $event->online_event  = ($request->online_event ? true : false);
         $event->private_participants  = ($request->private_participants ? true : false);
         $event->matchmaking_enabled  = ($request->matchmaking_enabled ? true : false);
-        $event->matchmaking_reebies  = ($request->tournaments_freebies ? true : false);
+        $event->tournaments_freebies  = ($request->tournaments_freebies ? true : false);
         $event->tournaments_staff  = ($request->tournaments_staff ? true : false);
 
         if (!$event->save()) {

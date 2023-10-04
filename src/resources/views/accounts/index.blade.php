@@ -260,7 +260,13 @@
 								<td>
 									@if (!$purchase->participants->isEmpty())
 									@foreach ($purchase->participants as $participant)
+									@if ($participant->free)
+									{{ $participant->event->display_name }} - Freebie
+									@elseif($participant->staff)
+									{{ $participant->event->display_name }} - Staff
+									@else
 									{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
+									@endif
 									@if (!$loop->last)
 									<hr>
 									@endif
