@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->boolean('matchmaking_freebies')->after('matchmaking_staff')->default(false);
+            $table->boolean('tournaments_staff')->after('matchmaking_enabled')->default(false);
+
         });
     }
 
@@ -26,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('matchmaking_freebies');
+            $table->dropColumn('tournaments_staff');
         });
     }
 };

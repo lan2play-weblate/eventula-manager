@@ -137,6 +137,16 @@
 									{{ Form::checkbox('private_participants', null, false, array('id'=>'private_participants')) }} Private participants (show participants only to participants)
 								</label>
 						</div>
+						<div class="form-check">
+								<label class="form-check-label">
+									{{ Form::checkbox('tournaments_staff', null, false, array('id'=>'tournaments_staff')) }} Allow Tournaments for Staff (Allow Staff to sign into Tournaments)
+								</label>
+						</div>
+						<div class="form-check">
+								<label class="form-check-label">
+									{{ Form::checkbox('tournaments_freebie', null, false, array('id'=>'tournaments_freebies')) }} Allow Tournaments for Freebies (Allow Freebies to sign into Tournaments)
+								</label>
+						</div>
 						<div class="form-group">
 							<div class="form-check">
 									<label class="form-check-label">

@@ -40,8 +40,8 @@ class Event extends Model
         'ticket_weekend',
         'private_participants',
         'matchmaking_enabled',
-        'matchmaking_freebies',
-        'matchmaking_staff'
+        'tournaments_freebies',
+        'tournaments_staff'
     ];
 
     /**

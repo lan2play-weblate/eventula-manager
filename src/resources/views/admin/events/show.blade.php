@@ -142,14 +142,14 @@
 					<div class="form-group">
 						<div class="form-check">
 								<label class="form-check-label">
-									{{ Form::checkbox('matchmaking_staff', null, $event->matchmaking_staff, array('id'=>'matchmaking_staff')) }} Allow Matchmaking for Staff
+									{{ Form::checkbox('tournaments_staff', null, $event->tournaments_staff, array('id'=>'tournaments_staff')) }} Allow Matchmaking for Staff
 								</label>
 						</div>
 					</div>
 					<div class="form-group">
 						<div class="form-check">
 								<label class="form-check-label">
-									{{ Form::checkbox('matchmaking_freebies', null, $event->matchmaking_freebies, array('id'=>'matchmaking_freebies')) }} Allow Matchmaking for Freebies
+									{{ Form::checkbox('tournaments_freebies', null, $event->tournaments_freebies, array('id'=>'tournaments_freebies')) }} Allow Matchmaking for Freebies
 								</label>
 						</div>
 					</div>
