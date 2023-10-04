@@ -332,40 +332,20 @@ use Debugbar;
 		<div class="col-12 col-sm-6 col-md-3">
 			<a href="/events/{{ $event->slug }}/tournaments/{{ $tournament->slug }}" class="link-unstyled">
 				<div class="card card-hover mb-3">
-					<div class="card-header ">
-						@if ($tournament->game && $tournament->game->image_thumbnail_path)
-						<picture>
-							<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">
-							<source srcset="{{ $tournament->game->image_thumbnail_path }}" type="image/jpeg">
-							<img class="img img-fluid rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}">
-						</picture>
-						@endif
-						<h3 class="text-primary">{{ $tournament->name }}</h3>
-					</div>
+					@if ($tournament->game && $tournament->game->image_thumbnail_path)
+					<picture>
+						<source srcset="{{ $tournament->game->image_thumbnail_path }}.webp" type="image/webp">
+						<source srcset="{{ $tournament->game->image_thumbnail_path }}" type="image/jpeg">
+						<img class="img img-fluid rounded" src="{{ $tournament->game->image_thumbnail_path }}" alt="{{ $tournament->game->name }}" class="card-img-top img-fluid">
+					</picture>
+					@endif
 					<div class="card-body">
+						<div class="card-title">
+						<h2 class="text-primary">{{ $tournament->name }}</h2>
+						</div>
 						<div class="thumbnail">
 							<div class="caption">
-								<span class="small">
-									@if ($tournament->status == 'COMPLETE')
-									<span class="badge badge-success">@lang('events.ended')</span>
-									@endif
-									@if ($tournament->status == 'LIVE')
-									<span class="badge badge-success">@lang('events.live')</span>
-									@endif
-									@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && !$tournament->getParticipant($user->active_event_participant->id))
-									<span class="badge badge-danger">@lang('events.notsignedup')</span>
-									@endif
-									@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id))
-									<span class="badge badge-success">@lang('events.signedup')</span>
-									@endif
-									@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && $user->getAllTickets($event->id)->isEmpty())
-									<span class="badge badge-info">@lang('events.purchaseticketosignup')</span>
-									@else
-									@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && !$event->online_event)
-									<span class="badge badge-info">@lang('events.signuponlywhenlive')</span>
-									@endif
-									@endif
-								</span>
+								
 								@if ($tournament->status != 'COMPLETE')
 								<dl>
 									<dt>
@@ -448,6 +428,28 @@ use Debugbar;
 								</strong>
 							</div>
 						</div>
+						
+					</div>
+					<div class="card-footer">
+						@if ($tournament->status == 'COMPLETE')
+						<span class="badge badge-success">@lang('events.ended')</span>
+						@endif
+						@if ($tournament->status == 'LIVE')
+						<span class="badge badge-success">@lang('events.live')</span>
+						@endif
+						@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && !$tournament->getParticipant($user->active_event_participant->id))
+						<span class="badge badge-danger">@lang('events.notsignedup')</span>
+						@endif
+						@if ($tournament->status != 'COMPLETE' && $user && $user->active_event_participant && $tournament->getParticipant($user->active_event_participant->id))
+						<span class="badge badge-success">@lang('events.signedup')</span>
+						@endif
+						@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && $user->getAllTickets($event->id)->isEmpty())
+						<span class="badge badge-info">@lang('events.purchaseticketosignup')</span>
+						@else
+						@if ($tournament->status != 'COMPLETE' && $user && !$user->active_event_participant && !$event->online_event)
+						<span class="badge badge-info">@lang('events.signuponlywhenlive')</span>
+						@endif
+						@endif
 					</div>
 				</div>
 			</a>
