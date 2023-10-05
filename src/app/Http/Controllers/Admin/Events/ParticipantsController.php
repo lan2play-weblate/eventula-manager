@@ -72,7 +72,7 @@ class ParticipantsController extends Controller
             return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
         }
         Session::flash('alert-success', 'Participant Signed in!');
-        return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
 
     public function transfer(Event $event, EventParticipant $participant, Request $request)
@@ -120,6 +120,22 @@ class ParticipantsController extends Controller
         return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
 
+    /**
+     * Sign out a single participant for the event
+     * @param  Event  $event
+     * @param  EventParticipant $participant
+     * @return View
+     */
+    public function signout(Event $event, EventParticipant $participant)
+    {   
+        if (!$event->getEventParticipant($participant->id)->setSignIn(false)) {
+            Session::flash('alert-danger', 'Cannot sign out Participant! '. $participant->name);
+            return Redirect::to('admin/events/' . $event->slug . '/participants/');
+        }
+
+        Session::flash('alert-success', 'Participant ' . $participant->name . ' signed out!');
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
+    }
 
     
 
