@@ -24,3 +24,5 @@ docker-compose.local.yml
 docker-compose-dev.local.yml
 
 dbfile.sql
+src/public/js/vendor.js
+src/public/js/vendor.min.js
