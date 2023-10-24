@@ -76,6 +76,17 @@ class EventsController extends Controller
         SEOMeta::addKeyword($seoKeywords);
         OpenGraph::setDescription($event->desc_short);
         OpenGraph::addProperty('type', 'article');
+
+        $event->load(
+            'timetables'
+        );
+        
+        foreach ($event->timetables as $timetable) {
+            $timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)
+                ->orderBy('start_time', 'asc')
+                ->get();
+        }
+
         return view('events.show')
             ->withEvent($event);
     }
