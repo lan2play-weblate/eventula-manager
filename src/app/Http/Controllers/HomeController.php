@@ -47,7 +47,7 @@ class HomeController extends Controller
     {
         // Check for Event
         $user = Auth::user();
-
+        // Is this user a eventParticipants?
         if (empty($user->eventParticipants)) {
             return $this->net();            
         }
@@ -57,6 +57,9 @@ class HomeController extends Controller
         
         // Getting the Current Time once
         $currentDateTime = Carbon::now();
+
+        // Loop trough the eventParticipants 
+        // The first one, that is active (see def. below) returns the event page
         foreach ($user->eventParticipants as $participant) {
             if ($this->isActiveParticipant($participant, $currentDateTime)) {
                 Debugbar::addMessage("Participant gets event", 'Event');
@@ -104,67 +107,128 @@ class HomeController extends Controller
      */
     public function net()
     {
-        $topAttendees = array();
-        foreach (EventParticipant::groupBy('user_id', 'event_id')->get() as $attendee) {
-            if ($attendee->event && $attendee->event->status == 'PUBLISHED' && $attendee->event->end < \Carbon\Carbon::today()) {
-                $recent = false;
-                if (!$attendee->user->admin && array_key_exists($attendee->user->id, $topAttendees)) {
-                    $topAttendees[$attendee->user->id]->event_count++;
-                    $recent = true;
-                }
-                if (!$attendee->user->admin && !$recent) {
-                    $attendee->user->event_count = 1;
-                    $topAttendees[$attendee->user->id] = $attendee->user;
-                }
-            }
-        }
-        usort($topAttendees, function ($a, $b) {
-            return $b['event_count'] <=> $a['event_count'];
-        });
-
-        $topWinners = array();
-        foreach (EventTournamentTeam::where('final_rank', 1)->get() as $winner_team) {
-            $recent = false;
-            foreach ($winner_team->tournamentParticipants as $winner) {
-                if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
-                    $topWinners[$winner->eventParticipant->user->id]->win_count++;
-                    $recent = true;
-                }
-                if (!$recent) {
-                    $winner->eventParticipant->user->win_count = 1;
-                    $topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
-                }
-            }
-        }
-        foreach (EventTournamentParticipant::where('final_rank', 1)->get() as $winner) {
-            $recent = false;
-            if (array_key_exists($winner->eventParticipant->user->id, $topWinners)) {
-                $topWinners[$winner->eventParticipant->user->id]->win_count++;
-                $recent = true;
-            }
-            if (!$recent) {
-                $winner->eventParticipant->user->win_count = 1;
-                $topWinners[$winner->eventParticipant->user->id] = $winner->eventParticipant->user;
-            }
-        }
-        usort($topWinners, function ($a, $b) {
-            return $b['win_count'] <=> $a['win_count'];
-        });
+        $topAttendees = $this->getTopAttendees();
+        $topWinners = $this->getTopWinners();
 
         $gameServerList = Helpers::getPublicGameServers();
 
         return view("home")
-            ->withNextEvent(
-                Event::where('end', '>=', \Carbon\Carbon::now())
-                    ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))->first()
-            )
+            ->withNextEvent($this->getNextEvent())
             ->withTopAttendees(array_slice($topAttendees, 0, 5))
             ->withTopWinners(array_slice($topWinners, 0, 5))
             ->withGameServerList($gameServerList)
-            ->withNewsArticles(NewsArticle::limit(2)->orderBy('created_at', 'desc')->get())
-            ->withEvents(Event::all())
+            ->withNewsArticles($this->getLatestNewsArticles())
+            ->withEvents($this->getAllEvents())
             ->withSliderImages(SliderImage::getImages('frontpage'))
         ;
+    }
+
+    
+
+     /**
+     * Get top attendees by event count.
+     *
+     * @return array
+     */
+    protected function getTopAttendees(): array
+    {
+        $attendees = [];
+        foreach (EventParticipant::groupBy('user_id', 'event_id')->get() as $attendee) {
+            if (!$attendee->event || $attendee->event->status != 'PUBLISHED' || $attendee->event->end >= Carbon::today()) {
+                continue;
+            }
+
+            $userId = $attendee->user->id;
+            if (!$attendee->user->admin && isset($attendees[$userId])) {
+                $attendees[$userId]->event_count++;
+            } elseif (!$attendee->user->admin) {
+                $attendee->user->event_count = 1;
+                $attendees[$userId] = $attendee->user;
+            }
+        }
+
+        usort($attendees, function ($a, $b) {
+            return $b['event_count'] <=> $a['event_count'];
+        });
+
+        return $attendees;
+    }
+
+    /**
+     * Get top winners by win count.
+     *
+     * @return array
+     */
+    protected function getTopWinners(): array
+    {
+        $winners = [];
+
+        // Process winner teams
+        foreach (EventTournamentTeam::where('final_rank', 1)->get() as $team) {
+            foreach ($team->tournamentParticipants as $participant) {
+                $this->updateWinCount($winners, $participant->eventParticipant->user);
+            }
+        }
+
+        // Process individual winners
+        foreach (EventTournamentParticipant::where('final_rank', 1)->get() as $winner) {
+            $this->updateWinCount($winners, $winner->eventParticipant->user);
+        }
+
+        usort($winners, function ($a, $b) {
+            return $b['win_count'] <=> $a['win_count'];
+        });
+
+        return $winners;
+    }
+
+    /**
+     * Update the win count for a given user.
+     *
+     * @param array $winners
+     * @param $user
+     */
+    protected function updateWinCount(array &$winners, $user): void
+    {
+        $userId = $user->id;
+        if (isset($winners[$userId])) {
+            $winners[$userId]->win_count++;
+        } else {
+            $user->win_count = 1;
+            $winners[$userId] = $user;
+        }
+    }
+
+     /**
+     * Get the next upcoming event.
+     *
+     * @return mixed
+     */
+    protected function getNextEvent()
+    {
+        return Event::where('end', '>=', Carbon::now())
+            ->orderBy(DB::raw('ABS(DATEDIFF(events.end, NOW()))'))
+            ->first();
+    }
+
+    /**
+     * Get the latest news articles.
+     *
+     * @return mixed
+     */
+    protected function getLatestNewsArticles()
+    {
+        return NewsArticle::limit(2)->orderBy('created_at', 'desc')->get();
+    }
+
+    /**
+     * Get all events.
+     *
+     * @return mixed
+     */
+    protected function getAllEvents()
+    {
+        return Event::all();
     }
 
     /**
@@ -211,10 +275,22 @@ class HomeController extends Controller
     {
         $signedIn = true;
         $gameServerList = Helpers::getCasualGameServers();
-        $event = Event::where('start', '<', date("Y-m-d H:i:s"))->where('end', '>', date("Y-m-d H:i:s"))->orderBy('id', 'desc')->first();
+        
+         // Using Carbon for date manipulations
+         $now = Carbon::now();
+         $event = Event::where('start', '<', $now)->where('end', '>', $now)->orderBy('id', 'desc')->first();
 
-        $event->load('eventParticipants.user');
-        $event->load('timetables');
+         // Check if event is null and handle it
+        if (!$event) {
+            return redirect()->route('home.index')->with('error', 'No active event found.');
+        }
+
+        // Loading can be done like this in one call of load function
+        $event->load(
+            'eventParticipants.user', 
+            'timetables'
+        );
+        
         foreach ($event->timetables as $timetable) {
             $timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)
                 ->orderBy('start_time', 'asc')
