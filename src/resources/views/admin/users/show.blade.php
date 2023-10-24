@@ -172,7 +172,6 @@
 					@if ($userShow->email != null && $userShow->password != null)
 						<div class="col-12 col-sm-6">
 							{{ Form::open(array('url'=>'/login/forgot')) }}
-	                            @csrf
 								<input type="hidden" name="email" value="{{ $userShow->email }}">
 								<button type="submit" class="btn btn-block btn-success">Reset Password</button>
 							{{ Form::close() }}
@@ -182,7 +181,6 @@
 					{{-- @if ($userShow->email != null && $userShow->password == null)
 					<div class="col-12 col-sm-6">
 						{{ Form::open(array('url'=>'/login/forgot')) }}
-							@csrf
 							<input type="hidden" name="email" value="{{ $userShow->email }}">
 							<button type="submit" class="btn btn-block btn-success">Send password set link</button>
 						{{ Form::close() }}
