@@ -63,6 +63,7 @@ class ParticipantsController extends Controller
      */
     public function signIn(Event $event, EventParticipant $participant)
     {
+        // Maybe Check for a participant that is not participating in this event?
         if ($participant->ticket && $participant->purchase->status != "Success") {
             Session::flash('alert-danger', 'Cannot sign in Participant because the payment is not completed!');
             return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
@@ -128,7 +129,7 @@ class ParticipantsController extends Controller
      */
     public function signout(Event $event, EventParticipant $participant)
     {   
-        if (!$event->getEventParticipant($participant->id)->setSignIn(false)) {
+        if (!$participant->setSignIn(false)) {
             Session::flash('alert-danger', 'Cannot sign out Participant! '. $participant->name);
             return Redirect::to('admin/events/' . $event->slug . '/participants/');
         }
