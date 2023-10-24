@@ -43,7 +43,11 @@ use Debugbar;
 	@lang('events.plssignin')
 	@endif
 
-	<!-- EVENT SPONSORS -->
+	
+
+	@include ('layouts._partials._sponsors.index')
+<!-- EVENT SPONSORS 
+
 	@if (!$event->sponsors->isEmpty())
 		<div class="pb-2 mt-4 mb-4 border-bottom">
 			<a name="sponsors"></a>
@@ -59,6 +63,7 @@ use Debugbar;
 			</a>
 		@endforeach
 	@endif
+	-->
 
 	<!-- ESSENTIAL INFORMATION -->
 	<div class="row">
