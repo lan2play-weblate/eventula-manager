@@ -83,16 +83,57 @@
 				<a name="event"></a>
 				<h3><i class="fas fa-info mr-3"></i>@lang('events.eventinfo')</h3>
 			</div>
-			<div class="row">
-				<div class="col-12 col-sm-5">
-					<p class="bg-success-light text-success padding">@lang('events.start'): {{ date('H:i d-m-Y', strtotime($event->start)) }}</p>
-					<p class="bg-danger-light text-danger padding">@lang('events.end'): {{ date('H:i d-m-Y', strtotime($event->end)) }}</p>
-					<p class="bg-info-light text-info padding">@if ($event->getSeatingCapacity() == 0) @lang('events.capacity'): {{ $event->capacity }} @endif @if ($event->getSeatingCapacity() != 0) @lang('events.seatingcapacity'): {{ $event->getSeatingCapacity() }} @endif</p>
-				</div>
-				<div class="col-12 col-sm-7">
-					<p>{!! $event->desc_long !!}</p>
-				</div>
-			</div>
+
+
+
+			<!-- Event Info Card -->
+			<div class="card shadow">
+        <div class="card-body">
+            <!-- Start and End Info -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p ><i class="fas fa-calendar-alt mr-2"></i>Start</p>
+                            <h3>{{ date('d.M Y', strtotime($event->start)) }} at {{ date('H:i', strtotime($event->start)) }} Uhr</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="d-flex align-items-center">
+                        <div>
+							
+                            <p><i class="fas fa-calendar-times mr-2"></i>End</p>
+                            <h3>{{ date('d.M Y', strtotime($event->end)) }} at {{ date('H:i', strtotime($event->end)) }} Uhr</h3>
+                        </div>
+                    </div>
+                </div>
+				<div class="col-md-4">
+                    <div class="d-flex align-items-center">
+                        <div>
+							
+                            <p><i class="fas fa-chair mr-2"></i>Capacity</p>
+                            <h3>{{ $event->capacity }} Seats</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Description -->
+            <div class="row">
+                <div class="col-12">
+                    <p>{{ $event->desc_long }}</p>
+                </div>
+            </div>
+
+			<!-- ICS Date Saver -->
+            <div class="row">
+                <div class="col-12">
+				<a href="{{ route('generate-event-ics', ['event' => $event]) }}" download><i class="fas fa-calendar-alt mr-2"></i>Save to Calendar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 		</div>
 
 		<!-- TICKETS -->

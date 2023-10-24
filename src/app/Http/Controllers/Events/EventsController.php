@@ -14,6 +14,8 @@ use App\EventParticipantType;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -89,5 +91,35 @@ class EventsController extends Controller
 
         return view('events.show')
             ->withEvent($event);
+    }
+
+    /**
+     * Show Event Page
+     * @param  Event $event
+     * @return ICS Text File
+     */
+    public function generateICS(Event $event)
+    {
+        $eventStart = Carbon::parse($event->start);
+        $eventEnd = Carbon::parse($event->end);
+
+        // TODO fill with app settings and event venue/description
+        $icsContent = "BEGIN:VCALENDAR\r\n";
+        $icsContent .= "VERSION:2.0\r\n";
+        $icsContent .= "PRODID:-//SXLAN//Eventula//EN\r\n";
+        $icsContent .= "BEGIN:VEVENT\r\n";
+        $icsContent .= "UID:" . uniqid() . "\r\n";
+        $icsContent .= "DTSTAMP:" . gmdate('Ymd\THis\Z') . "\r\n";
+        $icsContent .= "DTSTART:" . $eventStart->format('Ymd\THis\Z') . "\r\n";
+        $icsContent .= "DTEND:" . $eventEnd->format('Ymd\THis\Z') . "\r\n";
+        $icsContent .= "SUMMARY:Your Event Name\r\n";
+        $icsContent .= "DESCRIPTION:" . $event->desc_long . "\r\n";
+        $icsContent .= "LOCATION:" . $event->venue . "\r\n";
+        $icsContent .= "END:VEVENT\r\n";
+        $icsContent .= "END:VCALENDAR\r\n";
+
+        return response($icsContent, 200)
+            ->header('Content-Type', 'text/calendar; charset=utf-8')
+            ->header('Content-Disposition', 'attachment; filename="event.ics"');
     }
 }

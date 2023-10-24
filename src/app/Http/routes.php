@@ -162,6 +162,7 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/events', 'Events\EventsController@index');
             Route::get('/events/{event}', 'Events\EventsController@show');
             Route::get('/events/{event}/big', 'HomeController@bigScreen');
+            Route::get('/events/{event}/generate-ics', 'Events\EventsController@generateICS')->name('generate-event-ics');
 
             /**
              * Misc Pages
