@@ -23,6 +23,8 @@ use App\MatchMakingTeam;
 
 use App\Http\Requests;
 
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Redirect;
@@ -43,24 +45,57 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         // Check for Event
         $user = Auth::user();
-        if ($user && !empty($user->eventParticipants)) {
-            foreach ($user->eventParticipants as $participant) {
-                Debugbar::addMessage("Participant: " . json_encode($participant), 'Event');
-                if ((date('Y-m-d H:i:s') >= $participant->event->start) &&
-                    (date('Y-m-d H:i:s') <= $participant->event->end) &&
-                    ($participant->signed_in || $participant->event->online_event) &&
-                    ($participant->free || $participant->staff || $participant->purchase->status == "Success"))
-                {
-                    Debugbar::addMessage("Participant gets event", 'Event');
 
-                    return $this->event();
-                }
+        if (empty($user->eventParticipants)) {
+            return $this->net();            
+        }
+
+        Debugbar::addMessage("User: " . json_encode($user));
+        Debugbar::addMessage("Participants: " . json_encode($user->eventParticipants), 'Event');
+        
+        // Getting the Current Time once
+        $currentDateTime = Carbon::now();
+        foreach ($user->eventParticipants as $participant) {
+            if ($this->isActiveParticipant($participant, $currentDateTime)) {
+                Debugbar::addMessage("Participant gets event", 'Event');
+                return $this->event();
             }
         }
+
         return $this->net();
+    }
+
+    /**
+     * Determines if a participant is active based on several conditions:
+     *  - A Event is currently running
+     *  - the participant is signed In or Online Event
+     *  - has purchased successful or is free or is staff
+     *
+     * @param $participant
+     * @param $currentDateTime
+     * @return bool
+     */
+    protected function isActiveParticipant($participant, $currentDateTime): bool
+    {
+        try
+        { 
+            // Check if current time is within the event's start and end time
+            $isWithinEventTime = $currentDateTime >= $participant->event->start &&
+                $currentDateTime <= $participant->event->end;
+
+            // Conditions for active participants
+            $isActive = ($participant->signed_in || $participant->event->online_event) &&
+                ($participant->free || $participant->staff || $participant->purchase->status == "Success");
+
+            return $isWithinEventTime && $isActive;
+        } catch (\Exception $e) {
+            // Log the error for diagnosis
+            Debugbar::addMessage('Error checking participant activity: ' . $e->getMessage(), 'Event');
+            
+            return false;  // Default value if an exception occurs
+        }
     }
 
     /**
