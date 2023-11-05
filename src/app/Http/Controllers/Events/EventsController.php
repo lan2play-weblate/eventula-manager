@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Events;
 use DB;
 use Auth;
 
+use App\Setting;
+
 use App\Event;
 use App\EventTimetable;
 use App\EventTimetableData;
@@ -94,27 +96,40 @@ class EventsController extends Controller
     }
 
     /**
-     * Show Event Page
+     * Generate ICS element for download
      * @param  Event $event
      * @return ICS Text File
      */
     public function generateICS(Event $event)
     {
-        $eventStart = Carbon::parse($event->start);
-        $eventEnd = Carbon::parse($event->end);
-
-        // TODO fill with app settings and event venue/description
+        $eventStart = Carbon::parse($event->start)->format('Ymd\THis\Z');
+        $eventEnd = Carbon::parse($event->end)->format('Ymd\THis\Z');
+        $orgName = Setting::getOrgName();
+        $eventName = $event->display_name;
+        $eventDescription = $event->desc_long;
+        $venue = $event->venue;
+        $addressParts = [
+            $venue->address_1,
+            $venue->address_2,
+            $venue->address_street,
+            $venue->address_city,
+            $venue->address_postcode,
+            $venue->address_country
+        ];
+        $address = implode(', ', array_filter($addressParts, function($value) { return !is_null($value) && $value !== ''; }));
+        $address = str_replace([',', ';'], ['\,', '\;'], $address);
+        
         $icsContent = "BEGIN:VCALENDAR\r\n";
         $icsContent .= "VERSION:2.0\r\n";
-        $icsContent .= "PRODID:-//SXLAN//Eventula//EN\r\n";
+        $icsContent .= "PRODID:-//" . $orgName . "//" . $eventName . "//EN\r\n";
         $icsContent .= "BEGIN:VEVENT\r\n";
         $icsContent .= "UID:" . uniqid() . "\r\n";
         $icsContent .= "DTSTAMP:" . gmdate('Ymd\THis\Z') . "\r\n";
-        $icsContent .= "DTSTART:" . $eventStart->format('Ymd\THis\Z') . "\r\n";
-        $icsContent .= "DTEND:" . $eventEnd->format('Ymd\THis\Z') . "\r\n";
-        $icsContent .= "SUMMARY:Your Event Name\r\n";
-        $icsContent .= "DESCRIPTION:" . $event->desc_long . "\r\n";
-        $icsContent .= "LOCATION:" . $event->venue . "\r\n";
+        $icsContent .= "DTSTART:" . $eventStart . "\r\n";
+        $icsContent .= "DTEND:" . $eventEnd . "\r\n";
+        $icsContent .= "SUMMARY:" . $eventName . "\r\n";
+        $icsContent .= "DESCRIPTION:" . $eventDescription . "\r\n";
+        $icsContent .= "LOCATION:" . $address . "\r\n";
         $icsContent .= "END:VEVENT\r\n";
         $icsContent .= "END:VCALENDAR\r\n";
 
