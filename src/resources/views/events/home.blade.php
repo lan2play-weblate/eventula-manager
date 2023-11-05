@@ -760,7 +760,7 @@ use Debugbar;
 						<div class="table-responsive text-center">
 							<table class="table">
 
-								<tbody>{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}
+								<tbody>
 									@for ($row = 1; $row <= $seatingPlan->rows; $row++)
 										<tr>
 											<td>
@@ -773,11 +773,11 @@ use Debugbar;
 													@if($event->getSeat($seatingPlan->id,  $column, $row)->status == 'ACTIVE')
 													@if ($seatingPlan->locked)
 													<button class="btn btn-success btn-sm" disabled>
-														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row))->eventParticipant->user->username }}
+														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row)->eventParticipant->user->username }}
 													</button>
 													@else
 													<button class="btn btn-success btn-sm" disabled>
-														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row))->eventParticipant->user->username }}
+														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - {{ $event->getSeat($seatingPlan->id, $column, $row)->eventParticipant->user->username }}
 													</button>
 													@endif
 													@endif
@@ -797,8 +797,8 @@ use Debugbar;
 													<button class="btn btn-primary btn-sm" onclick="pickSeat(
 																					'{{ $seatingPlan->slug }}',
 																					'{{ $column }}',
-																					'{{ $row }},
-																					'{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }}'
+																					'{{ $row }}',
+																					'{{ Helpers::getLatinAlphabetUpperLetterByIndex($row)}}{{$column }}'
 																				)" data-bs-toggle="modal" data-bs-target="#pickSeatModal">
 														{{ Helpers::getLatinAlphabetUpperLetterByIndex($row) . $column }} - @lang('events.empty')
 													</button>
