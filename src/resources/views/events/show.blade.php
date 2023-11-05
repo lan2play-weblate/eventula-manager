@@ -179,13 +179,20 @@
 			</address>
 		</div>
 		<div class="col-lg-5">
-			@foreach ($event->venue->images as $image)
-			<picture>
-				<source srcset="{{ $image->path }}.webp" type="image/webp">
-				<source srcset="{{ $image->path }}" type="image/jpeg">
-				<img class="img-fluid rounded" alt="{{ $event->venue->display_name }}" src="{{ $image->path }}" />
-			</picture>
-			@endforeach
+			<div class="center-align slider-for">
+				@include ('layouts._partials.slick_loader')
+	
+				@foreach ($event->venue->images as $image)
+					@if ($image->filetype == 0)
+						<picture>
+							<source srcset="{{ $image->path }}.webp" type="image/webp">
+							<source srcset="{{ $image->path }}" type="image/jpeg">
+							<img src="{{ $image->path }}" data-thumb="{{ $image->path }}"
+								alt="{{ $image->description ?? 'Image' }}" class="img-fluid">
+						</picture>
+					@endif
+				@endforeach
+			</div>
 		</div>
 	</div>
 

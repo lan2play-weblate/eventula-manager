@@ -732,7 +732,6 @@ use Debugbar;
 	@include ('layouts._partials._events.seating')
 
 
-
 	<!-- Image Uploader -->
 	<div class="pb-2 mt-4 mb-4 border-bottom d-none">
 		<a name="image_uploader"></a>
