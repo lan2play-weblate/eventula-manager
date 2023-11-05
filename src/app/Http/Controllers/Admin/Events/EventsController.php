@@ -12,6 +12,7 @@ use App\Event;
 use App\EventParticipant;
 use App\EventTicket;
 use App\EventAnnouncement;
+use App\EventVenue;
 use App\Purchase;
 
 use App\Http\Requests;
@@ -201,6 +202,10 @@ class EventsController extends Controller
 
         if (isset($request->capacity)) {
             $event->capacity        = $request->capacity;
+        }
+
+        if (isset($request->venue)) {
+            $event->event_venue_id              = @$request->venue;
         }
 
         if (!$event->save()) {
