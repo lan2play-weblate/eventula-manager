@@ -43,7 +43,7 @@ return [
     /* Index */
     'start' => 'Start',
     'end' => 'Ende',
-    'seatingcapacity' => 'Sitzplatz Kapazitäten',
+    'seatingcapacity' => 'Sitzplatz Kapazität',
     /* Show */
     'eventinfo' => 'Event Informationen',
     'tickets' => 'Tickets',
@@ -121,4 +121,8 @@ return [
     'tournament_freebie_not_permitted' => 'Die Teilnahme an Turnieren von Freebies ist auf diesem Event nicht erlaubt',
     /* Ticket Partial*/
     'remove_seating' => 'Sitzplatz entfernen',
+
+    /* General */
+    'time_delimiter' => 'um',
+    'time_suffix' => 'Uhr'
 ];

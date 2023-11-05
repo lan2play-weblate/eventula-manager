@@ -121,4 +121,8 @@ return [
     'tournament_freebie_not_permitted' => 'Tournament participation of freebies is not allowed at this event.',
     /* Ticket Partial*/
     'remove_seating' => 'Remove Seating',
+
+    /* General */
+    'time_delimiter' => 'at',
+    'time_suffix' => ''
 ];
