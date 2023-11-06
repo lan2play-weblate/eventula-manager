@@ -20,6 +20,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class Helpers
 {
+    public static function getSupportedLocales() {
+        return config('app.locales', []);
+    }
     // TODO - refactor - eg getGameSelectArray - specifially the selectArray part
     /**
      * Get Venues
@@ -938,4 +941,6 @@ class Helpers
     {
         return range('A', 'Z')[$index - 1];
     }
+
+    
 }

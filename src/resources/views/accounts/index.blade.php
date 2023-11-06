@@ -83,6 +83,22 @@
 								</span>
 								@enderror
 							</div>
+							<div class="mb-3">
+								<div class="col-12 col-md-6">
+									<div class="mb-3 @error('locale') is-invalid @enderror">
+										{{ Form::label('locale',__('accounts.locale'),array('id'=>'','class'=>'')) }}
+										<input id="locale" type="locale" class="form-control" name="locale" value="{{ $user->locale }}" required autocomplete="locale">
+										<select name="locale" id="locale" class="form-control @error('locale') is-invalid @enderror" required autocomplete="locale">
+											{										Helpers::getVenues()
+											}
+										</select>
+										
+										{{ Form::label('venue','Venue',array('id'=>'','class'=>'')) }}
+										{{ Form::select('venue', Helpers::getVenues(), $event->venue->id, array('id'=>'venue','class'=>'form-control')) }}
+										
+									</div>
+								</div>
+							</div>
 							@endif
 							<button type="submit" class="btn btn-primary btn-block">@lang('accounts.submit')</button>
 						</div>

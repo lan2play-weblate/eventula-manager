@@ -300,6 +300,10 @@ class AccountController extends Controller
 
         $user->firstname = @$request->firstname;
         $user->surname = @$request->surname;
+        
+        if (isset($request->locale)) {
+            $user->locale = @$request->locale;
+        }
 
         if (!$user->save()) {
             return Redirect::back()->withFail("Oops, Something went Wrong.");
