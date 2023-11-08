@@ -348,4 +348,19 @@ class AccountController extends Controller
         }
         return redirect('/');
     }
+
+    public function update_avatar(Request $request) {
+        $this->validate($request, [
+            'avatar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+
+        $filename = Auth::id() . '_' . time() . '.' . $request->avatar->getClientOriginalExtension();
+        $request->avatar->move(public_path('uploads/avatars'), $filename);
+
+        $user = Auth::user();
+        $user->avatar = $filename;
+        $user->save();
+
+        return Redirect::back()->withSuccess('Account successfully updated!');
+    }
 }

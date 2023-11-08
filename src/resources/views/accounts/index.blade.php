@@ -34,12 +34,7 @@
 				<div class="card-body">
 					{{ Form::open(array('url'=>'/account/' )) }}
 					<div class="row" style="display: flex; align-items: center;">
-						<div class="col-md-2 col-sm-12">
-							@if ($user->avatar != NULL)
-							<img src="{{ $user->avatar }}" alt="{{ $user->username }}'s Avatar" class="img-fluid" img-thumbnail />
-							@endif
-						</div>
-						<div class="col-md-10 col-sm-12">
+						<div class="col-md-7 col-sm-12">
 							<div class="row">
 								<div class="col-12 col-md-6">
 									<div class="mb-3 @error('firstname') is-invalid @enderror">
@@ -90,7 +85,6 @@
 					{{ Form::close() }}
 				</div>
 			</div>
-
 			<!-- Email -->
 			<div class="card mb-3">
 				<div class="card-header ">
@@ -133,6 +127,36 @@
 					{{ Form::close() }}
 				</div>
 			</div>
+
+
+			<!-- ACCOUNT DETAILS -->
+		<div class="col-12  col-lg-12 mt-3 mb-3">
+			<div class="card mb-3">
+				<div class="card-header ">
+					<h3 class="card-title">Avatar</h3>
+				</div>
+				<div class="card-body">
+					<p>You can use your Steam Avatar or upload a custom one.</p>
+					{{ Form::open(array('url'=>'/account/' )) }}
+					<div class="row" style="display: flex; align-items: center;">
+						<div class="col-md-4 col-sm-12">
+							@if ($user->avatar)
+								<img src="{{ $user->avatar }}" alt="{{ $user->username }}'s Avatar" class="img-fluid img-thumbnail" />
+							@else
+								<!-- Default image when avatar is null -->
+								<img src="{{ asset('storage/images/avatars/default-avatar.png') }}" alt="{{ $user->username }}'s Avatar" class="img-fluid img-thumbnail" />
+							@endif
+							<div class="mb-3">
+								{{ Form::label('images','Select Images',array('id'=>'','class'=>'')) }}
+								{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>true)) }}
+							</div>
+							<button type="submit" class="btn btn-primary btn-block">@lang('accounts.submit')</button>
+							{{ Form::close() }}
+						</div>
+						</div>
+					</div>				
+				</div>
+			</div>	
 			<!-- creditlogs -->
 			@if ($creditLogs)
 			<div class="card mb-3">
