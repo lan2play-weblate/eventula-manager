@@ -513,6 +513,11 @@ Route::group(['middleware' => ['installed']], function () {
             Route::delete('/admin/events/{event}/tickets/{ticket}', 'Admin\Events\TicketsController@destroy');
 
             /**
+             * Ticket Groups
+             */
+            Route::post('admin/events/{event}/ticketgroups', 'Admin\Events\TicketGroupsController@store');
+
+            /**
              * Gifts
              */
             Route::post('/admin/events/{event}/freebies/admin', 'Admin\Events\EventsController@freeStaff');
