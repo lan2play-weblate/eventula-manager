@@ -517,6 +517,7 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::post('admin/events/{event}/ticketgroups', 'Admin\Events\TicketGroupsController@store');
             Route::get('admin/events/{event}/ticketgroups/{ticketGroup}', 'Admin\Events\TicketGroupsController@show');
+            Route::post('admin/events/{event}/ticketgroups/{ticketGroup}', 'Admin\Events\TicketGroupsController@update');
 
             /**
              * Gifts

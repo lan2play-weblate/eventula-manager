@@ -5,16 +5,18 @@ namespace App\Http\Controllers\Admin\Events;
 use App\Event;
 use App\EventTicketGroup;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 use Session;
 
 class TicketGroupsController extends Controller
 {
-    public function store(Request $request, Event $event)
+    protected function verifyRequestValues(Request $request): void
     {
         $rules = [
-            'ticket-group-name'    => 'required',
+            'ticket-group-name' => 'required',
             'ticket-group-tickets' => 'required|numeric',
         ];
         $messages = [
@@ -23,11 +25,21 @@ class TicketGroupsController extends Controller
             'ticket-group-tickets.required' => 'Tickets per user is required',
         ];
         $this->validate($request, $rules, $messages);
+    }
+
+    protected function updateTicketGroup(Request $request, EventTicketGroup $group): void
+    {
+        $group->name = $request->get('ticket-group-name');
+        $group->tickets_per_user = $request->get('ticket-group-tickets');
+    }
+
+    public function store(Request $request, Event $event): RedirectResponse
+    {
+        $this->verifyRequestValues($request);
 
         $group = new EventTicketGroup();
         $group->event_id = $event->id;
-        $group->name = $request->get('ticket-group-name');
-        $group->tickets_per_user = $request->get('ticket-group-tickets');
+        $this->updateTicketGroup($request, $group);
 
         if (!$group->save()) {
             return Redirect::back();
@@ -37,9 +49,24 @@ class TicketGroupsController extends Controller
         return Redirect::to("/admin/events/{$event->slug}/tickets");
     }
 
-    public function show(Event $event, EventTicketGroup $ticketGroup) {
+    public function show(Event $event, EventTicketGroup $ticketGroup): View
+    {
         return view('admin.events.ticketgroups.show')
             ->withEvent($event)
             ->withTicketGroup($ticketGroup);
+    }
+
+    public function update(Request $request, Event $event, EventTicketGroup $ticketGroup): RedirectResponse
+    {
+        $this->verifyRequestValues($request);
+        $this->updateTicketGroup($request, $ticketGroup);
+
+        if ($ticketGroup->save()) {
+            Session::flash('alert-success', 'Ticket group updated successfully');
+            return Redirect::to("/admin/events/{$event->slug}/tickets");
+        }
+        Session::flash('alert-danger', 'Ticket group could not be updated');
+
+        return Redirect::back();
     }
 }
