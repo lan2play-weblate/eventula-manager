@@ -36,4 +36,10 @@ class TicketGroupsController extends Controller
         Session::flash('alert-success', 'Ticket saved Successfully');
         return Redirect::to("/admin/events/{$event->slug}/tickets");
     }
+
+    public function show(Event $event, EventTicketGroup $ticketGroup) {
+        return view('admin.events.ticketgroups.show')
+            ->withEvent($event)
+            ->withTicketGroup($ticketGroup);
+    }
 }
