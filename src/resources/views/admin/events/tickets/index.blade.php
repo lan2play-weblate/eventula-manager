@@ -44,6 +44,32 @@
 			</div>
 		</div>
 
+		<div class="card mb-3">
+			<div class="card-header">
+				<i class="fa"></i> Ticket Groups
+			</div>
+			<div class="card-body table-responsive">
+				<table class="table table-striped table-hover">
+					<thead>
+					<tr>
+						<th>Name</th>
+						<th>Tickets in group</th>
+						<th>No. tickets per user</th>
+						<th>Actions</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>None</td>
+						<td>pending</td>
+						<td>pending</td>
+						<td></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
     {{-- TODO: Replace Morris --}}
 		{{-- <script>
 			Morris.Donut({
