@@ -25,9 +25,10 @@ class TicketsController extends Controller
      * @param  Event  $event
      * @return View
      */
-    public function index(Event $event)
+    public function index(Request $request, Event $event)
     {
         return view('admin.events.tickets.index')
+            ->withRequest($request)
             ->withEvent($event)
             ->withUsers(User::all());
     }

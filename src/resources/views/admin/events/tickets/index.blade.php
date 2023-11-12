@@ -243,6 +243,17 @@
 
 		<div class="card mb-3">
 			<div class="card-header">
+				<i class="fa fa-plus fa-fw"></i> Add Ticket Group
+			</div>
+			<div class="card-body">
+				{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/ticketgroups')) }}
+				@include('layouts._partials._admin._event._tickets.ticket-group-form')
+				{{ Form::close() }}
+			</div>
+		</div>
+
+		<div class="card mb-3">
+			<div class="card-header">
 				<i class="fa fa-plus fa-fw"></i> Add Tickets
 			</div>
 			<div class="card-body">
