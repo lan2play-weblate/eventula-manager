@@ -46,7 +46,7 @@
 
 		<div class="card mb-3">
 			<div class="card-header">
-				<i class="fa"></i> Ticket Groups
+				<i class="fa fa-layer-group"></i> Ticket Groups
 			</div>
 			<div class="card-body table-responsive">
 				<table class="table table-striped table-hover">
@@ -60,11 +60,19 @@
 					</thead>
 					<tbody>
 					<tr>
-						<td>None</td>
-						<td>pending</td>
-						<td>pending</td>
+						<td><i>ungrouped</i></td>
+						<td>{{ $event->getUngroupedTickets()->count() }}</td>
+						<td>N/A</td>
 						<td></td>
 					</tr>
+					@foreach($event->ticketGroups as $group)
+						<tr>
+							<td>{{ $group->name }}</td>
+							<td>{{ $group->tickets->count() }}</td>
+							<td>{{ $group->tickets_per_user }}</td>
+							<td></td>
+						</tr>
+					@endforeach
 					</tbody>
 				</table>
 			</div>
@@ -102,6 +110,7 @@
 						<tr>
 							<th>Name</th>
 							<th>Type</th>
+							<th>Ticket group</th>
 							<th>Price</th>
 							<th>Quantity</th>
 							<th>Purchased</th>
@@ -119,6 +128,13 @@
 								</td>
 								<td>
 									{{ $ticket->type }}
+								</td>
+								<td>
+									@if ($ticket->ticketGroup)
+										{{ $ticket->ticketGroup->name }}
+									@else
+										<i>ungrouped</i>
+									@endif
 								</td>
 								<td>
 									{{ $ticket->price }}
