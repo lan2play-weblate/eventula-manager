@@ -70,4 +70,15 @@ class TicketGroupsController extends Controller
 
         return Redirect::back();
     }
+
+    public function delete(Request $request, Event $event, EventTicketGroup $ticketGroup): RedirectResponse
+    {
+        if ($ticketGroup->delete()) {
+            Session::flash('alert-success', "Ticket group \"{$ticketGroup->name}\" deleted successfully");
+        } else {
+            Session::flash('alert-danger', 'Ticket group could not be deleted');
+        }
+
+        return Redirect::back();
+    }
 }
