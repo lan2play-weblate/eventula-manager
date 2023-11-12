@@ -42,10 +42,11 @@ class TicketGroupsController extends Controller
         $this->updateTicketGroup($request, $group);
 
         if (!$group->save()) {
+            Session::flash('alert-danger', 'Ticket group could not be saved');
             return Redirect::back();
         }
 
-        Session::flash('alert-success', 'Ticket saved Successfully');
+        Session::flash('alert-success', 'Ticket group saved successfully');
         return Redirect::to("/admin/events/{$event->slug}/tickets");
     }
 
