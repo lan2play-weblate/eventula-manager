@@ -13,7 +13,7 @@
         {{
             Form::text(
                 'ticket-group-name',
-                $request->old('ticket-group-name'),
+                isset($ticketGroup) ? $ticketGroup->name : null,
                 [
                     'id'=>'ticket-group-name',
                     'class'=>'form-control'
@@ -29,7 +29,7 @@
         {{
             Form::number(
                 'ticket-group-tickets',
-                $request->old('ticket-group-tickets') ?? 0,
+                isset($ticketGroup) ? $ticketGroup->tickets_per_user : 0,
                 [
                     'id'=>'ticket-group-tickets',
                     'class'=>'form-control',
