@@ -55,7 +55,7 @@
 						<th>Name</th>
 						<th>Tickets in group</th>
 						<th>No. tickets per user</th>
-						<th>Actions</th>
+						<th colspan="2">Actions</th>
 					</tr>
 					</thead>
 					<tbody>
@@ -63,14 +63,26 @@
 						<td><i>ungrouped</i></td>
 						<td>{{ $event->getUngroupedTickets()->count() }}</td>
 						<td>N/A</td>
-						<td></td>
+						<td colspan="2"></td>
 					</tr>
 					@foreach($event->ticketGroups as $group)
 						<tr>
 							<td>{{ $group->name }}</td>
 							<td>{{ $group->tickets->count() }}</td>
 							<td>{{ $group->tickets_per_user }}</td>
-							<td></td>
+							<td>
+								<a class="btn btn-primary btn-sm"
+								   href="/admin/events/{{ $event->slug }}/ticketgroups/{{ $group->id }}">Edit</a>
+							</td>
+							<td>
+								{{ Form::open([
+									'url' => "/admin/events/{$event->slug}/ticketgroups/{$group->id}",
+									'onsubmit' => 'return ConfirmSubmit()'
+								]) }}
+								{{ Form::hidden('_method', 'DELETE') }}
+								<button type="submit" class="btn btn-danger btn-sm">Delete</button>
+								{{ Form::close() }}
+							</td>
 						</tr>
 					@endforeach
 					</tbody>
