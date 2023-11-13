@@ -42,4 +42,8 @@ class EventTicket extends Model
     public function ticketGroup() {
         return $this->belongsTo('App\EventTicketGroup', 'event_ticket_group_id');
     }
+
+    public function hasTicketGroup():bool {
+        return !empty($this->ticketGroup);
+    }
 }
