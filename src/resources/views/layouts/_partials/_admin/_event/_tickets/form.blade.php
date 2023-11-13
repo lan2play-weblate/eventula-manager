@@ -76,7 +76,7 @@
 		{{ Form::label('ticket-group', 'Ticket group') }}
 		{{ Form::select(
             'ticket_group',
-            ['' => '-- ungrouped --'] + \App\EventTicketGroup::allAsSelectValues(),
+            Helpers::getTicketGroupSelection(),
             ($empty ?? false) ? null : $ticket->ticketGroup?->id,
             [
                 'id' => 'ticket-group',

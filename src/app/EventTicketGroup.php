@@ -35,14 +35,4 @@ class EventTicketGroup extends Model
     {
         return $this->hasMany('App\EventTicket');
     }
-
-    public static function allAsSelectValues(): array
-    {
-        $result = [];
-        foreach (self::all(['id', 'name']) as $row) {
-            $result[$row['id']] = $row['name'];
-        }
-
-        return $result;
-    }
 }

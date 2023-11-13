@@ -2,6 +2,7 @@
 
 namespace App\Libraries;
 
+use App\EventTicketGroup;
 use Session;
 use Illuminate\Http\Request;
 use Exception;
@@ -789,6 +790,16 @@ class Helpers
         $result = array();
         for ($i = 1; $i <= $ticketCount; $i++) {
             $result[$i] = $i;
+        }
+
+        return $result;
+    }
+
+    public static function getTicketGroupSelection()
+    {
+        $result = ['' => '-- ungrouped --'];
+        foreach (EventTicketGroup::all(['id', 'name']) as $row) {
+            $result[$row['id']] = $row['name'];
         }
 
         return $result;
