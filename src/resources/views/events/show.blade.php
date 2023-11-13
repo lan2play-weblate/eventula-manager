@@ -114,6 +114,9 @@
 								@lang('events.limitedavailability')
 							</small>
 							@endif
+							@if ($ticket->hasTicketGroup())
+								<small>@lang('events.ticketgroup', ['ticketgroup' => $ticket->ticketGroup->name])</small>
+							@endif
 							<div class="row mt-auto">
 								<div class="col-sm-12 col-12">
 									<h3>{{ Settings::getCurrencySymbol() }}{{$ticket->price}}
