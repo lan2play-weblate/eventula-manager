@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'max_ticket_count_reached' => 'Du kannst keine weiteren Tickets kaufen. Die Maximale Anzahl von :maxticketcount Tickets pro Benutzer wurde bereits erreicht.',
+    'max_ticket_group_count_reached' => 'Du kannst :ticketname nicht :ticketamount Mal kaufen, da sonst das Limit von :maxamount Ticket(s) aus der Gruppe :ticketgroup pro Nutzer überschritten würde. Du hast aktuell :currentamount Ticket(s).',
+    'max_ticket_type_count_reached' => 'Du kannst :ticketname nicht :ticketamount Mal kaufen, da sonst das Limit von :maxamount Ticket(s) pro Nutzer überschritten würde. Du hast aktuell :currentamount Ticket(s).',
     'ticket_not_yet' => 'Das Ticket kann noch nicht gekauft werden.',
     'ticket_not_anymore' => 'Das Ticket kann nicht mehr gekauft werden.',
 
