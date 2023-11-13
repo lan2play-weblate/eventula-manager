@@ -10,6 +10,7 @@ use App\GameServerCommandParameter;
 use App\EventTournament;
 use App\User;
 use App\GameServer;
+use App\EventTicket;
 use GuzzleHttp\Client;
 use \Carbon\Carbon as Carbon;
 use GrahamCampbell\ResultType\Result;
@@ -775,13 +776,15 @@ class Helpers
      * Get Ticket quatntity for Select
      * @return array
      */
-    public static function getTicketQuantitySelection($ticket, $remainingcapacity)
+    public static function getTicketQuantitySelection(EventTicket $ticket, $remainingcapacity, $defaultCapacity = 10)
     {
-        $ticketCount = min($remainingcapacity > 0 ? $remainingcapacity : 10, $ticket->quantity > 0 ? $ticket->quantity : 10);
-
-        if (is_numeric($ticket->no_tickets_per_user) && $ticket->no_tickets_per_user > 0) {
-            $ticketCount = min($ticket->no_tickets_per_user, $ticketCount);
-        }
+        $ticketCount = min(
+            $remainingcapacity > 0 ? $remainingcapacity : $defaultCapacity,
+            $ticket->quantity > 0 ? $ticket->quantity : $defaultCapacity,
+            ($ticket->no_tickets_per_user ?? 0) > 0 ? $ticket->no_tickets_per_user : $defaultCapacity,
+            ($ticket->ticketGroup?->tickets_per_user ?? 0) > 0 ? $ticket->ticketGroup->tickets_per_user : $defaultCapacity,
+            ($ticket->event->no_tickets_per_user ?? 0) > 0 ? $ticket->event->no_tickets_per_user : $defaultCapacity
+        );
 
         $result = array();
         for ($i = 1; $i <= $ticketCount; $i++) {
