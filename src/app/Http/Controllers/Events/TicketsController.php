@@ -61,6 +61,24 @@ class TicketsController extends Controller
             return Redirect::to('/events/' . $ticket->event->slug);
         }
 
+        if (($ticket->event->no_tickets_per_user ?? 0) > 0) {
+            $ticketCount = $user->getAllTickets($ticket->event->id)->count();
+            if ($ticketCount + $request->quantity > $ticket->event->no_tickets_per_user) {
+                Session::flash(
+                    'alert-danger',
+                    __(
+                        'tickets.max_ticket_event_count_reached',
+                        [
+                            'ticketname' => $ticket->name,
+                            'ticketamount' => $request->quantity,
+                            'maxamount' => $ticket->event->no_tickets_per_user,
+                            'currentamount' => $ticketCount
+                        ]
+                    )
+                );
+                return Redirect::to("/events/{$ticket->event->slug}");
+            }
+        }
         if ($ticket->hasTicketGroup()) {
             $ticketCount = $user->getAllTicketsInTicketGroup($ticket->event, $ticket)->count();
             if ($ticketCount + $request->quantity > $ticket->ticketGroup->tickets_per_user) {
