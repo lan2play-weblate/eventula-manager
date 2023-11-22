@@ -108,6 +108,30 @@
 			</div>
 		</div>
 
+		<div class="card mb-3">
+			<div class="card-header">
+				<i class="fa fa-copy fa-fw"></i>Duplicate existing seating plan
+			</div>
+			<div class="card-body">
+				{{ Form::open(['url' => "/admin/events/{$event->slug}/seating"]) }}
+				<div class="row">
+					<div class="col-12 mb-3">
+						{{ Form::label('duplicate', 'Copy from') }}
+						{{ Form::select(
+    							'duplicate',
+    							Helpers::getExistingSeatingPlansSelect(),
+    							'',
+    							[
+                                    'id' => 'duplicate',
+                                    'class'=> 'form-control'
+								]
+						) }}
+					</div>
+				</div>
+				<button type="submit" class="btn btn-success btn-block">Submit</button>
+				{{ Form::close() }}
+			</div>
+		</div>
 	</div>
 </div>
 
