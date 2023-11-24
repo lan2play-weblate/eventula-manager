@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Events;
 
 use DB;
+use Illuminate\Http\RedirectResponse;
 use Session;
 use Storage;
 
@@ -53,9 +54,25 @@ class SeatingController extends Controller
      * Add Seating Plan to Database
      * @param  Event   $event
      * @param  Request $request
-     * @return Redirect
+     * @return RedirectResponse
      */
-    public function store(Event $event, Request $request)
+    public function store(Event $event, Request $request): RedirectResponse
+    {
+        if ($request->get('duplicate') != null) {
+            return $this->duplicate($event, $request);
+        }
+
+        return $this->create($event, $request);
+    }
+
+    /**
+     * Create a new seating plan
+     * @param Event $event
+     * @param Request $request
+     * @return RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function create(Event $event, Request $request)
     {
         $rules = [
             "name"      => "required",
@@ -206,6 +223,27 @@ class SeatingController extends Controller
 
         Session::flash('alert-success', 'Successfully deleted Seating Plan ' . $seatPlanName . '!');
         return Redirect::to('/admin/events/' . $event->slug . '/seating');
+    }
+
+    /**
+     * Duplicate an existing seating plan
+     * @param Event $event
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    protected function duplicate(Event $event, Request $request): RedirectResponse {
+        $plan = EventSeatingPlan::where('id', $request->get('duplicate'))->first();
+        $dupe = $plan->replicate();
+        $dupe->status = 'DRAFT';
+        if ($dupe->image_path) {
+            Storage::copy(
+                $dupe->image_path,
+                "public/images/events/{$event->slug}/seating/"
+            );
+        }
+        dd($plan, $dupe);
+        Session::flash('alert-success', 'Successfully duplicated seating plan');
+        return Redirect::back();
     }
 
     /**
