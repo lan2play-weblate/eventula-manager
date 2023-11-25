@@ -247,8 +247,11 @@ class SeatingController extends Controller
                 $dupe->image_path = null;
             }
         }
-        dd($plan, $dupe);
-        Session::flash('alert-success', 'Successfully duplicated seating plan');
+        if ($dupe->save()) {
+            Session::flash('alert-success', 'Successfully duplicated seating plan');
+        } else {
+            Session::flash('alert-danger', 'Seating plan could not be copied');
+        }
         return Redirect::back();
     }
 
