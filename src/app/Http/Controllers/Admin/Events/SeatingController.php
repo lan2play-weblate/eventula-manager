@@ -232,32 +232,84 @@ class SeatingController extends Controller
      * @return RedirectResponse
      */
     protected function duplicate(Event $event, Request $request): RedirectResponse {
+        // Status variables, needed further down below
+        $seatingPlanImageCopied = true;
+        $disabledSeatsSaved = true;
+
+        // Get selected seating plan data
         $plan = EventSeatingPlan::where('id', $request->get('duplicate'))->first();
+        $disabledSeats = $plan->seats()->where('status', 'INACTIVE');
+
+        // Copy seating plan
         $dupe = $plan->replicate();
         $dupe->status = 'DRAFT';
-        $dupe->slug = null;
-        if ($request->has('name_override')) {
+        unset($dupe->slug);
+
+        if ($request->filled('name_override')) {
             $dupe->name = $request->get('name_override');
         }
-        if ($request->has('short_name_override')) {
+        if ($request->filled('short_name_override')) {
             $dupe->name_short = $request->get('short_name_override');
         }
         if ($dupe->image_path) {
             $imageName = basename($dupe->image_path);
             $imagePath = "public/images/events/{$event->slug}/seating/{$dupe->slug}/{$imageName}";
-            if (Storage::copy(
+            if (($seatingPlanImageCopied= Storage::copy(
                 str_replace('/storage/', 'public/', $dupe->image_path),
                 $imagePath
-            )) {
+            ))) {
                 $dupe->image_path = str_replace('public/', '/storage/', $imagePath);
             } else {
                 $dupe->image_path = null;
             }
         }
-        if ($dupe->save()) {
-            Session::flash('alert-success', 'Successfully duplicated seating plan');
-        } else {
-            Session::flash('alert-danger', 'Seating plan could not be copied');
+
+        $seatingPlanSaved = $dupe->save();
+
+        if ($seatingPlanSaved) {
+            foreach ($disabledSeats->get() as $seat) {
+                $newSeat = new EventSeating();
+                $newSeat->row = $seat->row;
+                $newSeat->column = $seat->column;
+                $newSeat->status = 'INACTIVE';
+                $newSeat->event_seating_plan_id = $dupe->id;
+                $disabledSeatsSaved &= $newSeat->save();
+            }
+        }
+
+        switch (
+            ($seatingPlanSaved ? 4 : 0) +
+            ($seatingPlanImageCopied ? 2 : 0) +
+            ($disabledSeatsSaved ? 1 : 0)
+        ) {
+            case 7:
+                Session::flash('alert-success', 'Seating plan copied successfully');
+                break;
+            case 6:
+                Session::flash('alert-warning', 'Seating plan copied successfully, but one ore more inactive seats could not be saved');
+                break;
+            case 5:
+                Session::flash('alert-warning', 'Seating plan copied successfully, but seating plan image could not be saved');
+                break;
+            case 4:
+                Session::flash('alert-warning', 'Seating plan copied successfully, but seating plan image and at least one inactive seat could not be saved');
+                break;
+            case 3:
+                // Normally unreachable
+                Session::flash('alert-danger', 'Could not copy seating plan, but seating plan image was copied and somehow managed to copy inactive seats‽ This should not usually happen');
+                break;
+            case 2:
+                Session::flash('alert-danger', 'Could not copy seating plan, but seating plan image was saved successfully‽');
+                break;
+            case 1:
+                // Normally unreachable
+                Session::flash('alert-danger', 'Could not copy seating plan, but somehow managed to copy inactive seats‽ This should not usually happen');
+                break;
+            case 0:
+                Session::flash('alert-danger', 'Could not copy seating plan');
+                break;
+            default:
+                Session::flash('alert-danger', 'Just, how?');
         }
         return Redirect::back();
     }
