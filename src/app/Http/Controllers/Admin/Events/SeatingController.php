@@ -72,7 +72,7 @@ class SeatingController extends Controller
      * @return RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function create(Event $event, Request $request)
+    protected function create(Event $event, Request $request)
     {
         $rules = [
             "name"      => "required",
