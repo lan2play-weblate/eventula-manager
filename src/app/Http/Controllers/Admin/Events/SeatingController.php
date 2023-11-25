@@ -235,6 +235,13 @@ class SeatingController extends Controller
         $plan = EventSeatingPlan::where('id', $request->get('duplicate'))->first();
         $dupe = $plan->replicate();
         $dupe->status = 'DRAFT';
+        $dupe->slug = null;
+        if ($request->has('name_override')) {
+            $dupe->name = $request->get('name_override');
+        }
+        if ($request->has('short_name_override')) {
+            $dupe->name_short = $request->get('short_name_override');
+        }
         if ($dupe->image_path) {
             $imageName = basename($dupe->image_path);
             $imagePath = "public/images/events/{$event->slug}/seating/{$dupe->slug}/{$imageName}";

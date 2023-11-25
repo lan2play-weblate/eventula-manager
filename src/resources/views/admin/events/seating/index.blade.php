@@ -114,19 +114,27 @@
 			</div>
 			<div class="card-body">
 				{{ Form::open(['url' => "/admin/events/{$event->slug}/seating"]) }}
-				<div class="row">
-					<div class="col-12 mb-3">
-						{{ Form::label('duplicate', 'Copy from') }}
-						{{ Form::select(
-    							'duplicate',
-    							Helpers::getExistingSeatingPlansSelect(),
-    							'',
-    							[
-                                    'id' => 'duplicate',
-                                    'class'=> 'form-control'
-								]
-						) }}
-					</div>
+				<div class="mb-3">
+					{{ Form::label('duplicate', 'Copy from') }}
+					{{ Form::select(
+							'duplicate',
+							Helpers::getExistingSeatingPlansSelect(),
+							'',
+							[
+								'id' => 'duplicate',
+								'class'=> 'form-control'
+							]
+					) }}
+				</div>
+				<div class="mb-3">
+					{{ Form::label('name-override', 'Name override') }}
+					{{ Form::text('name_override', null, ['id' => 'name-override', 'class' => 'form-control']) }}
+					<div class="form-text">Name for copy. Leave empty to copy original name</div>
+				</div>
+				<div class="mb-3">
+					{{ Form::label('short-name-override', 'Short name override') }}
+					{{ Form::text('short_name_override', null, ['id' => 'short-name-override', 'class' => 'form-control']) }}
+					<div class="form-text">Short name for copy. Leave empty to copy original short name</div>
 				</div>
 				<button type="submit" class="btn btn-success btn-block">Submit</button>
 				{{ Form::close() }}
