@@ -236,10 +236,16 @@ class SeatingController extends Controller
         $dupe = $plan->replicate();
         $dupe->status = 'DRAFT';
         if ($dupe->image_path) {
-            Storage::copy(
-                $dupe->image_path,
-                "public/images/events/{$event->slug}/seating/"
-            );
+            $imageName = basename($dupe->image_path);
+            $imagePath = "public/images/events/{$event->slug}/seating/{$dupe->slug}/{$imageName}";
+            if (Storage::copy(
+                str_replace('/storage/', 'public/', $dupe->image_path),
+                $imagePath
+            )) {
+                $dupe->image_path = str_replace('public/', '/storage/', $imagePath);
+            } else {
+                $dupe->image_path = null;
+            }
         }
         dd($plan, $dupe);
         Session::flash('alert-success', 'Successfully duplicated seating plan');
