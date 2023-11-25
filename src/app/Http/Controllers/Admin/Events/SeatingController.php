@@ -243,6 +243,7 @@ class SeatingController extends Controller
         // Copy seating plan
         $dupe = $plan->replicate();
         $dupe->status = 'DRAFT';
+        $dupe->event_id = $event->id;
         unset($dupe->slug);
 
         if ($request->filled('name_override')) {
