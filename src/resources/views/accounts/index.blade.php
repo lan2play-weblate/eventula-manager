@@ -128,35 +128,44 @@
 				</div>
 			</div>
 
-
-			<!-- ACCOUNT DETAILS -->
-		<div class="col-12  col-lg-12 mt-3 mb-3">
-			<div class="card mb-3">
-				<div class="card-header ">
-					<h3 class="card-title">Avatar</h3>
+ 			<!-- Avatar Settings -->
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Avatar Settings</h3>
 				</div>
 				<div class="card-body">
 					<p>You can use your Steam Avatar or upload a custom one.</p>
-					{{ Form::open(array('url'=>'/account/' )) }}
+					{{ Form::open(array('url'=>'/account/avatar', 'files' => 'true')) }}
+					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+						<label class="btn btn-outline-primary" for="btnradio1">Use Steam</label>
+					  
+						<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+						<label class="btn btn-outline-primary" for="btnradio2">Upload a Custom</label>
+					  </div>
 					<div class="row" style="display: flex; align-items: center;">
 						<div class="col-md-4 col-sm-12">
+							<!-- Avatar display area -->
 							@if ($user->avatar)
-								<img src="{{ $user->avatar }}" alt="{{ $user->username }}'s Avatar" class="img-fluid img-thumbnail" />
+								<img src="{{ asset($user->avatar) }}" alt="{{ $user->username }}'s Avatar" class="img-fluid img-thumbnail" />
 							@else
 								<!-- Default image when avatar is null -->
 								<img src="{{ asset('storage/images/avatars/default-avatar.png') }}" alt="{{ $user->username }}'s Avatar" class="img-fluid img-thumbnail" />
 							@endif
-							<div class="mb-3">
-								{{ Form::label('images','Select Images',array('id'=>'','class'=>'')) }}
-								{{ Form::file('images[]',array('id'=>'images','class'=>'form-control', 'multiple'=>true)) }}
+							<!-- File upload for Custom Avatar -->
+							<div class="mb-3 custom-avatar-upload">
+								{{ Form::label('custom_image', 'Select Images', array('id' => '', 'class' => '')) }}
+								{{ Form::file('avatar', array('id' => 'avatar', 'class' => 'form-control')) }}
 							</div>
+
 							<button type="submit" class="btn btn-primary btn-block">@lang('accounts.submit')</button>
-							{{ Form::close() }}
+
 						</div>
-						</div>
-					</div>				
+					</div>
+					{{ Form::close() }}
 				</div>
-			</div>	
+			</div>
+
 			<!-- creditlogs -->
 			@if ($creditLogs)
 			<div class="card mb-3">

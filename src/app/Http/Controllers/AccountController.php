@@ -13,6 +13,8 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class AccountController extends Controller
@@ -353,12 +355,12 @@ class AccountController extends Controller
         $this->validate($request, [
             'avatar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
-
-        $filename = Auth::id() . '_' . time() . '.' . $request->avatar->getClientOriginalExtension();
-        $request->avatar->move(public_path('uploads/avatars'), $filename);
-
+        
+        $path = Storage::putFile(
+            'public/images/avatars', $request->file('avatar')
+        );
         $user = Auth::user();
-        $user->avatar = $filename;
+        $user->avatar = '/storage/images/avatars/' . basename($path);
         $user->save();
 
         return Redirect::back()->withSuccess('Account successfully updated!');

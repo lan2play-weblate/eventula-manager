@@ -128,6 +128,7 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::delete('/account/tokens/remove/{token}', 'AccountController@removeToken');
                 Route::post('/account', 'AccountController@update');
                 Route::post('/account/delete', 'Auth\SteamController@destroy');
+                Route::post('/account/avatar', 'AccountController@update_avatar');
             });
 
             Route::group(['middleware' => ['auth', 'banned']], function () {
