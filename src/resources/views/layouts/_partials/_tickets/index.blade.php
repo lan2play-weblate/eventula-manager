@@ -46,7 +46,7 @@
 			<span class="badge text-bg-info float-end" style="margin-top:2px;">@lang('tickets.not_eligable_for_seat')</span>
 		@endif
 		@if ($participant->revoked)
-			<span class="badge text-bg-danger float-end" style="margin-top: 2px;">revoked</span>
+			<span class="badge text-bg-danger float-end" style="margin-top: 2px;">@lang('tickets.has_been_revoked')</span>
 		@endif
 	</div>
 	<div class="card-body">
