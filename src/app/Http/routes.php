@@ -481,6 +481,10 @@ Route::group(['middleware' => ['installed']], function () {
                 '/admin/events/{event}/participants/{participant}/transfer',
                 'Admin\Events\ParticipantsController@transfer'
             );
+            Route::post(
+                '/admin/events/{event}/participants/{participant}/revoke',
+                'Admin\Events\ParticipantsController@revoke'
+            );
 
             /**
              * Announcements

@@ -246,4 +246,17 @@ class EventParticipant extends Model
 
         return $pdf->output();
     }
+
+    function setRevoked()
+    {
+        $this->revoked = true;
+        if (!$this->seat) {
+            return $this->save();
+        }
+        if (!$this->seat->delete()) {
+            $this->revoked = false;
+            return false;
+        }
+        return $this->save();
+    }
 }

@@ -120,9 +120,14 @@ class ParticipantsController extends Controller
         return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
 
-
-    
-
-
+    function revoke(Event $event, EventParticipant $participant)
+    {
+        if (!$participant->setRevoked()) {
+            Session::flash('alert-danger', 'Cannot revoke Participant!');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
+        Session::flash('alert-success', 'Participant has been revoked');
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
+    }
 
 }

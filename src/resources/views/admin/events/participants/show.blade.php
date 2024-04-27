@@ -24,6 +24,10 @@
 
 @include ('layouts._partials._admin._event.dashMini')
 
+@if ($participant->revoked)
+	<div class="alert alert-danger">This participant has been revoked!</div>
+@endif
+
 <div class="row">
 	<div class="col-lg-8">
 
@@ -104,7 +108,11 @@
 						<p>{{ $participant->purchase->paypal_email }}</p>
 					@endif
 				@endif
-				@if ((!$participant->signed_in) && ((!$participant->ticket) || ($participant->purchase->status == "Success") ))
+				@if (
+        				(!$participant->revoked) &&
+        				(!$participant->signed_in) &&
+        				((!$participant->ticket) || ($participant->purchase->status == "Success"))
+					)
 					{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/transfer')) }}
 						<div class="mb-3">
 							{{ Form::label('event_id','Transfer to event',array('id'=>'','class'=>'')) }}
@@ -144,7 +152,29 @@
 			</div>
 		</div>
 
+		@if (!$participant->revoked)
+		<div class="card">
+			<div class="card-header">Danger Zone</div>
+			<div class="card-body">
+			{{ Form::open([
+    				'url' => '/admin/events/' . $event->slug . '/participants/' . $participant->id . '/revoke',
+    				'onSubmit' => 'return ConfirmRevoke()'
+				]) }}
+				<div class="mb-3">
+					<button type="submit" class="btn btn-danger btn-block">Revoke</button>
+				</div>
+			{{ Form::close() }}
+			</div>
+		</div>
+		@endif
+
 	</div>
 </div>
+
+<script type="text/javascript">
+	function ConfirmRevoke() {
+		return confirm('Are you sure you want to revoke this participant?')
+	}
+</script>
 
 @endsection
