@@ -27,7 +27,7 @@ class ParticipantsController extends Controller
     {
         return view('admin.events.participants.index')
             ->withEvent($event)
-            ->withParticipants($event->eventParticipants()->paginate(20));
+            ->withParticipants($event->allEventParticipants()->paginate(20));
     }
 
     /**
