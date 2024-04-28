@@ -161,6 +161,23 @@
 
 			</div>
 		</div>
+
+		@if (config('admin.super_danger_zone'))
+		<div class="card mb-3">
+			<div class="card-header">Super Danger Zone</div>
+			<div class="card-body">
+			{{ Form::open([
+    				'url' => '/admin/purchases/' . $purchase->id,
+    				'onSubmit' => 'return ConfirmDelete()'
+				]) }}
+				{{ Form::hidden('_method', 'DELETE') }}
+				<div class="mb-3">
+					<button type="submit" class="btn btn-danger btn-block">Delete purchase</button>
+				</div>
+				{{ Form::close() }}
+			</div>
+		</div>
+		@endif
 	</div>
 </div>
 

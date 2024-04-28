@@ -84,4 +84,14 @@ class PurchasesController extends Controller
         Session::flash('alert-success', 'Successfully updated purchase status!');
         return Redirect::to('/admin/purchases/' . $purchase->id);
     }
+
+    function delete(Purchase $purchase)
+    {
+        if (!$purchase->delete()) {
+            Session::flash('alert-danger', 'Cannot delete Purchase');
+            return Redirect::to('admin/purchases/' . $purchase->id);
+        }
+        Session::flash('alert-success', 'Purchase deleted');
+        return Redirect::to('admin/purchases');
+    }
 }

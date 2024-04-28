@@ -691,6 +691,9 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/purchases/event', 'Admin\PurchasesController@showEvent');
             Route::get('/admin/purchases/{purchase}/setSuccess', 'Admin\PurchasesController@setSuccess');
             Route::get('/admin/purchases/{purchase}', 'Admin\PurchasesController@show');
+            if (config('admin.super_danger_zone')) {
+                Route::delete('/admin/purchases/{purchase}', 'Admin\PurchasesController@delete');
+            }
 
             /**
              * Credit System
