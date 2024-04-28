@@ -172,6 +172,7 @@
 				]) }}
 				{{ Form::hidden('_method', 'DELETE') }}
 				<div class="mb-3">
+					<div class="alert alert-danger">Deleting a purchase will also remove related data, like event participants. This has the potential to break stuff!<br/>Having a backup is highly recommended!</div>
 					<button type="submit" class="btn btn-danger btn-block">Delete purchase</button>
 				</div>
 				{{ Form::close() }}

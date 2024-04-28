@@ -178,6 +178,10 @@
 				]) }}
 				{{ Form::hidden('_method', 'DELETE') }}
 				<div class="mb-3">
+					<div class="alert alert-danger">
+						This will remove the participant and related data, including clearing their seat. The underlying Purchase will not be removed.<br/>
+						This may have unintended side effects. Having a backup is highly recommended!
+					</div>
 					<button type="submit" class="btn btn-danger btn-block">Delete participant</button>
 				</div>
 			{{ Form::close() }}
