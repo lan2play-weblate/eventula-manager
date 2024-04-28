@@ -130,4 +130,14 @@ class ParticipantsController extends Controller
         return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
 
+    function delete(Event $event, EventParticipant $participant)
+    {
+        if (!$participant->delete()) {
+            Session::flash('alert-danger', 'Cannot delete participant');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
+        Session::flash('alert-success', 'Participants deleted');
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
+    }
+
 }

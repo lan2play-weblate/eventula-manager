@@ -153,7 +153,7 @@
 		</div>
 
 		@if (!$participant->revoked)
-		<div class="card">
+		<div class="card mb-3">
 			<div class="card-header">Danger Zone</div>
 			<div class="card-body">
 			{{ Form::open([
@@ -162,6 +162,23 @@
 				]) }}
 				<div class="mb-3">
 					<button type="submit" class="btn btn-danger btn-block">Revoke</button>
+				</div>
+			{{ Form::close() }}
+			</div>
+		</div>
+		@endif
+
+		@if (config('admin.super_danger_zone') && $participant->revoked)
+		<div class="card mb-3">
+			<div class="card-header">Super Danger Zone</div>
+			<div class="card-body">
+			{{ Form::open([
+    				'url' => '/admin/events/' . $event->slug . '/participants/' . $participant->id,
+    				'onSubmit' => 'return ConfirmDelete()'
+				]) }}
+				{{ Form::hidden('_method', 'DELETE') }}
+				<div class="mb-3">
+					<button type="submit" class="btn btn-danger btn-block">Delete participant</button>
 				</div>
 			{{ Form::close() }}
 			</div>

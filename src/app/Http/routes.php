@@ -485,6 +485,12 @@ Route::group(['middleware' => ['installed']], function () {
                 '/admin/events/{event}/participants/{participant}/revoke',
                 'Admin\Events\ParticipantsController@revoke'
             );
+            if (config('admin.super_danger_zone')) {
+                Route::delete(
+                    '/admin/events/{event}/participants/{participant}',
+                    'Admin\Events\ParticipantsController@delete'
+                );
+            }
 
             /**
              * Announcements
