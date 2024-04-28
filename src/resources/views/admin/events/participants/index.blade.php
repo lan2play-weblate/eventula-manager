@@ -53,7 +53,7 @@
 						</thead>
 						<tbody>
 							@foreach ($participants as $participant)
-							<tr @class(["odd", "gradeX", "revoked" => $participant->revoked])>
+							<tr @class(["odd", "gradeX", "table-danger revoked" => $participant->revoked])>
 								<td>
 									{{ $participant->user->username }}
 									@if ($participant->user->steamid)

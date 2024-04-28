@@ -168,7 +168,7 @@
 		</div>
 		@endif
 
-		@if (config('admin.super_danger_zone') && $participant->revoked)
+		@if (config('admin.super_danger_zone'))
 		<div class="card mb-3">
 			<div class="card-header">Super Danger Zone</div>
 			<div class="card-body">
