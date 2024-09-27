@@ -9,6 +9,9 @@ userId = $(shell id -u)
 groupId = $(shell id -g)
 endif
 
+userId = 1000
+groupId = 1000
+
 user = --user $(userId):$(groupId)
 
 ifeq ($(OS),Windows_NT)
@@ -38,7 +41,7 @@ interactive:
 
 # Stop all Containers
 stop:
-	$(DOCKER_COMPOSE) -f docker-compose-dev.yml stop || true
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml stop ||: true
 
 # Build from clean
 app-build-clean: folder-structure-prd layout-images-prd app-build-dep generate-key-prd dev wait-mysql database-migrate database-seed stop
@@ -380,12 +383,21 @@ mix-dev:
 
 # Purge Containers
 purge-containers:
+ifeq ($(OS),Windows_NT)
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml stop ||: true
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml rm -vf ||: true
+	docker rm eventula_manager_app ||: true
+	docker rm eventula_manager_database ||: true
+	docker volume rm eventula_manager_database ||: true
+	docker volume rm eventula_manager_storage ||: true
+else
 	$(DOCKER_COMPOSE) -f docker-compose-dev.yml -p eventula_manager stop || true
 	$(DOCKER_COMPOSE) -f docker-compose-dev.yml -p eventula_manager rm -vf || true
 	docker rm eventula_manager_app || true
 	docker rm eventula_manager_database || true
 	docker volume rm eventula_manager_database || true
 	docker volume rm eventula_manager_storage || true
+endif
 
 # Purge Caches
 purge-cache:
