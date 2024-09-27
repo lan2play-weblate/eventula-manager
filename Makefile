@@ -1,6 +1,6 @@
 # Initialize variables
 ifeq ($(OS),Windows_NT)
-currentDir = $(patsubst %/,%, $(subst /mnt, ,$(shell wsl wslpath -u $(strip $(dir $(realpath $(lastword $(MAKEFILE_LIST))))))))
+currentDir = $(patsubst %/,%, $(lastword $(subst /host, ,$(shell wsl wslpath -u $(strip $(dir $(realpath $(lastword $(MAKEFILE_LIST)))))))))
 userId = $(shell wsl id -u)
 groupId = $(shell wsl id -g)
 else
@@ -20,7 +20,6 @@ else
   DOCKER_COMPOSE=docker-compose
 endif
 endif
-
 
 # Run local dev
 start-local-dev: env-file-dev docker-lan app-build-clean-dev logs
@@ -45,7 +44,6 @@ stop:
 app-build-clean: folder-structure-prd layout-images-prd app-build-dep generate-key-prd dev wait-mysql database-migrate database-seed stop
 
 # Build dev from clean
-# app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev wait-mysql database-migrate database-seed stop
 app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev #wait-mysql stop
 
 # Build Dependencies
@@ -65,7 +63,7 @@ docs-html:
 docker-lan:
 ifeq ($(OS),Windows_NT)
 #not tested!
-ifeq ($(shell docker network ls --filter=NAME=lan | Measure-Object –Line),1)
+ifeq ($(shell powershell -Command "docker network ls --filter NAME=lan | Measure-Object -Line | Select-Object -ExpandProperty Lines"),1)
 	docker network create lan
 endif
 else
