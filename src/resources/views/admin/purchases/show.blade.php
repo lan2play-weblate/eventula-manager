@@ -68,9 +68,12 @@
 							@endforeach
 						@elseif (!$purchase->participants->isEmpty())
 							@foreach ($purchase->participants as $participant)
-								<tr>
+								<tr @class(['table-warning' => $participant->revoked])>
 									<td>
 										{{ $participant->ticket->name }} for {{ $participant->event->display_name }}
+										@if ($participant->revoked)
+											<span class="badge text-bg-warning">Participant revoked</span>
+										@endif
 									</td>
 									<td>
 										1
