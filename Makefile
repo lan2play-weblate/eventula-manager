@@ -9,8 +9,10 @@ userId = $(shell id -u)
 groupId = $(shell id -g)
 endif
 
+ifeq (userId,0)
 userId = 1000
 groupId = 1000
+endif
 
 user = --user $(userId):$(groupId)
 
@@ -438,7 +440,11 @@ database-upgrade:
 
 # execute mysql command usage make database-command command=sqlcommandhere
 database-command:
+ifeq ($(OS),Windows_NT)
+	powershell.exe -Command "echo \"use eventula_manager_database; $(command)\"| docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'"
+else
 	echo "use eventula_manager_database; $(command)" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
+endif
 
 # import mysql database usage make database-command dbfile=dbfile.sql
 ifndef dbfile
