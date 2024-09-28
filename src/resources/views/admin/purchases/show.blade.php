@@ -153,7 +153,7 @@
 				@if (count($purchase->participants) > 0)
 				<div class="mb-3">	
 					@foreach ($purchase->participants as $participant)
-						<a href="/admin/events/{{ $participant->event->slug }}/participants/{{ $participant->id }}"><button class="btn btn-block btn-success">View Participant - {{ $participant->user->username }}</button></a>
+						<a href="/admin/events/{{ $participant->event->slug }}/participants/{{ $participant->id }}"><button class="btn btn-block btn-{{ $participant->revoked ? 'warning' : 'success' }}">View Participant - {{ $participant->user->username }}{{ $participant->revoked ? ' (revoked)' : '' }}</button></a>
 					@endforeach
 				</div>
 				@endif
