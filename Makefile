@@ -1,12 +1,17 @@
 # Initialize variables
 ifeq ($(OS),Windows_NT)
-currentDir = $(patsubst %/,%, $(subst /mnt, ,$(shell wsl wslpath -u $(strip $(dir $(realpath $(lastword $(MAKEFILE_LIST))))))))
+currentDir = $(patsubst %/,%, $(lastword $(subst /host, ,$(shell wsl wslpath -u $(strip $(dir $(realpath $(lastword $(MAKEFILE_LIST)))))))))
 userId = $(shell wsl id -u)
 groupId = $(shell wsl id -g)
 else
 currentDir = $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 userId = $(shell id -u)
 groupId = $(shell id -g)
+endif
+
+ifeq (userId,0)
+userId = 1000
+groupId = 1000
 endif
 
 user = --user $(userId):$(groupId)
@@ -20,7 +25,6 @@ else
   DOCKER_COMPOSE=docker-compose
 endif
 endif
-
 
 # Run local dev
 start-local-dev: env-file-dev docker-lan app-build-clean-dev logs
@@ -39,13 +43,12 @@ interactive:
 
 # Stop all Containers
 stop:
-	$(DOCKER_COMPOSE) -f docker-compose-dev.yml stop || true
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml stop ||: true
 
 # Build from clean
 app-build-clean: folder-structure-prd layout-images-prd app-build-dep generate-key-prd dev wait-mysql database-migrate database-seed stop
 
 # Build dev from clean
-# app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev wait-mysql database-migrate database-seed stop
 app-build-clean-dev: folder-structure-dev layout-images-dev app-build-dep-dev purge-cache generate-key-dev dev #wait-mysql stop
 
 # Build Dependencies
@@ -65,7 +68,7 @@ docs-html:
 docker-lan:
 ifeq ($(OS),Windows_NT)
 #not tested!
-ifeq ($(shell docker network ls --filter=NAME=lan | Measure-Object –Line),1)
+ifeq ($(shell powershell -Command "docker network ls --filter NAME=lan | Measure-Object -Line | Select-Object -ExpandProperty Lines"),1)
 	docker network create lan
 endif
 else
@@ -382,12 +385,21 @@ mix-dev:
 
 # Purge Containers
 purge-containers:
+ifeq ($(OS),Windows_NT)
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml stop ||: true
+	$(DOCKER_COMPOSE) -f docker-compose-dev.yml rm -vf ||: true
+	docker rm eventula_manager_app ||: true
+	docker rm eventula_manager_database ||: true
+	docker volume rm eventula_manager_database ||: true
+	docker volume rm eventula_manager_storage ||: true
+else
 	$(DOCKER_COMPOSE) -f docker-compose-dev.yml -p eventula_manager stop || true
 	$(DOCKER_COMPOSE) -f docker-compose-dev.yml -p eventula_manager rm -vf || true
 	docker rm eventula_manager_app || true
 	docker rm eventula_manager_database || true
 	docker volume rm eventula_manager_database || true
 	docker volume rm eventula_manager_storage || true
+endif
 
 # Purge Caches
 purge-cache:
@@ -428,7 +440,11 @@ database-upgrade:
 
 # execute mysql command usage make database-command command=sqlcommandhere
 database-command:
+ifeq ($(OS),Windows_NT)
+	powershell.exe -Command "echo \"use eventula_manager_database; $(command)\"| docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'"
+else
 	echo "use eventula_manager_database; $(command)" | docker exec -i eventula_manager_database mysql -u eventula_manager -p'password'
+endif
 
 # import mysql database usage make database-command dbfile=dbfile.sql
 ifndef dbfile

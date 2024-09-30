@@ -37,7 +37,7 @@
 			</div>
 			<div class="card-body">
 				<div class="dataTable_wrapper">
-					<table width="100%" class="table table-striped table-hover" id="seating_table">
+					<table width="100%" class="table table-striped table-hover participants-table" id="seating_table">
 						<thead>
 							<tr>
 								<th>User</th>
@@ -53,7 +53,7 @@
 						</thead>
 						<tbody>
 							@foreach ($participants as $participant)
-							<tr class="odd gradeX">
+							<tr @class(["odd", "gradeX", "table-danger revoked" => $participant->revoked])>
 								<td>
 									{{ $participant->user->username }}
 									@if ($participant->user->steamid)
