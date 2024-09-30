@@ -50,6 +50,23 @@ class PurchasesController extends Controller
     }
 
     /**
+     * Show Revoked Purchases Index Page
+     * @return View
+     */
+    public function showRevoked()
+    {
+        return view('admin.purchases.index')
+        ->withPurchases(
+            Helpers::paginate(
+                Purchase::whereHas('participants', function ($query) {
+                    $query->where('revoked', '=', 1);
+                })->get()->sortByDesc('created_at'), 
+                20
+            )
+        );
+    }
+
+    /**
      * Show Purchase Page
      * @param Purchase $purchase
      * @return View

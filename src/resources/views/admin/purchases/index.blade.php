@@ -22,7 +22,7 @@
 			</div>
 			<div class="card-body">
 				<div class="row">
-					<div class="col-12 col-md-4">
+					<div class="col-12 col-md-3">
 						<div class="card border-secondary">
 							<a href="/admin/purchases">
 								<div class="card-footer">
@@ -33,7 +33,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="col-12 col-md-4">
+					<div class="col-12 col-md-3">
 						<div class="card border-secondary">
 							<a href="/admin/purchases/shop">
 								<div class="card-footer">
@@ -44,11 +44,22 @@
 							</a>
 						</div>
 					</div>
-					<div class="col-12 col-md-4">
+					<div class="col-12 col-md-3">
 						<div class="card border-secondary">
 							<a href="/admin/purchases/event">
 								<div class="card-footer">
 									<span class="float-start">Event Purchases</span>
+									<span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
+									<div class="clearfix"></div>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-12 col-md-3">
+						<div class="card border-secondary">
+							<a href="/admin/purchases/revoked">
+								<div class="card-footer">
+									<span class="float-start">Purchases with revoked Participants</span>
 									<span class="float-end"><i class="fa fa-arrow-circle-right"></i></span>
 									<div class="clearfix"></div>
 								</div>

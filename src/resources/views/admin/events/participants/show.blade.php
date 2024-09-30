@@ -194,7 +194,7 @@
 
 <script type="text/javascript">
 	function ConfirmRevoke() {
-		return confirm('Are you sure you want to revoke this participant?')
+		return confirm('Are you sure you want to revoke this participant? This does not trigger any refund and this action can not be reverted!')
 	}
 </script>
 
