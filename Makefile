@@ -261,7 +261,7 @@ composer-outdated-direct:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(currentDir)/src:/app \
     $(user) \
-    composer:latest composer outdated -D
+    composer:latest composer outdated -D --ignore-platform-reqs
 
 # list Composer outdated
 composer-outdated:
