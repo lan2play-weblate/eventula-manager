@@ -268,7 +268,7 @@ composer-outdated:
 	docker run --rm --name compose-maintainence-update --interactive \
     --volume $(currentDir)/src:/app \
     $(user) \
-    composer:latest composer outdated
+    composer:latest composer outdated --ignore-platform-reqs
 
 # add PHP Dependencies via Composer - usage make composer-add-dep module=module/namehere
 composer-add-dep:
