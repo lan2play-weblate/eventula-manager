@@ -6,10 +6,10 @@ services:
       context: .
     working_dir: /web/html/
     volumes:
-      - ./src/:/web/html/
-      - ./resources/certs:/etc/nginx/certs
-      - ./resources/secrets:/run/secrets
-    env_file: ./src/.env
+      - $PWD/src/:/web/html/
+      - $PWD/resources/certs:/etc/nginx/certs
+      - $PWD/resources/secrets:/run/secrets
+    env_file: $PWD/src/.env
     container_name: eventula_manager_app
     networks:
       - lan
@@ -21,7 +21,7 @@ services:
     image: mysql:8
     volumes:
       - eventula_manager_database:/var/lib/mysql
-    env_file: ./src/.env
+    env_file: $PWD/src/.env
     ports:
       - 3306:3306
     container_name: eventula_manager_database
