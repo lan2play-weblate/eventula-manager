@@ -79,6 +79,15 @@
 								}elseif($purchase->status == 'Danger') {
 									$statusColor = 'danger';
 								}
+                                $participantRevoked = false;
+                                if (!empty($purchase->participants)) {
+                                    foreach ($purchase->participants as $participant) {
+                                        if ($participant->revoked) {
+                                            $participantRevoked = true;
+                                            break;
+                                        }
+                                    }
+                                }
 							@endphp
 							<tr class="table-{{ $statusColor }} text-{{ $statusColor }}">
 								<td>{{ $purchase->id }}</td>
@@ -93,7 +102,12 @@
 									@endif
 								</td>
 								<td>@if(isset($purchase->user)) {{ $purchase->user->firstname }} {{ $purchase->user->surname }} @else User deleted @endif</td>
-								<td>{{ $purchase->status }}</td>
+								<td>
+									{{ $purchase->status }}
+									@if ($participantRevoked)
+										<span class="badge text-bg-warning">Participant(s) revoked</span>
+									@endif
+								</td>
 								<td>{{ $purchase->type }}</td>
 								<td>{{ $purchase->paypal_email }}</td>
 								<td>{{ $purchase->transaction_id }}</td>

@@ -68,9 +68,12 @@
 							@endforeach
 						@elseif (!$purchase->participants->isEmpty())
 							@foreach ($purchase->participants as $participant)
-								<tr>
+								<tr @class(['table-warning' => $participant->revoked])>
 									<td>
 										{{ $participant->ticket->name }} for {{ $participant->event->display_name }}
+										@if ($participant->revoked)
+											<span class="badge text-bg-warning">Participant revoked</span>
+										@endif
 									</td>
 									<td>
 										1
@@ -153,7 +156,15 @@
 				@if (count($purchase->participants) > 0)
 				<div class="mb-3">	
 					@foreach ($purchase->participants as $participant)
-						<a href="/admin/events/{{ $participant->event->slug }}/participants/{{ $participant->id }}"><button class="btn btn-block btn-success">View Participant - {{ $participant->user->username }}</button></a>
+						<a href="/admin/events/{{ $participant->event->slug }}/participants/{{ $participant->id }}">
+							<button @class(["btn", "btn-block",
+											"btn-warning" => $participant->revoked,
+											"btn-success" => !$participant->revoked])>
+								View Participant - {{ $participant->user->username }}
+								@if ($participant->revoked)
+									(revoked)
+								@endif
+							</button></a>
 					@endforeach
 				</div>
 				@endif
@@ -161,6 +172,24 @@
 
 			</div>
 		</div>
+
+		@if (config('admin.super_danger_zone'))
+		<div class="card mb-3">
+			<div class="card-header">Super Danger Zone</div>
+			<div class="card-body">
+			{{ Form::open([
+    				'url' => '/admin/purchases/' . $purchase->id,
+    				'onSubmit' => 'return ConfirmDelete()'
+				]) }}
+				{{ Form::hidden('_method', 'DELETE') }}
+				<div class="mb-3">
+					<div class="alert alert-danger">Deleting a purchase will also remove related data, like event participants. This has the potential to break stuff!<br/>Having a backup is highly recommended!</div>
+					<button type="submit" class="btn btn-danger btn-block">Delete purchase</button>
+				</div>
+				{{ Form::close() }}
+			</div>
+		</div>
+		@endif
 	</div>
 </div>
 
