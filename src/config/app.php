@@ -50,7 +50,6 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
         Ignited\LaravelOmnipay\LaravelOmnipayServiceProvider::class,
-        // Intervention\Image\Laravel\ImageServiceProvider::class,
         Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
         /*
          * Application Service Providers...
