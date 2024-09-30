@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51ad3eb9d953e559e8b7d51ecfbd0bf3",
+    "content-hash": "3f4aa4bd646b2b720baa2e11a0f33da6",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -9460,24 +9460,25 @@
         },
         {
             "name": "xpaw/php-source-query-class",
-            "version": "2.1.0",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xPaw/PHP-Source-Query.git",
-                "reference": "673e572233c3ab4b70b302d648ebaf5a8d9ba32b"
+                "reference": "02839815b3281c45b111c8dfdb37d6004d886fe9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xPaw/PHP-Source-Query/zipball/673e572233c3ab4b70b302d648ebaf5a8d9ba32b",
-                "reference": "673e572233c3ab4b70b302d648ebaf5a8d9ba32b",
+                "url": "https://api.github.com/repos/xPaw/PHP-Source-Query/zipball/02839815b3281c45b111c8dfdb37d6004d886fe9",
+                "reference": "02839815b3281c45b111c8dfdb37d6004d886fe9",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.4"
+                "php": ">=8.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "9.2",
-                "vimeo/psalm": "^3.12"
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.3",
+                "vimeo/psalm": "^5.15"
             },
             "type": "library",
             "autoload": {
@@ -9503,15 +9504,9 @@
                 "team fortress"
             ],
             "support": {
-                "source": "https://github.com/xPaw/PHP-Source-Query/tree/2.1.0"
+                "source": "https://github.com/xPaw/PHP-Source-Query/tree/4.0.0"
             },
-            "funding": [
-                {
-                    "url": "https://github.com/xPaw",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-12-04T08:20:42+00:00"
+            "time": "2024-08-04T08:10:16+00:00"
         }
     ],
     "packages-dev": [
