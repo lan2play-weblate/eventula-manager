@@ -11,6 +11,9 @@ mix.webpackConfig({
 
 mix.sass('resources/assets/sass/app.scss', 'public/css')
     .sass('resources/assets/sass/admin.scss', 'public/css').options({
+        sassOptions: {
+            includePaths: ['node_modules/'],
+          },
         processCssUrls: false,
         uglify: {
             parallel: 4, // Use multithreading for the processing
