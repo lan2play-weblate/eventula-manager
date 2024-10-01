@@ -1,4 +1,3 @@
-@use 'sass:color';
 // Colors
 $bootstrap-sass-asset-helper: true;
 $brand-primary: $color_primary;
@@ -29,7 +28,7 @@ monospace !default;
 $font-size-base: 0.875rem;
 $font-weight-normal: 300;
 // Cards
-$card-cap-bg: color.scale(invert($body-bg), $alpha: -97%);
+$card-cap-bg: transparentize(invert($body-bg), 0.97);
 $card-bg: $body-bg;
 $card-border-color: invert($body-bg);
 
