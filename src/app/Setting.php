@@ -105,7 +105,7 @@ class Setting extends Model
             Storage::putFileAs(
                 'public/images/main',
                 $logo,
-                'logo_main' . mt_rand(10, 9999) . '.png'
+                'logo_main' . mt_rand(10, 9999) . '.' . $logo->extension()
             )
         );
         $setting = self::where('setting', 'org_logo')->first();
