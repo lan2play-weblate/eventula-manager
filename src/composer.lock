@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5dffb5d3018a9a38452a230798bafdc",
+    "content-hash": "151e0170e6a53ac8e0d7b4f4a045eb4a",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -134,16 +134,16 @@
         },
         {
             "name": "barryvdh/laravel-debugbar",
-            "version": "v3.14.2",
+            "version": "v3.14.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "850be4e3c05add22d70a3a3fb564925fd7605973"
+                "reference": "c0bee7c08ae2429e4a9ed2bc75679b012db6e3bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/850be4e3c05add22d70a3a3fb564925fd7605973",
-                "reference": "850be4e3c05add22d70a3a3fb564925fd7605973",
+                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/c0bee7c08ae2429e4a9ed2bc75679b012db6e3bd",
+                "reference": "c0bee7c08ae2429e4a9ed2bc75679b012db6e3bd",
                 "shasum": ""
             },
             "require": {
@@ -202,7 +202,7 @@
             ],
             "support": {
                 "issues": "https://github.com/barryvdh/laravel-debugbar/issues",
-                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.14.2"
+                "source": "https://github.com/barryvdh/laravel-debugbar/tree/v3.14.3"
             },
             "funding": [
                 {
@@ -214,7 +214,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-24T17:03:19+00:00"
+            "time": "2024-10-02T09:17:49+00:00"
         },
         {
             "name": "brick/math",
@@ -11629,16 +11629,16 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "laravelcollective/html": 20,
         "invisnik/laravel-steam-auth": 20,
-        "team-reflex/challonge-php": 20,
-        "maniaplanet/dedicated-server-api": 20
+        "laravelcollective/html": 20,
+        "maniaplanet/dedicated-server-api": 20,
+        "team-reflex/challonge-php": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "8.2.*"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
