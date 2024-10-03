@@ -219,7 +219,6 @@ Fill in the APP_KEY from the last step and all other empty Variables (if not opt
 
 .. code-block:: yaml
 
-    version: "3.4"
     services:
         app:
             image: lan2play/eventula-manager:latest

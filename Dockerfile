@@ -1,16 +1,15 @@
-# FROM th0rn0/php-nginx-base:latest
 FROM lan2play/docker-php-nginx-base:latest
 LABEL org.opencontainers.image.authors="Thornton Phillis (Th0rn0@lanops.co.uk), Alexader Volz (Alexander@volzit.de)"
 
 # ENV - App Defaults
 
-ENV UUID 82
-ENV GUID 82
-ENV ENABLE_HTTPS false
-ENV LOG_FILES false
-ENV ANALYTICS_PROVIDER GoogleAnalytics
-ENV DB_MIGRATE false
-ENV TIMEZONE UTC
+ENV UUID=82
+ENV GUID=82
+ENV ENABLE_HTTPS=false
+ENV LOG_FILES=false
+ENV ANALYTICS_PROVIDER=GoogleAnalytics
+ENV DB_MIGRATE=false
+ENV TIMEZONE=UTC
 
 #versioning
 ARG BUILDNUMBER
@@ -28,8 +27,8 @@ ENV SOURCE_REF=$SOURCE_REF
 COPY resources/docker/root /
 WORKDIR $NGINX_DOCUMENT_ROOT
 COPY --chown=${UUID}:${GUID} src/ $NGINX_DOCUMENT_ROOT
-RUN find $NGINX_DOCUMENT_ROOT -type d ! -perm 0775 -print0 | xargs -0 -r chmod 775 
-RUN find $NGINX_DOCUMENT_ROOT -type f ! -perm 0664 -print0 | xargs -0 -r chmod 664 
+RUN find $NGINX_DOCUMENT_ROOT -type d ! -perm 0775 -exec chmod 775 {} \;
+RUN find $NGINX_DOCUMENT_ROOT -type f ! -perm 0664 -exec chmod 664 {} \;
 RUN chgrp -R ${GUID} $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 RUN chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 

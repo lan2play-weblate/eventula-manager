@@ -20,6 +20,7 @@ return [
     /* Ticket Partial*/
     'has_been_gifted' => 'Dieses Ticket wurde verschenkt!',
     'not_eligable_for_seat' => 'Mit diesem Ticket kann kein Sitzplatz gebucht werden',
+    'has_been_revoked' => 'Dieses Ticket wurde zurückgerufen!',
     'gift_ticket' => 'Verschenke Ticket', 
     'gift_url' => 'Geschenk URL:',
     'revoke_gift' => 'Geschenk zurückziehen',
