@@ -387,6 +387,7 @@ find $NGINX_DOCUMENT_ROOT -type d ! -perm 0775 -not -path "$NGINX_DOCUMENT_ROOT/
 echo "set storage and cache permissions..."
 chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 echo "set nginx tmp permissions..."
+mkdir -p /var/lib/nginx/tmp/client_body
 chown -R $UUID:$GUID /var/lib/nginx/tmp
 
 # Database Wait check
