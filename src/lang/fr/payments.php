@@ -84,4 +84,5 @@ return [
     'credit_payment_unsuccessful' => 'Le paiement a échoué ! - Solde de crédit insuffisant !',
     'delivery_type_in' => 'Le type de livraison doit être un événement ou une expédition',
     'tickets_pending_active' => 'Vos billets sont maintenant actifs, mais vous devez payer sur place en espèces pour vous enregistrer ! La commande est juridiquement contraignante !',
+    'purchase_id' => 'ID d\'achat :',
 ];
