@@ -90,6 +90,10 @@ class Event extends Model
      */
     public function eventParticipants()
     {
+        return $this->hasMany('App\EventParticipant')->where('revoked', '=', 0);
+    }
+    public function allEventParticipants()
+    {
         return $this->hasMany('App\EventParticipant');
     }
     public function timetables()

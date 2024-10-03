@@ -481,6 +481,16 @@ Route::group(['middleware' => ['installed']], function () {
                 '/admin/events/{event}/participants/{participant}/transfer',
                 'Admin\Events\ParticipantsController@transfer'
             );
+            Route::post(
+                '/admin/events/{event}/participants/{participant}/revoke',
+                'Admin\Events\ParticipantsController@revoke'
+            );
+            if (config('admin.super_danger_zone')) {
+                Route::delete(
+                    '/admin/events/{event}/participants/{participant}',
+                    'Admin\Events\ParticipantsController@delete'
+                );
+            }
 
             /**
              * Announcements
@@ -679,8 +689,12 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/purchases', 'Admin\PurchasesController@index');
             Route::get('/admin/purchases/shop', 'Admin\PurchasesController@showShop');
             Route::get('/admin/purchases/event', 'Admin\PurchasesController@showEvent');
+            Route::get('/admin/purchases/revoked', 'Admin\PurchasesController@showRevoked');
             Route::get('/admin/purchases/{purchase}/setSuccess', 'Admin\PurchasesController@setSuccess');
             Route::get('/admin/purchases/{purchase}', 'Admin\PurchasesController@show');
+            if (config('admin.super_danger_zone')) {
+                Route::delete('/admin/purchases/{purchase}', 'Admin\PurchasesController@delete');
+            }
 
             /**
              * Credit System
