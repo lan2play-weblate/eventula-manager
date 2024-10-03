@@ -386,6 +386,8 @@ echo "set folder permissions..."
 find $NGINX_DOCUMENT_ROOT -type d ! -perm 0775 -not -path "$NGINX_DOCUMENT_ROOT/node_modules/*" -print0 | xargs -0 -r chmod 775
 echo "set storage and cache permissions..."
 chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
+echo "set nginx tmp permissions..."
+chown -R $UUID:$GUID /var/lib/nginx/tmp
 
 # Database Wait check
 echo "---------------"
