@@ -3,12 +3,23 @@
   "extends": [
     "config:base"
   ],
-  "lockFileMaintenance": { "enabled": true },
+  "lockFileMaintenance": {
+    "enabled": true,
+    "branchTopic": "lock-file-maintenance-{{baseBranch}}"
+  },
   "forkProcessing": "enabled",
-  "baseBranches": ["dev", "master"],
+  "baseBranches": [
+    "dev",
+    "master"
+  ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
       "automerge": true
     }
   ]
