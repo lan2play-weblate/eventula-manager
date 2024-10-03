@@ -27,8 +27,8 @@ ENV SOURCE_REF=$SOURCE_REF
 COPY resources/docker/root /
 WORKDIR $NGINX_DOCUMENT_ROOT
 COPY --chown=${UUID}:${GUID} src/ $NGINX_DOCUMENT_ROOT
-RUN find $NGINX_DOCUMENT_ROOT -type d ! -perm 0775 -exec chmod 775 {} \;
-RUN find $NGINX_DOCUMENT_ROOT -type f ! -perm 0664 -exec chmod 664 {} \;
+RUN find $NGINX_DOCUMENT_ROOT -type d ! -perm 0775 -print0 | xargs -0 -r chmod 775 
+RUN find $NGINX_DOCUMENT_ROOT -type f ! -perm 0664 -print0 | xargs -0 -r chmod 664 
 RUN chgrp -R ${GUID} $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 RUN chmod -R ug+rwx $NGINX_DOCUMENT_ROOT/storage $NGINX_DOCUMENT_ROOT/bootstrap/cache
 
