@@ -35,10 +35,10 @@
     "type": "project",
     "require": {
         "php": "8.3.*",
-        "laravel/framework": "11.26.0",
+        "laravel/framework": "11.27.2",
         "laravelcollective/html": "dev-6x",
         "laravel/legacy-factories": "1.4.0",
-        "webonyx/graphql-php": "15.14.1",
+        "webonyx/graphql-php": "15.14.2",
         "invisnik/laravel-steam-auth": "dev-master",
         "laravel/socialite": "5.16.0",
         "ignited/laravel-omnipay": "3.6.0",
@@ -73,7 +73,7 @@
     "require-dev": {
         "mockery/mockery": "1.6.12",
         "fakerphp/faker": "1.23.1",
-        "phpunit/phpunit": "11.3.6",
+        "phpunit/phpunit": "11.4.1",
         "kitloong/laravel-migrations-generator": "7.0.5",
         "symfony/css-selector": "7.1.1",
         "symfony/dom-crawler": "7.1.5",
