@@ -31,26 +31,6 @@
       "matchBaseBranches": ["master"],
       "matchUpdateTypes": ["lockFileMaintenance"],
       "automerge": false
-    },
-    {
-      "matchManagers": ["regex"],
-      "matchPackageNames": ["node"],
-      "matchFileNames": ["Makefile"],
-      "updateTypes": ["major", "minor", "patch"],
-      "additionalBranchPrefix": "update-node-docker-",
-      "branchTopic": "{{depName}}-{{newVersion}}",
-      "enabled": true
-    }
-  ],
-  "customManagers": [
-    {
-      "description": "Update Node.js version in Makefile",
-      "customType": "regex",
-      "fileMatch": ["^Makefile$"],
-      "matchStrings": ["node:(?<currentValue>\\d+\\.\\d+\\.\\d+)"],
-      "depNameTemplate": "node",
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker"
     }
   ],
   "automergeType": "pr",
