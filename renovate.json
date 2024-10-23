@@ -31,14 +31,6 @@
       "matchBaseBranches": ["master"],
       "matchUpdateTypes": ["lockFileMaintenance"],
       "automerge": false
-    },
-    {
-      "matchPackageNames": ["node"],
-      "datasource": "docker",
-      "versioning": "docker",
-      "depNameTemplate": "node",
-      "additionalBranchPrefix": "update-node-",
-      "enabled": true
     }
   ],
   "customManagers": [
@@ -49,8 +41,8 @@
       "matchStrings": [
         "node:(?<currentValue>\\d+\\.\\d+\\.\\d+)"
       ],
-      "datasourceTemplate": "docker",
       "depNameTemplate": "node",
+      "datasourceTemplate": "docker",
       "versioningTemplate": "docker"
     }
   ],
