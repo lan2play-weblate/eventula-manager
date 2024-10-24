@@ -131,4 +131,4 @@ Hop over to our [admin documentation](https://eventula.lan2play.de/admin/getting
 
 - Lan2Play - https://lan2play.de
 - Sund-Xplosion - https://sxlan.de
-- West Coast Gaming -https://lan.westcoastgaming.se
+- West Coast Gaming - https://lan.westcoastgaming.se
