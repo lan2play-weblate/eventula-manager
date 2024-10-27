@@ -33,7 +33,7 @@ class TimetablesController extends Controller
         }
 
         if (!$event) {
-            abort(404);
+            abort(404, "Event not found.");
         }
 
         $event = Event::where('id', $event->id)->first();
@@ -61,7 +61,7 @@ class TimetablesController extends Controller
         }
 
         if (!$event || !$timetable) {
-            abort(404);
+            abort(404, "Event not found.");
         }
 
         return $timetable;
