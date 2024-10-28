@@ -52,6 +52,8 @@ class Event extends Model
 
     protected static function boot()
     {
+        // Remember There are is also an ApiGlobalScopesMiddleware used here
+
         parent::boot();
 
         $admin = false;
