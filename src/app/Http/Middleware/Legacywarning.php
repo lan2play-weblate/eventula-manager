@@ -18,7 +18,7 @@ class Legacywarning
     public function handle(Request $request, Closure $next): Response
     {
         
-        if ((Auth::check() && Auth::user()->getAdmin())) {
+        if ((Auth::check() && Auth::user()->getAdmin()) && ! config('admin.disable_legacy_warning')) {
             Auth::getSession()->flash('alert-warning', __('legacywarning.infotext'));
         }
 
