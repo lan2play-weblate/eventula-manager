@@ -56,6 +56,8 @@ class Event extends Model
 
     protected static function boot()
     {
+        // Remember There are is also an ApiGlobalScopesMiddleware used here
+
         parent::boot();
 
         $admin = false;
@@ -93,6 +95,10 @@ class Event extends Model
      * Relationships
      */
     public function eventParticipants()
+    {
+        return $this->hasMany('App\EventParticipant')->where('revoked', '=', 0);
+    }
+    public function allEventParticipants()
     {
         return $this->hasMany('App\EventParticipant');
     }

@@ -60,6 +60,7 @@ body {
 .sidebar {
     opacity: 0.9;
     background-color: $color_header_background;
+    min-height: calc(100vh - 51px);
 }
 
 h1,
@@ -120,7 +121,7 @@ h6 {
     min-width: 12.5rem;
 }
 
-.custom-control-input-green:checked~.custom-control-label::before {
+.custom-control-input-green:checked.custom-control-label::before {
     border-color: $color_primary !important;
     background-color: $color_primary !important;
 }

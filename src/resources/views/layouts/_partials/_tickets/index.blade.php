@@ -1,5 +1,11 @@
 <div class="card mb-3">
-	<div class="card-header  bg-success-light text-success">
+	<div @class([
+			"card-header",
+			"bg-success-light" => !$participant->revoked,
+			"text-success" => !$participant->revoked,
+			"bg-danger-light" => $participant->revoked,
+			"text-danger" => $participant->revoked
+        ])>
 		<strong>
 		{{ $participant->event->display_name }}
 		</strong>
@@ -42,6 +48,9 @@
 		@if ($participant->ticket && !$participant->ticket->seatable)
 			<span class="badge text-bg-info float-end" style="margin-top:2px;">@lang('tickets.not_eligable_for_seat')</span>
 		@endif
+		@if ($participant->revoked)
+			<span class="badge text-bg-danger float-end" style="margin-top: 2px;">@lang('tickets.has_been_revoked')</span>
+		@endif
 	</div>
 	<div class="card-body">
 		<div class="row" style="display: flex; align-items: center;">
@@ -82,6 +91,11 @@
 			<div class="offset-md-2 col-md-2 offset-sm-2 col-sm-4 col-12">
 				<img class="img img-fluid" src="/{{ $participant->qrcode }}" />
 			</div>
+		</div>
+	</div>
+	<div class="card-footer">
+		<div class="btn-group">
+			<a href="/events/participants/{{ $participant->id }}/pdf" class="btn btn-primary">@lang('tickets.download_pdf')</a>
 		</div>
 	</div>
 </div>

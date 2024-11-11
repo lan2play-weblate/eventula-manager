@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Events;
 
 use DB;
 use Auth;
+use Helpers;
 
 use App\Setting;
 
@@ -73,12 +74,12 @@ class EventsController extends Controller
                 $poll->sortOptions();
             }
         }
-        $seoKeywords = explode(',',config('settings.seo_keywords'));
+        $seoKeywords = Helpers::getSeoKeywords();
         $seoKeywords[] = $event->display_name;
         $seoKeywords[] = "Start Date: " . $event->start;
-        SEOMeta::setDescription($event->desc_short);
+        SEOMeta::setDescription(Helpers::getSeoCustomDescription($event->desc_short));
         SEOMeta::addKeyword($seoKeywords);
-        OpenGraph::setDescription($event->desc_short);
+        OpenGraph::setDescription(Helpers::getSeoCustomDescription($event->desc_short));
         OpenGraph::addProperty('type', 'article');
 
         $event->load(

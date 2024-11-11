@@ -27,7 +27,7 @@ class ParticipantsController extends Controller
     {
         return view('admin.events.participants.index')
             ->withEvent($event)
-            ->withParticipants($event->eventParticipants()->paginate(20));
+            ->withParticipants($event->allEventParticipants()->paginate(20));
     }
 
     /**
@@ -137,9 +137,24 @@ class ParticipantsController extends Controller
         Session::flash('alert-success', 'Participant ' . $participant->name . ' signed out!');
         return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
+    function revoke(Event $event, EventParticipant $participant)
+    {
+        if (!$participant->setRevoked()) {
+            Session::flash('alert-danger', 'Cannot revoke Participant!');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
+        Session::flash('alert-success', 'Participant has been revoked');
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
+    }
 
-    
-
-
+    function delete(Event $event, EventParticipant $participant)
+    {
+        if (!$participant->delete()) {
+            Session::flash('alert-danger', 'Cannot delete participant');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
+        Session::flash('alert-success', 'Participants deleted');
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
+    }
 
 }
