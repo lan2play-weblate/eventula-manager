@@ -34,12 +34,7 @@
 				<div class="card-body">
 					{{ Form::open(array('url'=>'/account/' )) }}
 					<div class="row" style="display: flex; align-items: center;">
-						<div class="col-md-2 col-sm-12">
-							@if ($user->avatar != NULL)
-							<img src="{{ $user->avatar }}" alt="{{ $user->username }}'s Avatar" class="img-fluid" img-thumbnail />
-							@endif
-						</div>
-						<div class="col-md-10 col-sm-12">
+						<div class="col-md-7 col-sm-12">
 							<div class="row">
 								<div class="col-12 col-md-6">
 									<div class="mb-3 @error('firstname') is-invalid @enderror">
@@ -83,6 +78,25 @@
 								</span>
 								@enderror
 							</div>
+							<div class="col-12 col-md-6">
+								<div class="mb-3 @error('locale') is-invalid @enderror">
+									{{ Form::label('locale', __('accounts.locale'), ['class' => '']) }}
+									<select name="locale" id="locale" class="form-control @error('locale') is-invalid @enderror" required autocomplete="locale">
+										@foreach(Helpers::getSupportedLocales() as $locale => $language)
+											<option value="{{ $language }}" {{ $user->locale == $language ? 'selected' : '' }}>
+												{{ $language }}
+											</option>
+										@endforeach
+									</select>
+									
+									@error('locale')
+										<div class="invalid-feedback">{{ $message }}</div>
+									@enderror
+								</div>
+							</div>
+							
+							
+							
 							@endif
 							<button type="submit" class="btn btn-primary btn-block">@lang('accounts.submit')</button>
 						</div>
@@ -90,7 +104,6 @@
 					{{ Form::close() }}
 				</div>
 			</div>
-
 			<!-- Email -->
 			<div class="card mb-3">
 				<div class="card-header ">
@@ -133,6 +146,45 @@
 					{{ Form::close() }}
 				</div>
 			</div>
+
+ 			<!-- Avatar Settings -->
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Avatar Settings</h3>
+				</div>
+				<div class="card-body">
+					<p>You can use your Steam Avatar or upload a custom one.</p>
+					{{ Form::open(array('url'=>'/account/avatar', 'files' => 'true')) }}
+					<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+						<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+						<label class="btn btn-outline-primary" for="btnradio1">Use Steam</label>
+					  
+						<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+						<label class="btn btn-outline-primary" for="btnradio2">Upload a Custom</label>
+					  </div>
+					<div class="row" style="display: flex; align-items: center;">
+						<div class="col-md-4 col-sm-12">
+							<!-- Avatar display area -->
+							@if ($user->avatar)
+								<img src="{{ asset($user->avatar) }}" alt="{{ $user->username }}'s Avatar" class="img-fluid img-thumbnail" />
+							@else
+								<!-- Default image when avatar is null -->
+								<img src="{{ asset('storage/images/avatars/default-avatar.png') }}" alt="{{ $user->username }}'s Avatar" class="img-fluid img-thumbnail" />
+							@endif
+							<!-- File upload for Custom Avatar -->
+							<div class="mb-3 custom-avatar-upload">
+								{{ Form::label('custom_image', 'Select Images', array('id' => '', 'class' => '')) }}
+								{{ Form::file('avatar', array('id' => 'avatar', 'class' => 'form-control')) }}
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-block">@lang('accounts.submit')</button>
+
+						</div>
+					</div>
+					{{ Form::close() }}
+				</div>
+			</div>
+
 			<!-- creditlogs -->
 			@if ($creditLogs)
 			<div class="card mb-3">
@@ -260,7 +312,13 @@
 								<td>
 									@if (!$purchase->participants->isEmpty())
 									@foreach ($purchase->participants as $participant)
+									@if ($participant->free)
+									{{ $participant->event->display_name }} - Freebie
+									@elseif($participant->staff)
+									{{ $participant->event->display_name }} - Staff
+									@else
 									{{ $participant->event->display_name }} - {{ $participant->ticket->name }}
+									@endif
 									@if (!$loop->last)
 									<hr>
 									@endif

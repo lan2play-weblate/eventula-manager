@@ -14,3 +14,5 @@ public/css/app\.css
 public/css/admin\.css\.map
 public/css/app\.css\.map
 public/uploads/gallery/
+public/js/vendor.js
+public/js/vendor.min.js

@@ -38,7 +38,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'avatar',
         'steamid',
         'last_login',
-        'email_verified_at'
+        'email_verified_at',
+        'locale'
     ];
 
     /**

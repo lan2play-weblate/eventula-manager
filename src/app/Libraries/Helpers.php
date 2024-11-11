@@ -23,6 +23,9 @@ use HaydenPierce\ClassFinder\ClassFinder;
  
 class Helpers
 {
+    public static function getSupportedLocales() {
+        return config('app.locales', []);
+    }
     // TODO - refactor - eg getGameSelectArray - specifially the selectArray part
     /**
      * Get Venues

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Session;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Settings;
 
 
@@ -295,6 +297,11 @@ class AccountController extends Controller
 
         $user->firstname = @$request->firstname;
         $user->surname = @$request->surname;
+        
+        if (isset($request->locale)) {
+            $user->locale = @$request->locale;
+            \Log::info("Submitted locale value: " . @$request->locale);
+        }
 
         if (!$user->save()) {
             return Redirect::back()->withFail("Oops, Something went Wrong.");
@@ -342,5 +349,20 @@ class AccountController extends Controller
             return redirect($request->session()->get('eventula_req_url'));
         }
         return redirect('/');
+    }
+
+    public function update_avatar(Request $request) {
+        $this->validate($request, [
+            'avatar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
+        
+        $path = Storage::putFile(
+            'public/images/avatars', $request->file('avatar')
+        );
+        $user = Auth::user();
+        $user->avatar = '/storage/images/avatars/' . basename($path);
+        $user->save();
+
+        return Redirect::back()->withSuccess('Account successfully updated!');
     }
 }

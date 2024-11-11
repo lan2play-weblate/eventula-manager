@@ -128,6 +128,7 @@ Route::group(['middleware' => ['installed']], function () {
                 Route::delete('/account/tokens/remove/{token}', 'AccountController@removeToken');
                 Route::post('/account', 'AccountController@update');
                 Route::post('/account/delete', 'Auth\SteamController@destroy');
+                Route::post('/account/avatar', 'AccountController@update_avatar');
             });
 
             Route::group(['middleware' => ['auth', 'banned']], function () {
@@ -167,6 +168,7 @@ Route::group(['middleware' => ['installed']], function () {
             });
             Route::get('/events/{event}', 'Events\EventsController@show');
             Route::get('/events/{event}/big', 'HomeController@bigScreen');
+            Route::get('/events/{event}/generate-ics', 'Events\EventsController@generateICS')->name('generate-event-ics');
 
             /**
              * Misc Pages
@@ -471,6 +473,7 @@ Route::group(['middleware' => ['installed']], function () {
              */
             Route::get('/admin/events/{event}/participants', 'Admin\Events\ParticipantsController@index');
             Route::get('/admin/events/{event}/participants/signoutall', 'Admin\Events\ParticipantsController@signoutall');
+            Route::get('/admin/events/{event}/participants/{participant}/signout', 'Admin\Events\ParticipantsController@signout');
             Route::get('/admin/events/{event}/participants/{participant}', 'Admin\Events\ParticipantsController@show');
             Route::post('/admin/events/{event}/participants/{participant}', 'Admin\Events\ParticipantsController@update');
             Route::post(
