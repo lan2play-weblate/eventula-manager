@@ -27,7 +27,7 @@ class ParticipantsController extends Controller
     {
         return view('admin.events.participants.index')
             ->withEvent($event)
-            ->withParticipants($event->eventParticipants()->paginate(20));
+            ->withParticipants($event->allEventParticipants()->paginate(20));
     }
 
     /**
@@ -63,6 +63,7 @@ class ParticipantsController extends Controller
      */
     public function signIn(Event $event, EventParticipant $participant)
     {
+        // Maybe Check for a participant that is not participating in this event?
         if ($participant->ticket && $participant->purchase->status != "Success") {
             Session::flash('alert-danger', 'Cannot sign in Participant because the payment is not completed!');
             return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
@@ -72,7 +73,7 @@ class ParticipantsController extends Controller
             return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
         }
         Session::flash('alert-success', 'Participant Signed in!');
-        return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
 
     public function transfer(Event $event, EventParticipant $participant, Request $request)
@@ -120,9 +121,40 @@ class ParticipantsController extends Controller
         return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
 
+    /**
+     * Sign out a single participant for the event
+     * @param  Event  $event
+     * @param  EventParticipant $participant
+     * @return View
+     */
+    public function signout(Event $event, EventParticipant $participant)
+    {   
+        if (!$participant->setSignIn(false)) {
+            Session::flash('alert-danger', 'Cannot sign out Participant! '. $participant->name);
+            return Redirect::to('admin/events/' . $event->slug . '/participants/');
+        }
 
-    
+        Session::flash('alert-success', 'Participant ' . $participant->name . ' signed out!');
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
+    }
+    function revoke(Event $event, EventParticipant $participant)
+    {
+        if (!$participant->setRevoked()) {
+            Session::flash('alert-danger', 'Cannot revoke Participant!');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
+        Session::flash('alert-success', 'Participant has been revoked');
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
+    }
 
-
+    function delete(Event $event, EventParticipant $participant)
+    {
+        if (!$participant->delete()) {
+            Session::flash('alert-danger', 'Cannot delete participant');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
+        Session::flash('alert-success', 'Participants deleted');
+        return Redirect::to('admin/events/' . $event->slug . '/participants/');
+    }
 
 }

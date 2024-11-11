@@ -37,7 +37,11 @@ class Event extends Model
         'seating_cap',
         'spectator_cap',
         'ticket_spectator',
-        'ticket_weekend'
+        'ticket_weekend',
+        'private_participants',
+        'matchmaking_enabled',
+        'tournaments_freebies',
+        'tournaments_staff'
     ];
 
     /**
@@ -52,6 +56,8 @@ class Event extends Model
 
     protected static function boot()
     {
+        // Remember There are is also an ApiGlobalScopesMiddleware used here
+
         parent::boot();
 
         $admin = false;
@@ -89,6 +95,10 @@ class Event extends Model
      * Relationships
      */
     public function eventParticipants()
+    {
+        return $this->hasMany('App\EventParticipant')->where('revoked', '=', 0);
+    }
+    public function allEventParticipants()
     {
         return $this->hasMany('App\EventParticipant');
     }
