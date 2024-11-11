@@ -2,19 +2,13 @@
 
 namespace App\Http\Middleware;
 
-use Auth;
 use Closure;
-use Session;
-use App;
-use Config;
-use App\Setting;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class UserLocale
 {
     /**
-     * Handle an incoming request.
+     * Handle an incoming request and set user locale if specified.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
@@ -22,33 +16,36 @@ class UserLocale
      */
     public function handle($request, Closure $next)
     {
-        \Log::info("UserLocale middleware called");
-        // Set the locale from the site settings as default
-        $locale = Setting::getSiteLocale();
-        \Log::info("Locale set from Site: " . $locale);
-        // Check if the user is authenticated before attempting to access user-specific settings
-        if (Auth::check()) {
-            $userLocale = Auth::user()->locale;
-            \Log::info("Locale set from User: " . $userLocale);
-            // Override with the user's preference if it's set
-            if ($userLocale) {
-                $locale = $userLocale;
-                \Log::info("Language of the user: " . $locale);
-            }
-        } else {
-            \Log::info("No authenticated user.");
-        }
-        // Override with the user's preference if authenticated
-        if (Auth::check() && Auth::user()->language) {
-            $locale = Auth::user()->language;
-            \Log::info("Language of the user: " . $locale);
+        // Set default locale as fallback
+        $locale = config('app.locale');
+
+        // Check if user is authenticated
+        if (!Auth::check()) {
+            return $next($request); // Proceed with default locale if not authenticated
         }
 
-        $locale_dirs = array_filter(glob(app()->langPath() . '/*'), 'is_dir');
-        if (in_array(app()->langPath() . '/' . $locale, $locale_dirs)) {
-            App::setLocale($locale);
+        // Retrieve user locale
+        $userLocale = Auth::user()->locale;
+
+        // Verify if user locale is set and valid
+        if (empty($userLocale) || !$this->isValidLocale($userLocale)) {
+            return $next($request); // Proceed with default locale if user's locale is invalid or not set
         }
+
+        // Apply the valid user locale
+        app()->setLocale($userLocale);
 
         return $next($request);
+    }
+
+    /**
+     * Validate if the given locale exists in the language directory.
+     *
+     * @param  string  $locale
+     * @return bool
+     */
+    protected function isValidLocale($locale)
+    {
+        return is_dir(app()->langPath() . '/' . $locale);
     }
 }

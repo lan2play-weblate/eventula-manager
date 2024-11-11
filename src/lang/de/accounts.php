@@ -92,4 +92,5 @@ return [
     'new_token_wizzard_del_failed' => 'Das Löschen des alten Tokens ist fehlgeschlagen. Bitte versuche es noch einmal.',
     'new_token_wizzard_creation_failed' => 'Das Erstellen des Tokens ist fehlgeschlagen. Bitte versuche es noch einmal.',
     'new_token_wizzard_clickoncallback' => 'Du kannst auf Zurück verbinden klicken oder den Token manuell kopieren.',
+    'locale' => 'Sprache',
 ];

@@ -300,6 +300,7 @@ class AccountController extends Controller
         
         if (isset($request->locale)) {
             $user->locale = @$request->locale;
+            \Log::info("Submitted locale value: " . @$request->locale);
         }
 
         if (!$user->save()) {
