@@ -288,14 +288,8 @@ class HomeController extends Controller
         // Loading can be done like this in one call of load function
         $event->load(
             'eventParticipants.user', 
-            'timetables'
         );
         
-        foreach ($event->timetables as $timetable) {
-            $timetable->data = EventTimetableData::where('event_timetable_id', $timetable->id)
-                ->orderBy('start_time', 'asc')
-                ->get();
-        }
 
         // TODO - Refactor
         $user = Auth::user();
