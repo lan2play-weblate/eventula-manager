@@ -199,9 +199,6 @@
 	<!-- EVENT SPONSORS -->
 	@include ('layouts._partials._sponsors.index')
 
-	<!-- TODO fix bootstrap 5 classes in partial
-	@include ('layouts._partials._sponsors.index') -->
-
 	<!-- EVENT INFORMATION SECTIONS -->
 	@if (!empty($event->information))
 	<div class="pb-2 mt-4 mb-4 border-bottom">
