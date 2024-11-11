@@ -248,15 +248,14 @@ class EventsController extends Controller
     {
         $purchase                               = new Purchase();
         $purchase->user_id                      = $request->user_id;
-        $purchase->type                         = 'free';
+        $purchase->type                         = 'system';
         $purchase->status                       = "Success";
         $purchase->transaction_id               = "Granted by ". $request->user()->username;
 
-        ;
         $purchase->setSuccess();
 
         if (!$purchase->save()) {
-            Session::flash('alert-danger', 'Could not save "free" purchase!');
+            Session::flash('alert-danger', 'Could not save "system" purchase!');
         }
 
         $participant                            = new EventParticipant();
@@ -287,11 +286,16 @@ class EventsController extends Controller
     {
         $purchase                             = new Purchase();
         $purchase->user_id                    = $request->user_id;
-        $purchase->type                       = 'free';
+        $purchase->type                       = 'system';
         $purchase->status                     = "Success";
         $purchase->transaction_id             = "Appointed by ". $request->user()->username;
 
         $purchase->setSuccess();
+
+        if (!$purchase->save()) {
+            Session::flash('alert-danger', 'Could not save "system" purchase!');
+        }
+
         $participant = new EventParticipant();
 
         $participant->user_id                = $request->user_id;
