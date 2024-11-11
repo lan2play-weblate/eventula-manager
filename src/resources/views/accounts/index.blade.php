@@ -83,7 +83,7 @@
 									{{ Form::label('locale', __('accounts.locale'), ['class' => '']) }}
 									<select name="locale" id="locale" class="form-control @error('locale') is-invalid @enderror" required autocomplete="locale">
 										@foreach(Helpers::getSupportedLocales() as $locale => $language)
-											<option value="{{ $language }}" {{ $user->locale == $locale ? 'selected' : '' }}>
+											<option value="{{ $language }}" {{ $user->locale == $language ? 'selected' : '' }}>
 												{{ $language }}
 											</option>
 										@endforeach
