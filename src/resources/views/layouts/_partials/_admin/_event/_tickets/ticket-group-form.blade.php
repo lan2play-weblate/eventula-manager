@@ -25,7 +25,7 @@
 
 <div class="row">
     <div class="mb-3 col-12">
-        {{ Form::label('ticket-group-tickets','Ticket group name') }}
+        {{ Form::label('ticket-group-tickets','No. tickets per user') }}
         {{
             Form::number(
                 'ticket-group-tickets',
