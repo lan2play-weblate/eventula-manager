@@ -255,7 +255,7 @@ class EventParticipant extends Model
         if (!$this->seat) {
             return $this->save();
         }
-        if (!$this->seat->delete()) {
+        if (!$this->seat->delete() || !$this->setSignIn(false)) {
             $this->revoked = false;
             return false;
         }

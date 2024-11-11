@@ -137,6 +137,7 @@ class ParticipantsController extends Controller
         Session::flash('alert-success', 'Participant ' . $participant->name . ' signed out!');
         return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
+    
     function revoke(Event $event, EventParticipant $participant)
     {
         if (!$participant->setRevoked()) {

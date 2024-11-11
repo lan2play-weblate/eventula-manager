@@ -143,11 +143,13 @@
 					</div>
 				@else
 				<hr>
+				@if (!$participant->revoked)
 				<div class="form-group">
 					<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id}}/signout/">
 						<button type="submit" class="btn btn-danger btn-block">Sign Out </button>
 					</a>	
 				</div>
+				@endif
 						</hr>
 				@endif
 				

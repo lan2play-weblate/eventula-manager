@@ -98,16 +98,18 @@
 									</a>
 								</td>
 								<td>
-									@if(!$participant->signed_in)
-									{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/signin')) }}
-									<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id}}/signin">
-										<button type="submit" class="btn btn-success btn-sm float-right mr-3 ml-3 btn-block">Sign In </button>
-									</a>
-									{{ Form::close() }}
-									@else
-									<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id}}/signout/">
-										<button type="submit" class="btn btn-danger btn-sm float-right mr-3 ml-3 btn-block">Sign Out </button>
-									</a>
+									@if (!$participant->revoked)
+										@if(!$participant->signed_in)
+										{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/participants/' . $participant->id . '/signin')) }}
+										<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id}}/signin">
+											<button type="submit" class="btn btn-success btn-sm float-right mr-3 ml-3 btn-block">Sign In </button>
+										</a>
+										{{ Form::close() }}
+										@else
+										<a href="/admin/events/{{ $event->slug }}/participants/{{ $participant->id}}/signout/">
+											<button type="submit" class="btn btn-danger btn-sm float-right mr-3 ml-3 btn-block">Sign Out </button>
+										</a>
+										@endif
 									@endif
 								</td>
 							</tr>
