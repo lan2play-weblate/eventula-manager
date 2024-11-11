@@ -235,7 +235,10 @@ class GamesController extends Controller
         }
 
         if ($request->file('image_header')) {
-            Storage::delete($game->image_header_path);
+            // Check if the image exists in storage before attempting to delete
+            if ($game->image_header_path && Storage::exists($game->image_header_path)) {
+                Storage::delete($game->image_header_path);
+            }
             $imageName  = 'header.' . $request->file('image_header')->getClientOriginalExtension();
             Image::read($request->file('image_header'))
                 ->resize(1600, 400)
