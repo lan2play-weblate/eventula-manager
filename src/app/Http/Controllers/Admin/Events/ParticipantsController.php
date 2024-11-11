@@ -68,6 +68,10 @@ class ParticipantsController extends Controller
             Session::flash('alert-danger', 'Cannot sign in Participant because the payment is not completed!');
             return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
         }
+        if ($participant->revoked) {
+            Session::flash('alert-danger', 'Cannot sign in a revoked Participant!');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
         if (!$participant->setSignIn()) {
             Session::flash('alert-danger', 'Cannot sign in Participant!');
             return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
@@ -129,6 +133,10 @@ class ParticipantsController extends Controller
      */
     public function signout(Event $event, EventParticipant $participant)
     {   
+        if ($participant->revoked) {
+            Session::flash('alert-danger', 'Cannot sign out a revoked Participant!');
+            return Redirect::to('admin/events/' . $event->slug . '/participants/' . $participant->id);
+        }
         if (!$participant->setSignIn(false)) {
             Session::flash('alert-danger', 'Cannot sign out Participant! '. $participant->name);
             return Redirect::to('admin/events/' . $event->slug . '/participants/');
@@ -137,7 +145,7 @@ class ParticipantsController extends Controller
         Session::flash('alert-success', 'Participant ' . $participant->name . ' signed out!');
         return Redirect::to('admin/events/' . $event->slug . '/participants/');
     }
-    
+
     function revoke(Event $event, EventParticipant $participant)
     {
         if (!$participant->setRevoked()) {
