@@ -2,6 +2,8 @@
 
 namespace App\Libraries;
 
+use App\Event;
+use App\EventSeatingPlan;
 use Session;
 use Illuminate\Http\Request;
 use Exception;
@@ -972,5 +974,15 @@ class Helpers
     public static function getSeoCustomDescription($description)
     {
         return $description. Helpers::getPoweredByLine();
+    }
+
+    public static function getExistingSeatingPlansSelect() {
+        $result = [];
+        foreach(EventSeatingPlan::all(['id', 'name', 'event_id']) as $plan) {
+            $event = Event::where('id', $plan->event_id)->first();
+            $result[$event->display_name] ??= [];
+            $result[$event->display_name][$plan->id] = $plan->name;
+        }
+        return $result;
     }
 }
