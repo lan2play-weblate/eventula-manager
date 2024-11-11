@@ -22,6 +22,7 @@ return [
     /* Ticket Partial*/
     'has_been_gifted' => 'This Ticket has been gifted!',
     'not_eligable_for_seat' => 'This Ticket is not eligable for a seat',
+    'has_been_revoked' => 'This ticket has been revoked!',
     'gift_ticket' => 'Gift Ticket', 
     'gift_url' => 'Gift URL:',
     'revoke_gift' => 'Revoke Gift',

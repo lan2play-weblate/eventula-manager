@@ -168,8 +168,11 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get all Tickets for current user
      */
-    public function getAllTickets($eventId)    {
+    public function getAllTickets($eventId, $includeRevoked = false)    {
         $clauses = ['user_id' => $this->id, 'event_id' => $eventId];
+        if (!$includeRevoked) {
+            $clauses['revoked'] = 0;
+        }
         $eventParticipants = EventParticipant::where($clauses)->get();
         return $eventParticipants;
     }
@@ -221,7 +224,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function getTickets($eventId, $obj = false)
     {
-        $clauses = ['user_id' => $this->id, 'event_id' => $eventId];
+        $clauses = ['user_id' => $this->id, 'event_id' => $eventId, 'revoked' => 0];
         $eventParticipants = EventParticipant::where($clauses)->get();
         $return = array();
         foreach ($eventParticipants as $eventParticipant) {
