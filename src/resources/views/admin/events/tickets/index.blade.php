@@ -153,12 +153,27 @@
 				<a name="freebies"></a>
 			</div>
 			<div class="card-body table-responsive">
+				@php
+					$users = $users->sortByDesc(function($user) use ($event) {
+					    return [
+					        $user->getFreeTickets($event->id)->count(),
+					        $user->getStaffTickets($event->id)->count()
+					    ];
+					})->values();
+					$totalFreeTickets = $users->sum(function($user) use ($event) {
+					return $user->getFreeTickets($event->id)->count();
+					});
+				
+					$totalStaffTickets = $users->sum(function($user) use ($event) {
+					    return $user->getStaffTickets($event->id)->count();
+					});
+				@endphp
 				<table width="100%" class="table table-striped table-hover" id="dataTables-example">
 					<thead>
 						<tr>
 							<th>Name</th>
-							<th>Free Tickets</th>
-							<th>Staff Tickets</th>
+							<th>Free Tickets (total: {{ $totalFreeTickets }})</th>
+							<th>Staff Tickets (total: {{ $totalStaffTickets }})</th>
 							<th></th>
 							<th></th>
 						</tr>
