@@ -219,7 +219,10 @@ class GamesController extends Controller
         }
 
         if ($request->file('image_thumbnail')) {
-            Storage::delete($game->image_thumbnail_path);
+            // Check if the image exists in storage before attempting to delete
+            if ($game->image_thumbnail_path && Storage::exists($game->image_thumbnail_path)) {
+                Storage::delete($game->image_thumbnail_path);
+            }
             $imageName  = 'thumbnail.' . $request->file('image_thumbnail')->getClientOriginalExtension();
             Image::read($request->file('image_thumbnail'))
                 ->resize(500, 500)
