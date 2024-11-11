@@ -23,6 +23,7 @@ return new class extends Migration
 
         Schema::table('event_tickets', function(Blueprint $table) {
             $table->integer('event_ticket_group_id')->unsigned()->nullable()->after('no_tickets_per_user');
+            $table->foreign('event_ticket_group_id')->references('id')->on('event_ticket_groups')->onDelete('set null');
         });
     }
 
@@ -31,10 +32,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('event_ticket_groups');
-
         Schema::table('event_tickets', function (Blueprint $table) {
+            $table->dropForeign('event_tickets_event_ticket_group_id_foreign');
             $table->dropColumn('event_ticket_group_id');
         });
+
+        Schema::drop('event_ticket_groups');
     }
 };
