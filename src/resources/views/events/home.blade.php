@@ -67,7 +67,7 @@ use Debugbar;
     		<div class="alert alert-info" style="position: relative; padding-right: 150px;">
 	        	{{ $announcement->message }}
        			<span style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%);">
-    	        	{{ $announcement->created_at->format('M d, h:s A') }}
+    	        	{{ $announcement->created_at->format('M d, h:i') }}
         		</span>
     		</div>
 			@endforeach
