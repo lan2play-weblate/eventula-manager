@@ -200,9 +200,9 @@
 									{{ Form::close() }}
 								</td>
 								<td width="15%">
-									{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/freebies/admin')) }}
+									{{ Form::open(array('url'=>'/admin/events/' . $event->slug . '/freebies/staff')) }}
 										<input type="hidden" name="user_id" value="{{ $user->id }}" />
-										<button type="submit" name="action" class="btn btn-success btn-sm btn-block">Admin Ticket</button>
+										<button type="submit" name="action" class="btn btn-success btn-sm btn-block">Staff Ticket</button>
 									{{ Form::close() }}
 								</td>
 							</tr>

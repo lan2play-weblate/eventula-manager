@@ -100,7 +100,7 @@
 											            $labels[] = 'Freebie';
 											        }
 											        if ($participant->staff == 1) {
-											            $labels[] = 'Admin';
+											            $labels[] = 'Staff';
 											        }
 											        if (empty($labels)) {
 											            $labels[] = 'No Ticket!';

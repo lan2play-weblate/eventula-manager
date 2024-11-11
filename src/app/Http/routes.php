@@ -531,7 +531,7 @@ Route::group(['middleware' => ['installed']], function () {
             /**
              * Gifts
              */
-            Route::post('/admin/events/{event}/freebies/admin', 'Admin\Events\EventsController@freeStaff');
+            Route::post('/admin/events/{event}/freebies/staff', 'Admin\Events\EventsController@freeStaff');
             Route::post('/admin/events/{event}/freebies/gift', 'Admin\Events\EventsController@freeGift');
 
             /**

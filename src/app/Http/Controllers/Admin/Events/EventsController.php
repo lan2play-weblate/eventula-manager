@@ -277,7 +277,7 @@ class EventsController extends Controller
     }
 
     /**
-     * Add Admin Participant
+     * Add Staff Participant
      * @param  Request $request
      * @param  Event   $event
      * @return Redirect
@@ -306,11 +306,11 @@ class EventsController extends Controller
         $participant->generateQRCode();
 
         if (!$participant->save()) {
-            Session::flash('alert-danger', 'Could not add Admin!');
+            Session::flash('alert-danger', 'Could not add Staff!');
             return Redirect::to('admin/events/' . $event->slug . '/tickets');
         }
 
-        Session::flash('alert-success', 'Successfully added Admin!');
+        Session::flash('alert-success', 'Successfully added Staff!');
         return Redirect::to('admin/events/' . $event->slug . '/tickets');
     }
 }
