@@ -15,6 +15,8 @@ use \Carbon\Carbon as Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Builder;
 
 use Debugbar;
 use Laravel\Sanctum\HasApiTokens;
@@ -52,6 +54,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'unique_attended_event_count',
+        'win_count'
+    ];
+
     public static function boot()
     {
         parent::boot();
@@ -79,7 +91,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function matchMakingTeams()
     {
         return $this->hasManyThrough('App\MatchMakingTeam', 'App\MatchMakingTeamPlayer', 'user_id', 'id', 'id', 'matchmaking_team_id');
-
     }
     public function purchases()
     {
@@ -107,12 +118,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function setActiveEventParticipant($event)
     {
         // TODO Enable signed in again depending on tournament setting
-        if ($event->online_event)
-        {
+        if ($event->online_event) {
             $clauses = ['user_id' => $this->id];
-        }
-        else
-        {
+        } else {
             $clauses = ['user_id' => $this->id, 'signed_in' => true];
         }
 
@@ -120,28 +128,21 @@ class User extends Authenticatable implements MustVerifyEmail
         $freeparticipant = EventParticipant::where('free', true)->where($clauses)->orderBy('updated_at', 'DESC')->first();
 
 
-        if (isset($payedparticipant) && isset($freeparticipant))
-        {
-            if ($payedparticipant->updated_at->greaterThan($freeparticipant->updated_at))
-            {
+        if (isset($payedparticipant) && isset($freeparticipant)) {
+            if ($payedparticipant->updated_at->greaterThan($freeparticipant->updated_at)) {
                 $this->active_event_participant = $payedparticipant;
-            }
-            else
-            {
+            } else {
                 $this->active_event_participant = $freeparticipant;
             }
         }
-        if (!isset($payedparticipant) && isset($freeparticipant))
-        {
+        if (!isset($payedparticipant) && isset($freeparticipant)) {
             $this->active_event_participant = $freeparticipant;
-        }        
-        if (isset($payedparticipant) && !isset($freeparticipant))
-        {
+        }
+        if (isset($payedparticipant) && !isset($freeparticipant)) {
             $this->active_event_participant = $payedparticipant;
         }
 
         Debugbar::addMessage("active_event_participant: " . json_encode($this->active_event_participant), 'setActiveEventParticipant');
-
     }
 
     /**
@@ -169,7 +170,8 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * Get all Tickets for current user
      */
-    public function getAllTickets($eventId, $includeRevoked = false)    {
+    public function getAllTickets($eventId, $includeRevoked = false)
+    {
         $clauses = ['user_id' => $this->id, 'event_id' => $eventId];
         if (!$includeRevoked) {
             $clauses['revoked'] = 0;
@@ -179,18 +181,19 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-    * User has at least one seatable ticket for event
-    */
-    public function hasSeatableTicket($eventId)    {
+     * User has at least one seatable ticket for event
+     */
+    public function hasSeatableTicket($eventId)
+    {
         $eventParticipants = $this->getAllTickets($eventId);
 
-        foreach ($eventParticipants as $eventParticipant){
-            
+        foreach ($eventParticipants as $eventParticipant) {
+
             if (($eventParticipant->ticket && $eventParticipant->ticket->seatable) ||
-                ($eventParticipant->free || $eventParticipant->staff)) {
+                ($eventParticipant->free || $eventParticipant->staff)
+            ) {
                 return true;
             }
-            
         }
         return false;
     }
@@ -212,10 +215,10 @@ class User extends Authenticatable implements MustVerifyEmail
             ) {
                 $seat = 'Not Seated';
                 $seatingPlanName = "";
-                if ($eventParticipant->seat) {                    
+                if ($eventParticipant->seat) {
                     if ($eventParticipant->seat->seatingPlan) {
                         $seatingPlanName = $eventParticipant->seat->seatingPlan->getName();
-                    }                    
+                    }
                     $seat = $eventParticipant->seat->getName();
                 }
                 $return[$eventParticipant->id] = 'Participant ID: ' . $eventParticipant->id . $seat;
@@ -335,4 +338,53 @@ class User extends Authenticatable implements MustVerifyEmail
         return $nextEvent;
     }
 
+    /**
+     * Get the user's unique attended event count.
+     */
+    protected function uniqueAttendedEventCount(): Attribute
+    {
+        $attribute =  Attribute::make(
+            get: fn() => $this->eventParticipants()
+                ->whereHas('event', function (Builder $query) {
+                    $query->whereIn('status', ['PUBLISHED', 'REGISTEREDONLY'])
+                        ->where('end', '<=', Carbon::today());
+                })
+                ->select(\DB::raw('COUNT(DISTINCT event_id) as unique_attended_event_count'))
+                ->value('unique_attended_event_count') ?? 0
+        );
+
+        return $attribute;
+    }
+
+    /**
+     * Get the user's win count.
+     */
+    protected function winCount(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->calculateWinCount()
+        );
+    }
+
+    /**
+     * Calculate the user's win count.
+     *
+     * @return int
+     */
+    protected function calculateWinCount(): int
+    {
+        $teamWins = EventTournamentTeam::where('final_rank', 1)
+            ->whereHas('tournamentParticipants.eventParticipant.user', function (Builder $query) {
+                $query->where('id', $this->id);
+            })
+            ->count();
+
+        $individualWins = EventTournamentParticipant::where('final_rank', 1)
+            ->whereHas('eventParticipant.user', function (Builder $query) {
+                $query->where('id', $this->id);
+            })
+            ->count();
+
+        return $teamWins + $individualWins;
+    }
 }
