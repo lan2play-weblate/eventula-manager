@@ -97,7 +97,7 @@ class EventsController extends Controller
         $eventEnd = Carbon::parse($event->end)->format('Ymd\THis\Z');
         $orgName = Setting::getOrgName();
         $eventName = $event->display_name;
-        $eventDescription = $event->desc_long;
+        $eventDescription = strip_tags((string) $event->desc_long);
         $venue = $event->venue;
         $addressParts = [
             $venue->address_1,
