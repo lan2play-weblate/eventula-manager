@@ -55,7 +55,7 @@
         <div class="row">
             <div class="col-12">
                 <a href="{{ route('generate-event-ics', ['event' => $event]) }}" download><i
-                        class="fas fa-calendar-alt mr-2"></i> Save to Calendar</a>
+                        class="fas fa-calendar-alt mr-2"></i> @lang('events.savetocalendar') </a>
             </div>
         </div>
     </div>

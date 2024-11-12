@@ -124,5 +124,6 @@ return [
 
     /* General */
     'time_delimiter' => 'um',
-    'time_suffix' => 'Uhr'
+    'time_suffix' => 'Uhr',
+    'savetocalendar' => 'In Kalender speichern'
 ];

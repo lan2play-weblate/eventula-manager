@@ -124,5 +124,6 @@ return [
 
     /* General */
     'time_delimiter' => 'at',
-    'time_suffix' => ''
+    'time_suffix' => '',
+    'savetocalendar' => 'Save to Calendar'
 ];
