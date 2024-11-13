@@ -149,24 +149,6 @@ class Settings
     }
 
     /**
-     * Get Facebook Link
-     * @return String
-     */
-    public static function getFacebookLink()
-    {
-        return \App\Setting::getFacebookLink();
-    }
-
-    /**
-     * Set Facebook Link
-     * @param String $text
-     */
-    public static function setFacebookLink($text)
-    {
-        return \App\Setting::setFacebookLink($text);
-    }
-
-    /**
      * Get Steam Link
      * @return String
      */
@@ -443,24 +425,6 @@ class Settings
     public static function setPrivacyPolicy($text)
     {
         return \App\Setting::setPrivacyPolicy($text);
-    }
-
-    /**
-     * Get Facebook Page Access Tokens
-     * @return Array
-     */
-    public static function getSocialFacebookPageAccessTokens()
-    {
-        return \App\Setting::getSocialFacebookPageAccessTokens();
-    }
-
-    /**
-     * Set Facebook Page Access Tokens
-     * @param Array $facebook_access_tokens
-     */
-    public static function setSocialFacebookPageAccessTokens($facebook_access_tokens)
-    {
-        return \App\Setting::setSocialFacebookPageAccessTokens($facebook_access_tokens);
     }
 
     /**

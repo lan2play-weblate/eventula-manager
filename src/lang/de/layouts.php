@@ -18,7 +18,6 @@ return [
     'default_about_us' => 'Über uns',
     'default_polls' => 'Umfragen',
     'default_lan_guide' => 'Lan Guide',
-    'default_facebook' => 'Facebook',
     'default_discord' => 'Discord',
     'default_steam' => 'Steam',
     'default_twitter' => 'Twitter',

@@ -55,7 +55,6 @@
 								strpos($setting->setting, 'legal_notice') === false &&
 								strpos($setting->setting, 'theme') === false &&
 								$setting->setting != 'currency' &&
-								$setting->setting != 'social_facebook_page_access_token' &&
 								$setting->setting != 'installed'
 							)
 								<tr>
@@ -193,19 +192,6 @@
 				<p><small>Link Social Media your social media accounts to publish posts and pictures from the Lan Manager</small></p>
 				<div class="row">
 					<div class="col-12 col-md-6">
-						<h4>Facebook</h4>
-						@if (!$facebookIsLinked)
-							<a href="{{ $facebookCallback }}">
-								<button type="button" class="btn btn-block btn-success" @if($facebookCallback == null) disabled @endif>Link Account</button>
-							</a>
-						@else
-							{{ Form::open(array('url'=>'/admin/settings/unlink/facebook')) }}
-								{{ Form::hidden('_method', 'DELETE') }}
-								<button type="submit" class="btn btn-block btn-danger" >Unlink Account</button>
-							{{ Form::close() }}
-						@endif
-					</div>
-					<div class="col-12 col-md-6">
 						<h4>Twitter <small>Coming soon</small></h4>
 						{{ Form::open(array('url'=>'/admin/settings/link/twitter')) }}
 							<button type="submit" class="btn btn-block btn-success" disabled>Link Account</button>
@@ -253,10 +239,6 @@
 						<div class="mb-3 col-12 col-md-6">
 							{{ Form::label('analytics_google_id', "Google Analyics ID" ,array('id'=>'','class'=>'')) }}
 							{{ Form::text("analytics_google_id", config('analytics.configurations.GoogleAnalytics.tracking_id') ,array('id'=>'setting_analytics_google_id','class'=>'form-control')) }}
-						</div>
-						<div class="mb-3 col-12 col-md-6">
-							{{ Form::label('analytics_facebook_pixel', "Facebook Pixel ID" ,array('id'=>'','class'=>'')) }}
-							{{ Form::text("analytics_facebook_pixel", config('facebook-pixel.facebook_pixel_id') ,array('id'=>'setting_analytics_facebook_pixel','class'=>'form-control')) }}
 						</div>
 					</div>
 					<button type="submit" class="btn btn-success btn-sm btn-block">Update</button>

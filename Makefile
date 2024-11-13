@@ -145,6 +145,22 @@ database-seed:
 database-rollback:
 	docker exec eventula_manager_app php artisan migrate:rollback
 
+idehelper-publish:
+	docker exec eventula_manager_app php artisan vendor:publish --provider="Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider" --tag=config
+
+idehelper-clearcache:
+	docker exec eventula_manager_app php artisan config:cache
+
+# Seed the Database
+idehelper-generate:
+	docker exec eventula_manager_app php artisan ide-helper:generate
+# Seed the Database
+idehelper-meta:
+	docker exec eventula_manager_app php artisan ide-helper:meta
+
+# Seed the Database
+idehelper-models:
+	docker exec eventula_manager_app php artisan ide-helper:models --nowrite
 # show newly generated Application Key
 generate-key-show-newkey:
 	docker run --rm composer:latest /bin/bash -c "echo 'generating key..' && composer create-project laravel/laravel example-app >/dev/null 2>/dev/null && cd example-app && php artisan key:generate >/dev/null 2>/dev/null && cat .env | grep APP_KEY=b"

@@ -146,14 +146,6 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         Setting::firstOrCreate(
-            ['setting'          => 'facebook_link'],
-            [
-                'value'         => null,
-                'default'       => true,
-                'description'   => 'Link to your Facebook Page'
-            ]
-        );
-        Setting::firstOrCreate(
             ['setting'          => 'frontpage_alot_tagline'],
             [
                 'value'         => "People we've fragged",
@@ -224,13 +216,6 @@ class RequiredDatabaseSeeder extends Seeder
             ['setting'          => 'privacy_policy'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
-                'default'       => true,
-            ]
-        );
-        Setting::firstOrCreate(
-            ['setting'          => 'social_facebook_page_access_token'],
-            [
-                'value'         => null,
                 'default'       => true,
             ]
         );
@@ -604,18 +589,6 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         ApiKey::firstOrCreate(
-            ['key'          => 'facebook_app_id'],
-            [
-                'value'         => env('FACEBOOK_APP_ID', null),
-            ]
-        );
-        ApiKey::firstOrCreate(
-            ['key'          => 'facebook_app_secret'],
-            [
-                'value'         => env('FACEBOOK_APP_SECRET', null),
-            ]
-        );
-        ApiKey::firstOrCreate(
             ['key'          => 'challonge_api_key'],
             [
                 'value'         => env('CHALLONGE_API_KEY', null),
@@ -625,12 +598,6 @@ class RequiredDatabaseSeeder extends Seeder
             ['key'          => 'google_analytics_tracking_id'],
             [
                 'value'         => env('GOOGLE_ANALYTICS_TRACKING_ID', null),
-            ]
-        );
-        ApiKey::firstOrCreate(
-            ['key'          => 'facebook_pixel_id'],
-            [
-                'value'         => env('FACEBOOK_PIXEL_ID', null),
             ]
         );
         ApiKey::firstOrCreate(
@@ -644,25 +611,25 @@ class RequiredDatabaseSeeder extends Seeder
         MailTemplate::firstOrCreate(
             ['mailable' => EventulaTicketOrderMail::class],
             [
-                'subject' => "ticket order", 
-                'html_template' => '<p>placeholder<p>', 
-                'text_template' => "placeholder", 
+                'subject' => "ticket order",
+                'html_template' => '<p>placeholder<p>',
+                'text_template' => "placeholder",
             ]
         );
         MailTemplate::firstOrCreate(
             ['mailable' => EventulaTicketOrderPendingMail::class],
             [
-                'subject' => "ticket order pending", 
-                'html_template' => '<p>placeholder<p>', 
-                'text_template' => "placeholder", 
+                'subject' => "ticket order pending",
+                'html_template' => '<p>placeholder<p>',
+                'text_template' => "placeholder",
             ]
-        );        
+        );
         MailTemplate::firstOrCreate(
             ['mailable' => EventulaTicketOrderPaymentFinishedMail::class],
             [
-                'subject' => "ticket payment finished", 
-                'html_template' => '<p>placeholder<p>', 
-                'text_template' => "placeholder", 
+                'subject' => "ticket payment finished",
+                'html_template' => '<p>placeholder<p>',
+                'text_template' => "placeholder",
             ]
         );
 

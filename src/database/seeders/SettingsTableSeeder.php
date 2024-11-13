@@ -135,14 +135,6 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         Setting::firstOrCreate(
-            ['setting'          => 'facebook_link'],
-            [
-                'value'         => null,
-                'default'       => true,
-                'description'   => 'Link to your Facebook Page'
-            ]
-        );
-        Setting::firstOrCreate(
             ['setting'          => 'frontpage_alot_tagline'],
             [
                 'value'         => "People we've fragged",
@@ -213,13 +205,6 @@ class SettingsTableSeeder extends Seeder
             ['setting'          => 'privacy_policy'],
             [
                 'value'         => $faker->paragraph($nbSentences = 90, $variableNbSentences = true),
-                'default'       => true,
-            ]
-        );
-        Setting::firstOrCreate(
-            ['setting'          => 'social_facebook_page_access_token'],
-            [
-                'value'         => null,
                 'default'       => true,
             ]
         );

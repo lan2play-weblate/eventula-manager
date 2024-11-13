@@ -242,29 +242,6 @@ class Setting extends Model
     }
 
     /**
-     * Get Facebook Link
-     * @return String
-     */
-    public static function getFacebookLink()
-    {
-        return self::where('setting', 'facebook_link')->first()->value;
-    }
-
-    /**
-     * Set Discord Link
-     * @param String $text
-     */
-    public static function setFacebookLink($text)
-    {
-        $setting = self::where('setting', 'facebook_link')->first();
-        $setting->value = $text;
-        if (!$setting->save()) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * Get Steam Link
      * @return String
      */
@@ -634,29 +611,6 @@ class Setting extends Model
     {
         $setting = self::where('setting', 'privacy_policy')->first();
         $setting->value = $text;
-        if (!$setting->save()) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Get Facebook Page Access Tokens
-     * @return String
-     */
-    public static function getSocialFacebookPageAccessTokens()
-    {
-        return unserialize(self::where('setting', 'social_facebook_page_access_token')->first()->value);
-    }
-
-    /**
-     * Set Facebook Page Access Tokens
-     * @param Array $facebookAccessTokens
-     */
-    public static function setSocialFacebookPageAccessTokens($facebookAccessTokens)
-    {
-        $setting = self::where('setting', 'social_facebook_page_access_token')->first();
-        $setting->value = serialize($facebookAccessTokens);
         if (!$setting->save()) {
             return false;
         }

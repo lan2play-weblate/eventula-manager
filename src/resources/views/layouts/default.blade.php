@@ -14,36 +14,6 @@
 
     {!! OpenGraph::generate() !!}
 
-
-    @if (config('facebook-pixel.enabled'))
-        <!-- Facebook Pixel Code -->
-        <script>
-            ! function(f, b, e, v, n, t, s) {
-                if (f.fbq) return;
-                n = f.fbq = function() {
-                    n.callMethod ?
-                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                };
-                if (!f._fbq) f._fbq = n;
-                n.push = n;
-                n.loaded = !0;
-                n.version = '2.0';
-                n.queue = [];
-                t = b.createElement(e);
-                t.async = !0;
-                t.src = v;
-                s = b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t, s)
-            }(window, document, 'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', "{{ config('facebook-pixel.facebook_pixel_id') }}");
-            fbq('track', 'PageView');
-        </script>
-        <noscript><img height="1" width="1" style="display:none"
-                src="https://www.facebook.com/tr?id={{ config('facebook-pixel.facebook_pixel_id') }}&ev=PageView&noscript=1" /></noscript>
-        <!-- End Facebook Pixel Code -->
-    @endif
-
     <title>
         @hasSection ('page_title')
             @yield ('page_title') | {{ Settings::getOrgName() }}
@@ -144,10 +114,6 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <h2>Connect</h2>
-                            @if (Settings::getFacebookLink() != '')
-                                <p><a target="_blank" rel="noreferrer"
-                                        href="{{ Settings::getFacebookLink() }}">@lang('layouts.default_facebook')</a></p>
-                            @endif
                             @if (Settings::getDiscordLink() != '')
                                 <p><a target="_blank" rel="noreferrer"
                                         href="{{ Settings::getDiscordLink() }}">@lang('layouts.default_discord')</a></p>
