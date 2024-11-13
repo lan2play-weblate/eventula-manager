@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Settings;
 
+use App\Rules\ValidLocale;
 
 class AccountController extends Controller
 {
@@ -269,6 +270,7 @@ class AccountController extends Controller
             'surname'       => 'filled',
             'password1'     => 'same:password2',
             'password2'     => 'same:password1',
+            'locale'        => ['nullable', new ValidLocale]
         ];
         $messages = [
             'firstname.filled'  => 'Firstname Cannot be blank.',
@@ -300,7 +302,6 @@ class AccountController extends Controller
         
         if (isset($request->locale)) {
             $user->locale = @$request->locale;
-            \Log::info("Submitted locale value: " . @$request->locale);
         }
 
         if (!$user->save()) {

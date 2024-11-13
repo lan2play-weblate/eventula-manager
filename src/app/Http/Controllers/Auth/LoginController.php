@@ -77,16 +77,6 @@ class LoginController extends Controller
 
 
         if ($this->attemptLogin($request)) {
-
-            // Check if the user's locale is set and exists in the list of allowed locales
-            \Log::info("Locale from User: " . $user->locale);
-
-            if ($user->locale && in_array($user->locale, config('app.locales'))) {
-                App::setLocale($user->locale); // Set the application locale to user preference
-                session(['locale' => $user->locale]); // Optional: Store in session
-                // Set a cookie for locale that lasts a long time, for example a year
-                Cookie::queue('locale', $user->locale, 525600);
-            }
             if ((!isset($user->phonenumber) || $user->phonenumber == null) &&  Settings::isAuthRequirePhonenumberEnabled()) {
                 return redirect('/account/email'); // redirect to site
             }

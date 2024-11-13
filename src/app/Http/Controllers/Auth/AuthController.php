@@ -204,6 +204,7 @@ class AuthController extends Controller
         $user->surname          = $request->surname;
         $user->username         = $request->username;
         $user->username_nice    = strtolower(str_replace(' ', '-', $request->username));
+        $user->locale           = Settings::getSiteLocale();
 
         if (!$user->save()) {
             Auth::logout();

@@ -24,10 +24,30 @@ use HaydenPierce\ClassFinder\ClassFinder;
 
 class Helpers
 {
+    
+    
+    /**
+     * Gets an array of all supported languages from the language directory.
+     *
+     * @return array
+     */
     public static function getSupportedLocales()
     {
-        return config('app.locales', []);
+        return array_map('basename', array_filter(glob(app()->langPath().'/*'), 'is_dir'));
     }
+
+
+    /**
+     * Validate if the given locale exists in the supported languages.
+     *
+     * @param  string  $locale
+     * @return bool
+     */
+    public static function isValidLocale($locale)
+    {
+        return in_array($locale, self::getSupportedLocales());
+    }
+
     // TODO - refactor - eg getGameSelectArray - specifially the selectArray part
     /**
      * Get Venues

@@ -78,23 +78,24 @@
 								</span>
 								@enderror
 							</div>
-							<div class="col-12 col-md-6">
-								<div class="mb-3 @error('locale') is-invalid @enderror">
-									{{ Form::label('locale', __('accounts.locale'), ['class' => '']) }}
-									<select name="locale" id="locale" class="form-control @error('locale') is-invalid @enderror" required autocomplete="locale">
-										@foreach(Helpers::getSupportedLocales() as $locale => $language)
-											<option value="{{ $language }}" {{ $user->locale == $language ? 'selected' : '' }}>
-												{{ $language }}
-											</option>
-										@endforeach
-									</select>
-									
-									@error('locale')
-										<div class="invalid-feedback">{{ $message }}</div>
-									@enderror
+							@if(Settings::isUserLocaleEnabled())
+								<div class="col-12 col-md-6">
+									<div class="mb-3 @error('locale') is-invalid @enderror">
+										{{ Form::label('locale', __('accounts.locale'), ['class' => '']) }}
+										<select name="locale" id="locale" class="form-control @error('locale') is-invalid @enderror" required autocomplete="locale">
+											@foreach(Helpers::getSupportedLocales() as $locale => $language)
+												<option value="{{ $language }}" {{ $user->locale == $language ? 'selected' : '' }}>
+													{{ $language }}
+												</option>
+											@endforeach
+										</select>
+										
+										@error('locale')
+											<div class="invalid-feedback">{{ $message }}</div>
+										@enderror
+									</div>
 								</div>
-							</div>
-							
+							@endif
 							
 							
 							@endif

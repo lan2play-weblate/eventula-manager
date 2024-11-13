@@ -45,6 +45,9 @@
 							@if ($userShow->email != null)
 								<li class="list-group-item">Email: {{ $userShow->email }}</li>
 							@endif
+							<li class="list-group-item" @if (!Settings::isUserLocaleEnabled()) style="opacity: .5;" @endif >
+								User Locale:  {{ $userShow->locale }} @if (!Settings::isUserLocaleEnabled()) (User Locale is disabled systemwide) @endif
+							</li>
 						</ul>
   					</div>
   				</div>
