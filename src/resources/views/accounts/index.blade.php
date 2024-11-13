@@ -284,6 +284,7 @@
                             @foreach ($eventParticipants as $participant)
                                 @include ('layouts._partials._tickets.index')
                             @endforeach
+                            {{ $eventParticipants->links() }}
                         @else
                             @lang('accounts.no_tickets')
                         @endif
