@@ -45,7 +45,7 @@ class SteamController extends Controller
                 if (!is_null($user)) {
                     if ($user->banned) {
                         Session::flash('alert-danger', 'You have been banned!');
-                        return Redirect::back()->withError('You have been banned.');
+                        return Redirect::back()->with('error', 'You have been banned.');
                     }
                     //username found... Log user in
                     Auth::login($user, true);
@@ -89,7 +89,7 @@ class SteamController extends Controller
                             return $this->addtoexistingaccount($info, Auth::user());
                         } else {
                             Session::flash('alert-danger', 'Another steamid is already set in your account, remove it first in your account settings!');
-                            return Redirect::to('/account/')->withError('Another steamid is already set in your account, remove it first in your account settings!');
+                            return Redirect::to('/account/')->with('error', 'Another steamid is already set in your account, remove it first in your account settings!');
                         }
                     }
                 }
@@ -130,7 +130,7 @@ class SteamController extends Controller
             return Redirect('/account');
         }
         Session::flash('alert-danger', 'Saving user failed!');
-        return Redirect::to('/account/')->withError('Saving user failed!');
+        return Redirect::to('/account/')->with('error', 'Saving user failed!');
     }
 
     /**

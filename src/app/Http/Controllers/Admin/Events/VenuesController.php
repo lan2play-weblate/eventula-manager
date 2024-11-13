@@ -83,7 +83,7 @@ class VenuesController extends Controller
         }
         if (!$validCountry) {
             Session::flash('alert-danger', 'That country appears to be invalid. Please use a valid one.');
-            return Redirect::back()->with('input', $request->input())->withError('That country appears to be invalid. Please use a valid one.');
+            return Redirect::back()->with('input', $request->input())->with('error', 'That country appears to be invalid. Please use a valid one.');
         }
 
         if (isset($request->address_postcode) && $request->address_postcode != null && trim($request->address_postcode) != '') {
@@ -193,7 +193,7 @@ class VenuesController extends Controller
             }
             if (!$validCountry) {
                 Session::flash('alert-danger', 'That country appears to be invalid. Please use a valid one.');
-                return Redirect::back()->with('input', $request->input())->withError('That country appears to be invalid. Please use a valid one.');
+                return Redirect::back()->with('input', $request->input())->with('error', 'That country appears to be invalid. Please use a valid one.');
             }
 
             if (isset($request->address_postcode) && $request->address_postcode != null && trim($request->address_postcode) != '') {
