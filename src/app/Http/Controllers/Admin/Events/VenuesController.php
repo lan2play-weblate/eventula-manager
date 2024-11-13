@@ -28,7 +28,7 @@ class VenuesController extends Controller
     public function index()
     {
         return view('admin.events.venues.index')
-            ->withVenues(EventVenue::paginate(10))
+            ->with('venues', EventVenue::paginate(10))
         ;
     }
 

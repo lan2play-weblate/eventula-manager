@@ -29,9 +29,9 @@ class ShopController extends Controller
     public function index()
     {
         return view('admin.shop.index')
-            ->withIsShopEnabled(Settings::isShopEnabled())
-            ->withCategories(ShopItemCategory::paginate(10, ['*'], 'sc'))
-            ->withItems(ShopItem::paginate(20, ['*'], 'it'));
+            ->with('isShopEnabled', Settings::isShopEnabled())
+            ->with('categories', ShopItemCategory::paginate(10, ['*'], 'sc'))
+            ->with('items', ShopItem::paginate(20, ['*'], 'it'));
     }
 
     /**
@@ -41,7 +41,7 @@ class ShopController extends Controller
     public function showCategory(ShopItemCategory $category)
     {
         return view('admin.shop.category')
-            ->withIsShopEnabled(Settings::isShopEnabled())
+            ->with('isShopEnabled', Settings::isShopEnabled())
             ->withCategory($category)
             ->withItems($category->items()->paginate());
     }
@@ -53,7 +53,7 @@ class ShopController extends Controller
     public function showItem(ShopItemCategory $category, ShopItem $item)
     {
         return view('admin.shop.item')
-            ->withIsShopEnabled(Settings::isShopEnabled())
+            ->with('isShopEnabled', Settings::isShopEnabled())
             ->withCategory($category)
             ->withItem($item);
     }

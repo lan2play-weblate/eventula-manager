@@ -51,7 +51,7 @@ class HomeController extends Controller
             return $this->home();
         }
 
-        // Loop trough the eventParticipants 
+        // Loop trough the eventParticipants
         // The first one, whos event is currently running and that is active redirects to the event page
         foreach ($user->eventParticipants as $participant) {
             if ($participant->event->isRunningCurrently() && $participant->isActive()) {
@@ -72,13 +72,13 @@ class HomeController extends Controller
     public function home()
     {
         return view("home")
-            ->withNextEvent(Event::nextUpcoming()->first())
-            ->withTopAttendees(Helpers::getTopAttendees())
-            ->withTopWinners(Helpers::getTopWinners())
-            ->withGameServerList(Helpers::getPublicGameServers())
-            ->withNewsArticles(NewsArticle::latestArticles()->get())
-            ->withEvents(Event::all())
-            ->withSliderImages(SliderImage::getImages('frontpage'))
+            ->with('nextEvent', Event::nextUpcoming()->first())
+            ->with('topAttendees', Helpers::getTopAttendees())
+            ->with('topWinners', Helpers::getTopWinners())
+            ->with('gameServerList', Helpers::getPublicGameServers())
+            ->with('newsArticles', NewsArticle::latestArticles()->get())
+            ->with('events', Event::all())
+            ->with('sliderImages', SliderImage::getImages('frontpage'))
         ;
     }
 
@@ -187,7 +187,7 @@ class HomeController extends Controller
             ->withMemberedTeams($memberedteams)
             ->withOwnedMatches($ownedmatches)
             ->withCurrentUserOpenLivePendingDraftMatches($currentuseropenlivependingdraftmatches)
-            ->withisMatchMakingEnabled(Settings::isMatchMakingEnabled())
+            ->with('isMatchMakingEnabled', Settings::isMatchMakingEnabled())
             ->withEvent($event)
             ->withGameServerList($gameServerList)
             ->withTicketFlagSignedIn($ticketFlagSignedIn)

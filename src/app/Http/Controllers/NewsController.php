@@ -35,7 +35,7 @@ class NewsController extends Controller
         SEOMeta::addKeyword($seoKeywords);
         OpenGraph::addProperty('type', 'article');
         return view('news.index')
-            ->withNewsArticles(NewsArticle::paginate(20));
+            ->with('newsArticles', NewsArticle::paginate(20));
     }
 
     /**

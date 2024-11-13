@@ -60,7 +60,7 @@ class MatchMakingController extends Controller
             ->withMemberedTeams($memberedteams)
             ->withOwnedMatches($ownedmatches)
             ->withCurrentUserOpenLivePendingDraftMatches($currentuseropenlivependingdraftmatches)
-            ->withisMatchMakingEnabled(Settings::isMatchMakingEnabled());
+            ->with('isMatchMakingEnabled', Settings::isMatchMakingEnabled());
     }
 
     /**

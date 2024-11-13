@@ -51,7 +51,7 @@ class MatchMakingController extends Controller
             ->withMatches($matches)
             ->withPendingMatches($pendingmatches)
             ->withLiveMatches($livematches)
-            ->withisMatchMakingEnabled(Settings::isMatchMakingEnabled())
+            ->with('isMatchMakingEnabled', Settings::isMatchMakingEnabled())
             ->withUsers($selectallusers);
     }
 
@@ -151,7 +151,7 @@ class MatchMakingController extends Controller
                         Session::flash('alert-danger', "you cannot create the match with the selected team 1 owner, because the nessecary third party account link on the user is missing");
                         return Redirect::back();
                     }
-        
+
                 }
 
                 $game_id = $request->game_id;
@@ -511,7 +511,7 @@ class MatchMakingController extends Controller
     public function addusertomatch(MatchMaking $match, MatchMakingTeam $team, Request $request)
     {
 
-        
+
 
 
          $rules = [
@@ -536,7 +536,7 @@ class MatchMakingController extends Controller
         }
 
 
-       
+
 
         if ($match->status == "LIVE" ||  $match->status == "COMPLETE" ||  $match->status == "WAITFORPLAYERS" ||  $match->status == "PENDING")
         {
@@ -612,12 +612,12 @@ class MatchMakingController extends Controller
             if(!$matchReplay->deleteReplayFile())
             {
                 Session::flash('alert-danger', 'Cannot delete Replay files!');
-                return Redirect::back(); 
+                return Redirect::back();
             }
             if(!$matchReplay->delete())
             {
                 Session::flash('alert-danger', 'Cannot delete Replays!');
-                return Redirect::back(); 
+                return Redirect::back();
             }
         }
         if (!$match->players()->delete()) {

@@ -44,8 +44,8 @@ class MailingController extends Controller
         foreach ($userswithmail as $user) {
             $selectallusers[$user->id] = $user->username;
         }
-        return view('admin.mailing.index')->withMailTemplates(MailTemplate::all())
-            ->withMailVariables(EventulaMailingMail::getVariables())
+        return view('admin.mailing.index')->with('mailTemplates', MailTemplate::all())
+            ->with('mailVariables', EventulaMailingMail::getVariables())
             ->withUsersWithMail($selectallusers)
             ->withNextEvent($nextevent)
             ->withUser($user);

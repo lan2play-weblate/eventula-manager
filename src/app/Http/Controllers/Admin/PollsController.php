@@ -27,7 +27,7 @@ class PollsController extends Controller
     public function index()
     {
         return view('admin.polls.index')
-            ->withPolls(Poll::paginate(10))
+            ->with('polls', Poll::paginate(10))
         ;
     }
 
