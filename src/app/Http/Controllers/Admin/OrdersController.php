@@ -36,7 +36,7 @@ class OrdersController extends Controller
     public function show(ShopOrder $order)
     {
         return view('admin.orders.show')
-            ->withOrder($order);
+            ->with('order', $order);
     }
 
     /**

@@ -77,9 +77,9 @@ class PaymentsController extends Controller
             }
         }
         return view('payments.review')
-            ->withPaymentGateway($paymentGateway)
+            ->with('paymentGateway', $paymentGateway)
             ->with('basket', Helpers::formatBasket($basket))
-            ->withNextEventFlag($nextEventFlag)
+            ->with('nextEventFlag', $nextEventFlag)
         ;
     }
 
@@ -102,10 +102,10 @@ class PaymentsController extends Controller
             }
         }
         return view('payments.details')
-            ->withPaymentGateway($paymentGateway)
+            ->with('paymentGateway', $paymentGateway)
             ->with('basket', Helpers::formatBasket($basket, true))
-            ->withDelivery($delivery)
-            ->withDeliveryDetails($deliveryDetails)
+            ->with('delivery', $delivery)
+            ->with('deliveryDetails', $deliveryDetails)
         ;
     }
 
@@ -120,7 +120,7 @@ class PaymentsController extends Controller
             return Redirect::back();
         }
         return view('payments.delivery')
-            ->withPaymentGateway($paymentGateway)
+            ->with('paymentGateway', $paymentGateway)
             ->with('basket', Helpers::formatBasket($basket, true))
         ;
     }
@@ -500,9 +500,9 @@ class PaymentsController extends Controller
         Session::forget('params');
         Session::forget(Settings::getOrgName() . '-basket');
         return view('payments.successful')
-            ->withType($type)
-            ->withBasket($basket)
-            ->withPurchase($purchase)
+            ->with('type', $type)
+            ->with('basket', $basket)
+            ->with('purchase', $purchase)
         ;
     }
 
@@ -525,9 +525,9 @@ class PaymentsController extends Controller
         Session::forget('params');
         Session::forget(Settings::getOrgName() . '-basket');
         return view('payments.pending')
-            ->withType($type)
-            ->withBasket($basket)
-            ->withPurchase($purchase)
+            ->with('type', $type)
+            ->with('basket', $basket)
+            ->with('purchase', $purchase)
         ;
     }
 

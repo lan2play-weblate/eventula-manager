@@ -44,9 +44,9 @@ class EventsController extends Controller
     {
         return view('admin.events.show')
             ->with('user', Auth::user())
-            ->withEvent($event)
-            ->withAnnouncements($event->announcements()->paginate(5, ['*'], 'an'))
-            ->withParticipants($event->eventParticipants()->paginate(10, ['*'], 'ep'));
+            ->with('event', $event)
+            ->with('announcements', $event->announcements()->paginate(5, ['*'], 'an'))
+            ->with('participants', $event->eventParticipants()->paginate(10, ['*'], 'ep'));
     }
 
     /**

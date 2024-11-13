@@ -51,9 +51,9 @@ class GamesController extends Controller
         }
 
         return view('admin.games.show')
-            ->withAllCommands($allcommands)
-            ->withGame($game)
-            ->withMatchCountError($matchcounterror);
+            ->with('allCommands', $allcommands)
+            ->with('game', $game)
+            ->with('matchCountError', $matchcounterror);
     }
 
     /**

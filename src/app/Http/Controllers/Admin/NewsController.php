@@ -51,8 +51,8 @@ class NewsController extends Controller
     public function show(NewsArticle $newsArticle)
     {
         return view('admin.news.show')
-            ->withNewsArticle($newsArticle)
-            ->withComments($newsArticle->comments()->paginate(10, ['*'], 'cm'))
+            ->with('newsArticle', $newsArticle)
+            ->with('comments', $newsArticle->comments()->paginate(10, ['*'], 'cm'))
         ;
     }
 

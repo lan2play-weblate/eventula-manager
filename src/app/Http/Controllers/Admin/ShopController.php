@@ -42,8 +42,8 @@ class ShopController extends Controller
     {
         return view('admin.shop.category')
             ->with('isShopEnabled', Settings::isShopEnabled())
-            ->withCategory($category)
-            ->withItems($category->items()->paginate());
+            ->with('category', $category)
+            ->with('items', $category->items()->paginate());
     }
 
     /**
@@ -54,8 +54,8 @@ class ShopController extends Controller
     {
         return view('admin.shop.item')
             ->with('isShopEnabled', Settings::isShopEnabled())
-            ->withCategory($category)
-            ->withItem($item);
+            ->with('category', $category)
+            ->with('item', $item);
     }
 
  	/**

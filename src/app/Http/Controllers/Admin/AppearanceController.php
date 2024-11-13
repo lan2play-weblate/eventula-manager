@@ -44,7 +44,7 @@ class AppearanceController extends Controller
         return view('admin.settings.appearance')
             ->with('sliderImages', SliderImage::getImages('frontpage'))
             ->with('userOverrideCss', Appearance::getCssOverride())
-            ->withCssVariables($sortedCssVariables);
+            ->with('cssVariables', $sortedCssVariables);
     }
 
     /**

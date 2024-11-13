@@ -74,7 +74,7 @@ class PurchasesController extends Controller
     public function show(Purchase $purchase)
     {
         return view('admin.purchases.show')
-            ->withPurchase($purchase);
+            ->with('purchase', $purchase);
     }
 
     /**

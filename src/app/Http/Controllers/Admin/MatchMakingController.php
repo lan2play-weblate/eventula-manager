@@ -48,11 +48,11 @@ class MatchMakingController extends Controller
             $selectallusers[$user->id] = $user->username;
         }
         return view('admin.matchmaking.index')
-            ->withMatches($matches)
-            ->withPendingMatches($pendingmatches)
-            ->withLiveMatches($livematches)
+            ->with('matches', $matches)
+            ->with('pendingMatches', $pendingmatches)
+            ->with('liveMatches', $livematches)
             ->with('isMatchMakingEnabled', Settings::isMatchMakingEnabled())
-            ->withUsers($selectallusers);
+            ->with('users', $selectallusers);
     }
 
 
@@ -100,9 +100,9 @@ class MatchMakingController extends Controller
 
 
         return view('admin.matchmaking.show')
-            ->withMatch($match)
-            ->withAvailableUsers($availableusers)
-            ->withUsers($selectallusers);
+            ->with('match', $match)
+            ->with('availableUsers', $availableusers)
+            ->with('users', $selectallusers);
 
     }
 

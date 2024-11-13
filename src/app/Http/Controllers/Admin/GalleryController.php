@@ -44,8 +44,8 @@ class GalleryController extends Controller
     public function show(GalleryAlbum $album)
     {
         return view('admin.gallery.show')
-            ->withAlbum($album)
-            ->withImages($album->images()->paginate(10))
+            ->with('album', $album)
+            ->with('images', $album->images()->paginate(10))
             ->with('isGalleryEnabled', Settings::isGalleryEnabled())
         ;
     }

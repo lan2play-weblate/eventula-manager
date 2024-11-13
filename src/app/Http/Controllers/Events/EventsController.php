@@ -83,7 +83,7 @@ class EventsController extends Controller
         OpenGraph::addProperty('type', 'article');
 
         return view('events.show')
-            ->withEvent($event);
+            ->with('event', $event);
     }
 
     /**

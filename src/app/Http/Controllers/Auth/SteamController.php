@@ -116,14 +116,14 @@ class SteamController extends Controller
 
         if ($validator->fails()) {
             return redirect('/account/')
-                ->withErrors($validator)
+                ->with('errors', $validator)
                 ->withInput();
         }
 
         $user->steamname = $info->personaname;
         $user->steam_avatar = $info->avatarfull;
         $user->selected_avatar = 'steam';
-        
+
         $user->steamid = $info->steamID64;
         if ($user->save()) {
             Session::flash('alert-success', "Successfully added steam account!");

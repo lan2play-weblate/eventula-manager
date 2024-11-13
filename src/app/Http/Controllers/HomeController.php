@@ -182,17 +182,17 @@ class HomeController extends Controller
         }
 
         return view("events.home")
-            ->withOpenPublicMatches($openpublicmatches)
-            ->withLiveClosedPublicMatches($liveclosedpublicmatches)
-            ->withMemberedTeams($memberedteams)
-            ->withOwnedMatches($ownedmatches)
-            ->withCurrentUserOpenLivePendingDraftMatches($currentuseropenlivependingdraftmatches)
+            ->with('openPublicMatches', $openpublicmatches)
+            ->with('liveClosedPublicMatches', $liveclosedpublicmatches)
+            ->with('memberedTeams', $memberedteams)
+            ->with('ownedMatches', $ownedmatches)
+            ->with('currentUserOpenLivePendingDraftMatches', $currentuseropenlivependingdraftmatches)
             ->with('isMatchMakingEnabled', Settings::isMatchMakingEnabled())
-            ->withEvent($event)
-            ->withGameServerList($gameServerList)
-            ->withTicketFlagSignedIn($ticketFlagSignedIn)
-            ->withSignedIn($signedIn)
-            ->withUser($user);
+            ->with('event', $event)
+            ->with('gameServerList', $gameServerList)
+            ->with('ticketFlagSignedIn', $ticketFlagSignedIn)
+            ->with('signedIn', $signedIn)
+            ->with('user', $user);
     }
 
     /**
@@ -202,6 +202,6 @@ class HomeController extends Controller
      */
     public function bigScreen(Event $event)
     {
-        return view("events.big")->withEvent($event);
+        return view("events.big")->with('event', $event);
     }
 }

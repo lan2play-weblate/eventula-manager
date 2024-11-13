@@ -33,7 +33,7 @@ class CreditController extends Controller
         return view('admin.credit.index')
             ->with('isCreditEnabled', Settings::isCreditEnabled())
             ->with('creditLogs', CreditLog::paginate(10, ['*'], 'cl'))
-            ->withUsers($selectallusers);
+            ->with('users', $selectallusers);
     }
 
     /**

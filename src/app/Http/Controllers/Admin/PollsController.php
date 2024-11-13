@@ -40,7 +40,7 @@ class PollsController extends Controller
     {
         $poll->sortOptions();
         return view('admin.polls.show')
-            ->withPoll($poll);
+            ->with('poll', $poll);
     }
 
     public function update(Poll $poll, Request $request)

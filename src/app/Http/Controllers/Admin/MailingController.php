@@ -46,9 +46,9 @@ class MailingController extends Controller
         }
         return view('admin.mailing.index')->with('mailTemplates', MailTemplate::all())
             ->with('mailVariables', EventulaMailingMail::getVariables())
-            ->withUsersWithMail($selectallusers)
-            ->withNextEvent($nextevent)
-            ->withUser($user);
+            ->with('usersWithMail', $selectallusers)
+            ->with('nextEvent', $nextevent)
+            ->with('user', $user);
     }
 
     /**
@@ -59,8 +59,8 @@ class MailingController extends Controller
     public function show(MailTemplate $mailTemplate)
     {
         return view('admin.mailing.show')
-            ->withMailTemplate($mailTemplate)
-            ->withMailVariables($mailTemplate->mailable::getVariables());
+            ->with('mailTemplate', $mailTemplate)
+            ->with('mailVariables', $mailTemplate->mailable::getVariables());
     }
 
     /**

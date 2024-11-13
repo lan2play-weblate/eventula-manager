@@ -45,8 +45,8 @@ class HelpController extends Controller
     public function show(HelpCategory $helpCategory)
     {
         return view('admin.help.show')
-            ->withHelpCategory($helpCategory)
-            ->withEntrys($helpCategory->entrys()->paginate(10))
+            ->with('helpCategory', $helpCategory)
+            ->with('entrys', $helpCategory->entrys()->paginate(10))
             ->with('isHelpEnabled', Settings::isHelpEnabled())
         ;
     }

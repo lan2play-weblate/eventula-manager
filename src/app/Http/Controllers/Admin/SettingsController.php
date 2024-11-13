@@ -50,7 +50,7 @@ class SettingsController extends Controller
             ->with('isHelpEnabled', Settings::isHelpEnabled())
             ->with('isMatchMakingEnabled', Settings::isMatchMakingEnabled())
             ->with('isCreditEnabled', Settings::isCreditEnabled())
-            ->withFacebookCallback($facebookCallback)
+            ->with('facebookCallback', $facebookCallback)
             ->with('facebookIsLinked', Facebook::isLinked())
             ->with('supportedLoginMethods', Settings::getSupportedLoginMethods())
             ->with('activeLoginMethods', Settings::getLoginMethods());

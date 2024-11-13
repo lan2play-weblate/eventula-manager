@@ -59,9 +59,9 @@ class UsersController extends Controller
             $creditLogs = $user->creditLogs()->paginate(5, ['*'], 'cl');
         }
         return view('admin.users.show')
-            ->withUserShow($user)
-            ->withCreditLogs($creditLogs)
-            ->withPurchases($user->purchases()->paginate(10, ['*'], 'pu'));
+            ->with('userShow', $user)
+            ->with('creditLogs', $creditLogs)
+            ->with('purchases', $user->purchases()->paginate(10, ['*'], 'pu'));
     }
 
     /**
