@@ -239,7 +239,13 @@ class AccountController extends Controller
                 case 'steam':
                     $user->steamname = "";
                     $user->steamid = "";
-                    $user->avatar = "";
+                    $user->steam_avatar = "";
+
+                    if ($user->selected_avatar == 'steam')
+                    {
+                        $user->selected_avatar = 'local';
+                    }
+
                     break;
                 default:
                     return Redirect::back()->withError('no valid sso method selected');
@@ -352,18 +358,46 @@ class AccountController extends Controller
         return redirect('/');
     }
 
-    public function update_avatar(Request $request) {
+    public function update_local_avatar(Request $request) {
         $this->validate($request, [
             'avatar' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
         
-        $path = Storage::putFile(
+        if(!$path = Storage::putFile(
             'public/images/avatars', $request->file('avatar')
-        );
+        ))
+        {
+            Session::flash('alert-danger', 'Oops,Something went wrong while uploading the File on the custom avatar upload.');
+            return Redirect::back();
+        }
         $user = Auth::user();
-        $user->avatar = '/storage/images/avatars/' . basename($path);
-        $user->save();
+        $user->local_avatar = '/storage/images/avatars/' . basename($path);
+        $user->selected_avatar = 'local';
+        if (!$user->save()) {
+            Session::flash('alert-danger', 'Oops, Something went wrong while updating the user on the custom avatar upload.');
+            return Redirect::back();
+        }
 
-        return Redirect::back()->withSuccess('Account successfully updated!');
+        Session::flash('alert-success', 'Custom avatar successfully updated!');
+        return Redirect::back();
     }
+
+    public function update_selected_avatar(Request $request) {
+
+        $this->validate($request, [
+            'selected_avatar' => 'required|in:steam,local',
+        ]);
+
+        $user = Auth::user();
+        $user->selected_avatar = $request->selected_avatar;
+        if (!$user->save()) {
+            Session::flash('alert-danger', 'Oops, Something went wrong while updating the user on the selected avatar change.');
+            return Redirect::back();
+        }
+
+        Session::flash('alert-success', 'Selected avatar successfully updated!');
+        return Redirect::back();
+    }
+
+    
 }

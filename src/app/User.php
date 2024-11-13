@@ -37,7 +37,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'username_nice',
         'steamname',
         'username',
-        'avatar',
+        'steam_avatar',
+        'local_avatar',
         'steamid',
         'last_login',
         'email_verified_at',
@@ -61,7 +62,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $appends = [
         'unique_attended_event_count',
-        'win_count'
+        'win_count',
+        'avatar'
     ];
 
     public static function boot()
@@ -363,6 +365,21 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Attribute::make(
             get: fn() => $this->calculateWinCount()
+        );
+    }
+
+  /**
+     * Get the user's avatar.
+     */
+    protected function avatar(): Attribute
+    {
+        $default_avatar = "storage/images/main/default_avatar.png";
+        return Attribute::make(
+            get: fn () => match ($this->selected_avatar) {
+                'steam' => !empty($this->steam_avatar) ? $this->steam_avatar : asset($default_avatar),
+                'local' => !empty($this->local_avatar) ? asset($this->local_avatar) : asset($default_avatar),
+                default => asset($default_avatar),
+            }
         );
     }
 
