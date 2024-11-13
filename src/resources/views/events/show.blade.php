@@ -183,14 +183,12 @@
 				@include ('layouts._partials.slick_loader')
 	
 				@foreach ($event->venue->images as $image)
-					@if ($image->filetype == 0)
 						<picture>
 							<source srcset="{{ $image->path }}.webp" type="image/webp">
 							<source srcset="{{ $image->path }}" type="image/jpeg">
 							<img src="{{ $image->path }}" data-thumb="{{ $image->path }}"
 								alt="{{ $image->description ?? 'Image' }}" class="img-fluid">
 						</picture>
-					@endif
 				@endforeach
 			</div>
 		</div>
