@@ -27,9 +27,26 @@ class TicketsController extends Controller
      */
     public function index(Event $event)
     {
+        $users = User::all();
+        $systemtickets = $users->sortByDesc(function($user) use ($event) {
+            return [
+                $user->getFreeTickets($event->id)->count(),
+                $user->getStaffTickets($event->id)->count()
+            ];
+        })->values();
+        $totalFreeTickets = $systemtickets->sum(function($user) use ($event) {
+        return $user->getFreeTickets($event->id)->count();
+        });
+    
+        $totalStaffTickets = $systemtickets->sum(function($user) use ($event) {
+            return $user->getStaffTickets($event->id)->count();
+        });
+
         return view('admin.events.tickets.index')
             ->withEvent($event)
-            ->withUsers(User::all());
+            ->withTotalFreeTickets($totalFreeTickets)
+            ->withTotalStaffTickets($totalStaffTickets)
+            ->withUsers($users);
     }
 
     /**
