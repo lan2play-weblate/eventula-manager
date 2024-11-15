@@ -369,8 +369,12 @@ class Event extends Model
         return true;
     }
 
+    /**
+     * Get ungrouped tickets of Eventvent
+     * @return \Illuminate\Database\Eloquent\Collection|\App\EventTicket[]
+     */
     public function getUngroupedTickets() {
-        return $this->tickets->where('event_ticket_group_id', '===', null);
+        return $this->tickets()->ungrouped()->get();;
     }
 
     /**
