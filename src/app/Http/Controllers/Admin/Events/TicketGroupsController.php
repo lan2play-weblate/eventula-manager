@@ -7,33 +7,20 @@ use App\EventTicketGroup;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Http\Requests\TicketGroupRequest;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Session;
 
 class TicketGroupsController extends Controller
 {
-    protected function verifyRequestValues(Request $request): void
-    {
-        $rules = [
-            'ticket-group-name' => 'required',
-            'ticket-group-tickets' => 'required|numeric',
-        ];
-        $messages = [
-            'ticket-group-name.required' => 'Ticket group name is required',
-            'ticket-group-tickets.numeric' => 'Tickets per user must be a number',
-            'ticket-group-tickets.required' => 'Tickets per user is required',
-        ];
-        $this->validate($request, $rules, $messages);
-    }
-
-    protected function updateTicketGroup(Request $request, EventTicketGroup $group): void
+    protected function updateTicketGroup(TicketGroupRequest $request, EventTicketGroup $group): void
     {
         $group->name = $request->get('ticket-group-name');
         $group->tickets_per_user = $request->get('ticket-group-tickets');
     }
 
-    public function store(Request $request, Event $event): RedirectResponse
+    public function store(TicketGroupRequest $request, Event $event): RedirectResponse
     {
         $this->verifyRequestValues($request);
 
@@ -57,7 +44,7 @@ class TicketGroupsController extends Controller
             ->withTicketGroup($ticketGroup);
     }
 
-    public function update(Request $request, Event $event, EventTicketGroup $ticketGroup): RedirectResponse
+    public function update(TicketGroupRequest $request, Event $event, EventTicketGroup $ticketGroup): RedirectResponse
     {
         $this->verifyRequestValues($request);
         $this->updateTicketGroup($request, $ticketGroup);
