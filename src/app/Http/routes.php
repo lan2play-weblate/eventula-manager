@@ -622,8 +622,6 @@ Route::group(['middleware' => ['installed']], function () {
             Route::get('/admin/settings/auth', 'Admin\SettingsController@showAuth');
             Route::get('/admin/settings/api', 'Admin\SettingsController@showApi');
             Route::post('/admin/settings/api', 'Admin\SettingsController@updateApi');
-            Route::get('/admin/settings/link/{social}', 'Admin\SettingsController@linkSocial');
-            Route::delete('/admin/settings/unlink/{social}', 'Admin\SettingsController@unlinkSocial');
             Route::post('/admin/settings/payments/{gateway}/disable', 'Admin\SettingsController@disablePaymentGateway');
             Route::post('/admin/settings/payments/{gateway}/enable', 'Admin\SettingsController@enablePaymentGateway');
             Route::post('/admin/settings/login/{method}/disable', 'Admin\SettingsController@disableLoginMethod');
