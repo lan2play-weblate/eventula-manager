@@ -120,5 +120,4 @@ return [
         'JsonLd'                => Artesaos\SEOTools\Facades\JsonLd::class,
         'Debugbar'              => Barryvdh\Debugbar\Facades\Debugbar::class,
     ],
-
 ];

@@ -240,6 +240,7 @@ folder-structure-prd:
 	mkdir -p /src/storage/app/public/images/venues/ && \
 	mkdir -p /src/storage/app/public/images/main/ && \
 	mkdir -p /src/storage/app/public/images/shop/ && \
+	mkdir -p /src/storage/app/public/images/avatars/ && \
 	mkdir -p /src/storage/app/public/attachments/help/"
 
 folder-structure-dev:
@@ -251,6 +252,7 @@ folder-structure-dev:
 	mkdir -p /src/storage/app/public/images/venues/ && \
 	mkdir -p /src/storage/app/public/images/main/ && \
 	mkdir -p /src/storage/app/public/images/shop/ && \
+	mkdir -p /src/storage/app/public/images/avatars/ && \
 	mkdir -p /src/storage/app/public/attachments/help/"
 
 # Create SSL Keypair for Development
@@ -445,6 +447,7 @@ purge-files:
 	touch /src/public/css/images/.gitkeep; \
 	rm -rf /src/storage/app/public/images/gallery ; \
 	rm -rf /src/storage/app/public/images/events ; \
+	rm -rf /src/storage/app/public/images/avatars ; \
 	rm -rf /src/storage/app/public/images/venues ; \
 	rm -rf /src/storage/app/public/images/main ; \
 	rm -rf /src/storage/user/scss/*.css ; \
