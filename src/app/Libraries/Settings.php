@@ -148,6 +148,24 @@ class Settings
         return \App\Setting::setDiscordId($text);
     }
 
+     /**
+     * Get Facebook Link
+     * @return String
+     */
+    public static function getFacebookLink()
+    {
+        return \App\Setting::getFacebookLink();
+    }
+
+    /**
+     * Set Facebook Link
+     * @param String $text
+     */
+    public static function setFacebookLink($text)
+    {
+        return \App\Setting::setFacebookLink($text);
+    }
+
     /**
      * Get Steam Link
      * @return String

@@ -242,6 +242,29 @@ class Setting extends Model
     }
 
     /**
+     * Get Facebook Link
+     * @return String
+     */
+    public static function getFacebookLink()
+    {
+        return self::where('setting', 'facebook_link')->first()->value;
+    }
+
+    /**
+     * Set Discord Link
+     * @param String $text
+     */
+    public static function setFacebookLink($text)
+    {
+        $setting = self::where('setting', 'facebook_link')->first();
+        $setting->value = $text;
+        if (!$setting->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Get Steam Link
      * @return String
      */

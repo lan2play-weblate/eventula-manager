@@ -226,7 +226,7 @@
 		<!-- Shop System -->
 		<div class="card mb-3">
 			<div class="card-header">
-				<i class="fa fa-info-circle fa-fw"></i> SEO & Analytics
+				<i class="fa fa-info-circle fa-fw"></i> SEO
 			</div>
 			<div class="card-body">
 				{{ Form::open(array('url'=>'/admin/settings/', 'onsubmit' => 'return ConfirmSubmit()')) }}
@@ -235,10 +235,6 @@
 							{{ Form::label('seo_keywords', "SEO Keywords" ,array('id'=>'','class'=>'')) }}
 							{{ Form::text("seo_keywords", implode(', ', explode(',', Settings::getSeoKeywords())) ,array('id'=>'setting_seo_keywords','class'=>'form-control')) }}
 							<small>Separate each keyword with a Comma.</small>
-						</div>
-						<div class="mb-3 col-12 col-md-6">
-							{{ Form::label('analytics_google_id', "Google Analyics ID" ,array('id'=>'','class'=>'')) }}
-							{{ Form::text("analytics_google_id", config('analytics.configurations.GoogleAnalytics.tracking_id') ,array('id'=>'setting_analytics_google_id','class'=>'form-control')) }}
 						</div>
 					</div>
 					<button type="submit" class="btn btn-success btn-sm btn-block">Update</button>

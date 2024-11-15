@@ -125,7 +125,6 @@ class SettingsController extends Controller
             ->withStripePublicKey(ApiKey::where('key', 'stripe_public_key')->first()->value)
             ->withStripeSecretKey(ApiKey::where('key', 'stripe_secret_key')->first()->value)
             ->withChallongeApiKey(ApiKey::where('key', 'challonge_api_key')->first()->value)
-            ->withGoogleAnalyticsTrackingId(ApiKey::where('key', 'google_analytics_tracking_id')->first()->value)
             ->withSteamApiKey(ApiKey::where('key', 'steam_api_key')->first()->value);
     }
 
@@ -343,6 +342,11 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
+        if (isset($request->facebook_link) && !Settings::setFacebookLink($request->facebook_link)) {
+            Session::flash('alert-danger', 'Could not update!');
+            return Redirect::back();
+        }
+
         if (
             isset($request->participant_count_offset) &&
             !Settings::setParticipantCountOffset($request->participant_count_offset)
@@ -427,11 +431,6 @@ class SettingsController extends Controller
             return Redirect::back();
         }
 
-        if (isset($request->analytics_google_id) && !ApiKey::setGoogleAnalyticsId($request->analytics_google_id)) {
-            Session::flash('alert-danger', 'Could not update!');
-            return Redirect::back();
-        }
-
         if ($request->file('org_logo') && !Settings::setOrgLogo($request->file('org_logo'))) {
             Session::flash('alert-danger', 'Could not update!');
             return Redirect::back();
@@ -448,38 +447,6 @@ class SettingsController extends Controller
         }
 
         Session::flash('alert-success', 'Successfully updated!');
-        return Redirect::back();
-    }
-
-    /**
-     * Link Social Platform for posting Images & News
-     * @param  String $social
-     * @return Redirect
-     */
-    public function linkSocial($social)
-    {
-        $acceptedSocial = array(
-            //'facebook',
-            // 'twitter',
-            // 'instagram',
-        );
-        if (!in_array($social, $acceptedSocial)) {
-            Session::flash('alert-danger', "{$social} is not supported by the Lan Manager.");
-            return Redirect::back();
-        }
-
-        Session::flash('alert-success', "Successfully Linked {$social}!");
-        return Redirect::back();
-    }
-
-    /**
-     * Unlink Social Platform
-     * @param  String $social
-     * @return Redirect
-     */
-    public function unlinkSocial($social)
-    {
-        // TODO Only contained Facebook remove this method??
         return Redirect::back();
     }
 

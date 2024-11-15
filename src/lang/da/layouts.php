@@ -22,6 +22,7 @@ return [
     'default_about_us' => 'Om os',
     'default_polls' => 'Afstemninger',
     'default_lan_guide' => 'Lan guide',
+    'default_facebook' => 'Facebook',
     'default_discord' => 'Discord',
     'default_steam' => 'Steam',
     'default_twitter' => 'Twitter',

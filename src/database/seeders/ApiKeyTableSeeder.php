@@ -49,10 +49,6 @@ class ApiKeyTableSeeder extends Seeder
             'value'         => env('CHALLONGE_API_KEY', null),
         ]);
         factory(ApiKey::class)->create([
-            'key'          => 'google_analytics_tracking_id',
-            'value'         => env('GOOGLE_ANALYTICS_TRACKING_ID', null),
-        ]);
-        factory(ApiKey::class)->create([
             'key'          => 'steam_api_key',
             'value'         => env('STEAM_API_KEY', null),
         ]);

@@ -146,7 +146,7 @@ use Debugbar;
 	@endif
 
 	<!-- Server -->
-	@if(Settings::getTeamspeakLink() != "" || Settings::getMumbleLink() != "" || Settings::getDiscordLink() != "" || Settings::getSteamLink() != "" || Settings::getRedditLink() != "" || Settings::getTwitterLink() != "" || !empty($gameServerList))
+	@if(Settings::getTeamspeakLink() != "" || Settings::getMumbleLink() != "" || Settings::getFacebookLink() != "" || Settings::getDiscordLink() != "" || Settings::getSteamLink() != "" || Settings::getRedditLink() != "" || Settings::getTwitterLink() != "" || !empty($gameServerList))
 	<div class="pb-2 mt-4 mb-4 border-bottom">
 		<a name="server"></a>
 		<h3>@lang('events.server')</h3>
@@ -163,6 +163,11 @@ use Debugbar;
 			<a href="mumble://{{ $user->username }}{{ chr(64) }}{{ Settings::getMumbleLink() }}" width="100%">
 				<img class="margin" src="https://www.mumble.info/css/mumble.svg" alt="Mumble Logo" width="28" height="28">@lang('home.servers_mumble')
 			</a>
+		</div>
+		@endif
+		@if (Settings::getFacebookLink() != "")
+		<div class="col-6 col-lg-4">
+			<a target="_blank" rel="noreferrer" href="{{ Settings::getFacebookLink() }}"><i class="fab fa-facebook fa-2x margin"></i>@lang('home.servers_facebook')</a>
 		</div>
 		@endif
 		@if (Settings::getDiscordLink() != "")

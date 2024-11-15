@@ -27,7 +27,6 @@
 </head>
 
 <body class="full-height">
-    {{-- {!! Analytics::render() !!} --}}
 
     @include ('layouts._partials.navigation')
 
@@ -114,6 +113,10 @@
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <h2>Connect</h2>
+                            @if (Settings::getFacebookLink() != '')
+                                <p><a target="_blank" rel="noreferrer"
+                                        href="{{ Settings::getFacebookLink() }}">@lang('layouts.default_facebook')</a></p>
+                            @endif
                             @if (Settings::getDiscordLink() != '')
                                 <p><a target="_blank" rel="noreferrer"
                                         href="{{ Settings::getDiscordLink() }}">@lang('layouts.default_discord')</a></p>

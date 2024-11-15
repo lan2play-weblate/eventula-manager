@@ -146,6 +146,14 @@ class RequiredDatabaseSeeder extends Seeder
             ]
         );
         Setting::firstOrCreate(
+            ['setting'          => 'facebook_link'],
+            [
+                'value'         => null,
+                'default'       => true,
+                'description'   => 'Link to your Facebook Page'
+            ]
+        );
+        Setting::firstOrCreate(
             ['setting'          => 'frontpage_alot_tagline'],
             [
                 'value'         => "People we've fragged",
@@ -593,13 +601,7 @@ class RequiredDatabaseSeeder extends Seeder
             [
                 'value'         => env('CHALLONGE_API_KEY', null),
             ]
-        );
-        ApiKey::firstOrCreate(
-            ['key'          => 'google_analytics_tracking_id'],
-            [
-                'value'         => env('GOOGLE_ANALYTICS_TRACKING_ID', null),
-            ]
-        );
+            );
         ApiKey::firstOrCreate(
             ['key'          => 'steam_api_key'],
             [

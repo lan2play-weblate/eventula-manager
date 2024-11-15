@@ -36,6 +36,7 @@ return [
     'servers_communication' => 'Communication',
     'servers_teamspeak' => 'Teamspeak Server',
     'servers_mumble' => 'Mumble Server',
+    'servers_facebook' => 'Facebook',
     'servers_discord' => 'Discord',
     'servers_steam' => 'Steam',
     'servers_reddit' => 'Reddit',
