@@ -18,6 +18,7 @@ return [
     'default_about_us' => 'Om oss',
     'default_polls' => 'Röstningar',
     'default_lan_guide' => 'Languide',
+    'default_facebook' => 'Facebook',
     'default_discord' => 'Discord',
     'default_steam' => 'Steam',
     'default_twitter' => 'Twitter',
