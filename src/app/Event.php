@@ -137,6 +137,9 @@ class Event extends Model
     {
         return $this->hasMany('App\EventTimetable');
     }
+    public function ticketGroups() {
+        return $this->hasMany('App\EventTicketGroup');
+    }
     public function tickets()
     {
         return $this->hasMany('App\EventTicket');
@@ -364,6 +367,14 @@ class Event extends Model
             return false;
         }
         return true;
+    }
+
+    /**
+     * Get ungrouped tickets of Eventvent
+     * @return \Illuminate\Database\Eloquent\Collection|\App\EventTicket[]
+     */
+    public function getUngroupedTickets() {
+        return $this->tickets()->ungrouped()->get();;
     }
 
     /**
