@@ -10,7 +10,9 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'max_ticket_count_reached' => 'Du kan inte köpa denna biljett längre. Gränsen för antal biljetter (:maxticketcount st) har nåtts.',
+    'max_ticket_event_count_reached' => 'Du kan inte köpa :ticketname :ticketamount gång(er), eftersom det skulle överskrida gränsen på totalt :maxamount biljett(er) för evenemanget. Du har för närvarande :currentamount biljett(er) totalt för detta evenemang.',
+    'max_ticket_group_count_reached' => 'Du kan inte köpa :ticketname :ticketamount gång(er), eftersom det skulle överskrida gränsen på :maxamount biljett(er) från gruppen :ticketgroup per användare. Du har för närvarande :currentamount biljett(er).',
+    'max_ticket_type_count_reached' => 'Du kan inte köpa :ticketname :ticketamount gång(er), eftersom det skulle överskrida gränsen på :maxamount biljett(er) per användare. Du har för närvarande :currentamount biljett(er).',
     'ticket_not_yet' => 'Du kan inte köpa denna biljett ännu',
     'ticket_not_anymore' => 'Du kan inte köpa denna biljett längre',
     /* Ticket Partial*/
