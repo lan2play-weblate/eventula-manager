@@ -205,7 +205,7 @@ Fill in the APP_KEY from the last step and all other empty Variables (if not opt
 
 
 
-1. Create your docker-compose.yml file
+3. Create your docker-compose.yml file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``docker-compose.yml``
