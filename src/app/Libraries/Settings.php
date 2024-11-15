@@ -589,7 +589,7 @@ class Settings
 
     /**
      * Get Credit Tournament Participation Amount
-     * @return Integer $amount
+     * @return int $amount
      */
     public static function getCreditTournamentParticipation()
     {
@@ -598,7 +598,7 @@ class Settings
 
     /**
      * Get Credit Tournament First Amount
-     * @return Integer $amount
+     * @return int $amount
      */
     public static function getCreditTournamentFirst()
     {
@@ -607,7 +607,7 @@ class Settings
 
     /**
      * Get Credit Tournament Second Amount
-     * @return Integer $amount
+     * @return int $amount
      */
     public static function getCreditTournamentSecond()
     {
@@ -616,7 +616,7 @@ class Settings
 
     /**
      * Get Credit Tournament Third Amount
-     * @return Integer $amount
+     * @return int $amount
      */
     public static function getCreditTournamentThird()
     {
@@ -625,7 +625,7 @@ class Settings
 
     /**
      * Get Credit Site Registration Amount
-     * @return Integer $amount
+     * @return int $amount
      */
     public static function getCreditRegistrationEvent()
     {
@@ -634,7 +634,7 @@ class Settings
 
     /**
      * Get Credit Event Registration Amount
-     * @return Integer $amount
+     * @return int $amount
      */
     public static function getCreditRegistrationSite()
     {
@@ -708,7 +708,7 @@ class Settings
 
     /**
      * Get Shop Closed Message
-     * @return Integer $amount
+     * @return int $amount
      */
     public static function getShopClosedMessage()
     {
@@ -909,7 +909,7 @@ class Settings
 
     /**
      * Get SEO Keywords
-     * @return Integer $amount
+     * @return int $amount
      */
     public static function getSeoKeywords()
     {

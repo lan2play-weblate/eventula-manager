@@ -138,7 +138,7 @@ class Helpers
 
     /**
      * Get Total Events Count
-     * @return Integer
+     * @return int
      */
     public static function getEventTotal()
     {
@@ -233,7 +233,7 @@ class Helpers
 
     /**
      * Get Total Event Participants Count
-     * @return Integer
+     * @return int
      */
     public static function getEventParticipantTotal()
     {
@@ -244,7 +244,7 @@ class Helpers
     /**
      * Get Active Tournaments count for User
      * @param  $event_id
-     * @return Integer
+     * @return int
      */
     public static function getUserActiveTournaments($event_id)
     {
@@ -294,7 +294,7 @@ class Helpers
     /**
      * Get Basket Total
      * @param  $basket
-     * @return Integer
+     * @return int
      */
     public static function getBasketTotal($basket)
     {
@@ -310,7 +310,7 @@ class Helpers
      * array_key_exists with regex
      * @param  $pattern
      * @param  $array
-     * @return Integer
+     * @return int
      */
     public static function pregArrayKeyExists($pattern, $array)
     {
@@ -458,7 +458,7 @@ class Helpers
 
     /**
      * Get CSS Version Number for Cache Busting
-     * @return integer
+     * @return int
      */
     public static function getCssVersion()
     {
