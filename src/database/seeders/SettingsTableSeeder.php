@@ -135,6 +135,14 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         Setting::firstOrCreate(
+            ['setting'          => 'facebook_link'],
+            [
+                'value'         => null,
+                'default'       => true,
+                'description'   => 'Link to your Facebook Page'
+            ]
+        );
+        Setting::firstOrCreate(
             ['setting'          => 'frontpage_alot_tagline'],
             [
                 'value'         => "People we've fragged",
