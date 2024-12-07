@@ -543,13 +543,17 @@
 					</td>
 					<td style="vertical-align: middle;">
 						@if ($participant->user->hasSeatableTicket($event->id))
-						@if ($participant->seat)
-						{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->getName() }}
+							@if ($participant->seat)
+								@if ($participant->seat->seatingPlan)
+									{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->getName() }}
+								@else
+									@lang('events.seatingplannotaccessable')
+								@endif
+							@else
+								@lang('events.notseated')
+							@endif
 						@else
-						@lang('events.notseated')
-						@endif
-						@else
-						@lang('events.noseatableticketlist')
+							@lang('events.noseatableticketlist')
 						@endif
 					</td>
 				</tr>

@@ -34,6 +34,7 @@ return [
     'seatableticketsremaining' => 'total seatable tickets remaining',
     'numofseatedseats' => 'Number of seated seats here',
     'seatingplanlocked' => 'NOTE: Seating plan is currently locked!',
+    'seatingplannotaccessable' => 'Seating Plan not (yet) available!',
     'yourseats' => 'Your seats',
     'remove' => 'Remove',
     'plspurchaseticket' => 'Please purchase a ticket',
