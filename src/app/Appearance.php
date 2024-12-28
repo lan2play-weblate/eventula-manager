@@ -37,27 +37,33 @@ class Appearance extends Model
         @Cache::forget("css_version");
         $scss = new Compiler();
         $scss->setImportPaths('/web/html/resources/assets/sass/');
-        // required for node_moudles imports
         $scss->addImportPath('/web/html/');
         $scss->addImportPath('/web/html/node_modules/');
-        $scss->setSourceMap(Compiler::SOURCE_MAP_FILE);
+
         $cssTemplates = ['app', 'admin'];
         foreach ($cssTemplates as $cssTemplate) {
-            $scss->setSourceMapOptions(array(
-                'sourceMapWriteTo'  => config('filesystems.disks.compiled-css.root') .
-                    '/' .
-                    str_replace("/", "_", $cssTemplate) .
-                    ".css.map"
-                ,
+            // Define the source map options as required
+            $sourceMapWriteTo = config('filesystems.disks.compiled-css.root') .
+                '/' .
+                str_replace("/", "_", $cssTemplate) .
+                ".css.map";
+
+            $scss->setSourceMapOptions([
+                'sourceMapWriteTo'  => $sourceMapWriteTo,
                 'sourceMapFilename' => $cssTemplate . '.css',
                 'sourceMapBasepath' => config('filesystems.disks.compiled-css.root'),
                 'sourceRoot'        => '/',
-            ));
+            ]);
+
+            // Delete old compiled files
             @Storage::disk('compiled-css')->delete($cssTemplate . '.css');
             @Storage::disk('compiled-css')->delete($cssTemplate . '.css.map');
-            if (!Storage::disk('compiled-css')
-                ->put($cssTemplate . '.css', $scss->compile('@import "' . $cssTemplate . '.scss";'))
-            ) {
+
+            // Compile and save the new CSS file
+            $scssContent = '@import "' . $cssTemplate . '.scss";';
+            $compiledCss = $scss->compileString($scssContent, $sourceMapWriteTo)->getCss();
+
+            if (!Storage::disk('compiled-css')->put($cssTemplate . '.css', $compiledCss)) {
                 return false;
             }
         }
