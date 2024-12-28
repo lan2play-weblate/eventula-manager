@@ -30,6 +30,7 @@ return [
     'seat' => 'Sitzplatz',
     'notseated' => 'Sitzplatz nicht belegt',
     'seatingplans' => 'Sitzplätze',
+    'seatingplannotaccessable' => 'Sitzplan (noch) nicht verfügbar!',
     'unseatedtickets' => 'Ticket ohne Sitzplatz',
     'seatableticketsremaining' => 'Verbleibende Tickets mit Sitzplatz',
     'numofseatedseats' => 'Anzahl belegter Sitzplätze',

@@ -137,6 +137,9 @@ class Event extends Model
     {
         return $this->hasMany('App\EventTimetable');
     }
+    public function ticketGroups() {
+        return $this->hasMany('App\EventTicketGroup');
+    }
     public function tickets()
     {
         return $this->hasMany('App\EventTicket');
@@ -233,7 +236,7 @@ class Event extends Model
 
     /**
      * Get Total Ticket Sales
-     * @return Integer
+     * @return int
      */
     public function getTicketSalesCount()
     {
@@ -248,7 +251,7 @@ class Event extends Model
 
     /**
      * Get Total Seated
-     * @return Integer
+     * @return int
      */
     public function getSeatedCount()
     {
@@ -261,7 +264,7 @@ class Event extends Model
 
     /**
      * Get Seating Capacity
-     * @return Integer
+     * @return int
      */
     public function getSeatingCapacity()
     {
@@ -314,7 +317,7 @@ class Event extends Model
 
     /**
      * Get Timetable Data Count
-     * @return Integer
+     * @return int
      */
     public function getTimetableDataCount()
     {
@@ -364,6 +367,14 @@ class Event extends Model
             return false;
         }
         return true;
+    }
+
+    /**
+     * Get ungrouped tickets of Eventvent
+     * @return \Illuminate\Database\Eloquent\Collection|\App\EventTicket[]
+     */
+    public function getUngroupedTickets() {
+        return $this->tickets()->ungrouped()->get();;
     }
 
     /**

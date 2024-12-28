@@ -86,7 +86,7 @@
 				<h3><i class="fas fa-ticket-alt me-3"></i>@lang('events.purchasetickets')</h3>
 			</div>
 			<div class="row card-deck">
-				@foreach ($event->tickets as $ticket)
+				@foreach ($event->tickets()->orderBy('event_ticket_group_id')->get() as $ticket)
 				<div class="col-12 col-sm-4">
 					<div class="card mb-3" disabled>
 						<div class="card-body d-flex flex-column">
@@ -95,6 +95,9 @@
 							<small>
 								@lang('events.limitedavailability')
 							</small>
+							@endif
+							@if ($ticket->hasTicketGroup())
+								<small>@lang('events.ticketgroup', ['ticketgroup' => $ticket->ticketGroup->name])</small>
 							@endif
 							<div class="row mt-auto">
 								<div class="col-sm-12 col-12">
@@ -540,13 +543,17 @@
 					</td>
 					<td style="vertical-align: middle;">
 						@if ($participant->user->hasSeatableTicket($event->id))
-						@if ($participant->seat)
-						{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->getName() }}
+							@if ($participant->seat)
+								@if ($participant->seat->seatingPlan)
+									{{ $participant->seat->seatingPlan->getShortName() }} | {{ $participant->seat->getName() }}
+								@else
+									@lang('events.seatingplannotaccessable')
+								@endif
+							@else
+								@lang('events.notseated')
+							@endif
 						@else
-						@lang('events.notseated')
-						@endif
-						@else
-						@lang('events.noseatableticketlist')
+							@lang('events.noseatableticketlist')
 						@endif
 					</td>
 				</tr>
