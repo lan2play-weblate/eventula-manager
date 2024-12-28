@@ -1,39 +1,92 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base"],
+  "extends": [
+    "config:recommended"
+  ],
   "lockFileMaintenance": {
     "enabled": true,
     "branchTopic": "lock-file-maintenance-{{baseBranch}}"
   },
   "forkProcessing": "enabled",
-  "baseBranches": ["dev", "master"],
+  "baseBranches": [
+    "dev",
+    "legacy",
+    "main"
+  ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "matchBaseBranches": ["dev"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "matchBaseBranches": [
+        "dev"
+      ],
       "automerge": true
     },
     {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "matchBaseBranches": ["master"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "matchBaseBranches": [
+        "main"
+      ],
       "automerge": false
     },
     {
-      "matchUpdateTypes": ["major"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "pin",
+        "digest"
+      ],
+      "matchBaseBranches": [
+        "legacy"
+      ],
       "automerge": false
     },
     {
-      "matchBaseBranches": ["dev"],
-      "matchUpdateTypes": ["lockFileMaintenance"],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
+    },
+    {
+      "matchBaseBranches": [
+        "dev"
+      ],
+      "matchUpdateTypes": [
+        "lockFileMaintenance"
+      ],
       "automerge": true
     },
     {
-      "matchBaseBranches": ["master"],
-      "matchUpdateTypes": ["lockFileMaintenance"],
+      "matchBaseBranches": [
+        "main"
+      ],
+      "matchUpdateTypes": [
+        "lockFileMaintenance"
+      ],
+      "automerge": false
+    },
+    {
+      "matchBaseBranches": [
+        "legacy"
+      ],
+      "matchUpdateTypes": [
+        "lockFileMaintenance"
+      ],
       "automerge": false
     }
   ],
   "automergeType": "pr",
   "automergeStrategy": "auto",
-  "automergeSchedule": ["at any time"]
+  "automergeSchedule": [
+    "at any time"
+  ]
 }
