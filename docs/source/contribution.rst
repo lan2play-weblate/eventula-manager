@@ -17,7 +17,7 @@ You can also join our discord to get in contact with us and the other contributo
 
 Documentation
 --------------
-This documentation is written in restructured text and its build using sphinx and the read the docs theme. The source can be found in our main repository in the ``docs/`` subfolder (https://github.com/Lan2Play/eventula-manager/tree/master/src).
+This documentation is written in restructured text and its build using sphinx and the read the docs theme. The source can be found in our main repository in the ``docs/`` subfolder (https://github.com/Lan2Play/eventula-manager/tree/main/src).
 Feel free to PR corrections or expansions of the documentation at any time! 
 
 To build the documentation locally to the ``docs/build`` subfolder you have two options:

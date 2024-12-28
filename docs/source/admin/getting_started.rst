@@ -404,6 +404,6 @@ If you want to bring those two files ( ``_user-variables.scss`` and ``_user-over
 
 .. warning::
 
-    Mounting them to they're regular path ( ``/web/html/resources/assets/sass/app/modules`` / ``/web/html/resources/assets/sass/app/components`` ) will get them deleted on the container startup (see APPEAR_DISABLE_CUSTOM_CSS_LINKING in https://github.com/Lan2Play/eventula-manager/blob/master/resources/docker/root/run/docker-entrypoint.sh)
+    Mounting them to they're regular path ( ``/web/html/resources/assets/sass/app/modules`` / ``/web/html/resources/assets/sass/app/components`` ) will get them deleted on the container startup (see APPEAR_DISABLE_CUSTOM_CSS_LINKING in https://github.com/Lan2Play/eventula-manager/blob/main/resources/docker/root/run/docker-entrypoint.sh)
 
 

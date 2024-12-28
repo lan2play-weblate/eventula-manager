@@ -2,13 +2,13 @@ name: lan2play_website_build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
     paths:
     - 'docs/**'
     - '.github/workflows/website_build.yml'
   pull_request:
     branches: 
-    - master
+    - main
     - dev
     - 'feature/**'
     paths:
@@ -28,7 +28,7 @@ jobs:
 
   publish_prd:
     runs-on: ubuntu-latest
-    if: ${{ startsWith(github.ref, 'refs/heads/master') && github.event_name == 'push' }}
+    if: ${{ startsWith(github.ref, 'refs/heads/main') && github.event_name == 'push' }}
     steps:
     - uses: actions/checkout@v4
     - name: build

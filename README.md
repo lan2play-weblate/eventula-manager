@@ -43,19 +43,19 @@ Hop over to our [admin documentation](https://eventula.lan2play.de/admin/getting
 ## Screenshots
 ##### Home Page:
 
-![Manager front page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/home-page.png)
+![Manager front page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/main/resources/images/home-page.png)
 ##### Event Page:
-![Event Page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/events-page.png)
+![Event Page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/main/resources/images/events-page.png)
 ##### Successful Payment Page
-![Successful Payment](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/success-payment-page.png)
+![Successful Payment](https://raw.githubusercontent.com/Lan2Play/eventula-manager/main/resources/images/success-payment-page.png)
 ##### Event Management
-![Event Admin Page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/events-management-page.png)
+![Event Admin Page](https://raw.githubusercontent.com/Lan2Play/eventula-manager/main/resources/images/events-management-page.png)
 ##### Ticket Management
-![Tickets Breakdown](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/tickets-management-page.png)
+![Tickets Breakdown](https://raw.githubusercontent.com/Lan2Play/eventula-manager/main/resources/images/tickets-management-page.png)
 ##### Tournament Management
-![Tournament Management](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/tournaments-management-page.png)
+![Tournament Management](https://raw.githubusercontent.com/Lan2Play/eventula-manager/main/resources/images/tournaments-management-page.png)
 ##### Tournament Brakcets
-![Tournament Brackets](https://raw.githubusercontent.com/Lan2Play/eventula-manager/master/resources/images/tournaments-brackets-page.png)
+![Tournament Brackets](https://raw.githubusercontent.com/Lan2Play/eventula-manager/main/resources/images/tournaments-brackets-page.png)
 
 ## Features
 

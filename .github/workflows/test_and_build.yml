@@ -3,8 +3,9 @@ name: Test and Build
 on:
   push:
     branches: 
-      - master
+      - main
       - dev
+      - legacy
     paths-ignore:
       - 'README.md'
       - 'renovate.json'
@@ -13,8 +14,9 @@ on:
       - 'docs'
   pull_request:
     branches: 
-      - master
+      - main
       - dev
+      - legacy
       - 'renovate/**'
       - 'feature/**'
     paths-ignore:
@@ -63,14 +65,32 @@ jobs:
           no-cache: true
           push: false      
       - name: Build and push Linux Image
-        if: ${{ startsWith(github.ref, 'refs/heads/master') && github.event_name == 'push' }}
+        if: ${{ startsWith(github.ref, 'refs/heads/main') && github.event_name == 'push' }}
         uses: docker/build-push-action@v6.10.0
         with:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm/v7
           tags: |
+            lan2play/eventula-manager:main
             lan2play/eventula-manager:latest
+          build-args: |
+            BUILDNODE=GitHub (Run Number: ${{ github.run_number }} Run ID: ${{ github.run_id }})
+            BUILDID=${{ github.run_id }}
+            BUILDNUMBER=${{ github.run_number }}
+            SOURCE_COMMIT=${{ github.sha }}
+            SOURCE_REF=${{ github.ref }}
+          no-cache: true
+          push: true
+      - name: Build and push Linux legacy Image
+        if: ${{ startsWith(github.ref, 'refs/heads/legacy') && github.event_name == 'push' }}
+        uses: docker/build-push-action@v6.10.0
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm/v7
+          tags: |
+            lan2play/eventula-manager:legacy
           build-args: |
             BUILDNODE=GitHub (Run Number: ${{ github.run_number }} Run ID: ${{ github.run_id }})
             BUILDID=${{ github.run_id }}
