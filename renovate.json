@@ -40,18 +40,6 @@
     },
     {
       "matchUpdateTypes": [
-        "minor",
-        "patch",
-        "pin",
-        "digest"
-      ],
-      "matchBaseBranches": [
-        "legacy"
-      ],
-      "automerge": false
-    },
-    {
-      "matchUpdateTypes": [
         "major"
       ],
       "automerge": false
@@ -68,15 +56,6 @@
     {
       "matchBaseBranches": [
         "main"
-      ],
-      "matchUpdateTypes": [
-        "lockFileMaintenance"
-      ],
-      "automerge": false
-    },
-    {
-      "matchBaseBranches": [
-        "legacy"
       ],
       "matchUpdateTypes": [
         "lockFileMaintenance"
