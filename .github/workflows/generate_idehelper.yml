@@ -29,7 +29,7 @@ jobs:
       - name: make foldersctructure and layout images
         run: make folder-structure-dev; make layout-images-dev    
       - name: spin up dev
-        run: make purge-cache; make generate-key-dev; make dev
+        run: make purge-cache; make generate-key-dev; make dev; make wait-mysql; sleep 10
       - name: make regenerate-idehelper
         run: make regenerate-idehelper       
       - name: Check for changes
