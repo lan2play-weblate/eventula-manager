@@ -1,0 +1,41 @@
+name: generate idehelper
+
+on:
+  push:
+    branches: 
+      - dev
+    paths-ignore:
+      - 'README.md'
+      - 'renovate.json'
+      - '.github/workflows/update-dockerhub.yml'
+      - '.github/workflows/website_build.yml'
+      - 'docs'
+  workflow_dispatch: # Allows action to be run manually from the Actions tab
+
+jobs:
+  build-docker:
+      runs-on: 'ubuntu-latest'
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: get dependencies
+        run: make composer-install-dev; make npm-install-gh
+      - name: make regenerate-idehelper
+        run: make regenerate-idehelper       
+      - name: Check for changes
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            echo "Changes detected. Preparing to commit.";
+          else
+            echo "No changes detected.";
+            exit 0;
+          fi
+
+      - name: Commit changes
+        if: success() && steps.check-for-changes.outcome == 'success'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Regenerate IDE helper files [ci]"
+          git push origin dev
