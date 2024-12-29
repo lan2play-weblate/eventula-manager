@@ -195,6 +195,12 @@ class MatchMakingController extends Controller
                     }
                 }
             }
+        } else {
+
+            if (!Settings::isSystemsMatchMakingNonegameEnabled() && !Auth::user()->getAdmin()) {
+                Session::flash('alert-danger', __('matchmaking.nonegame_disabled'));
+                return Redirect::back();
+            }
         }
 
 

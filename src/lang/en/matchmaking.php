@@ -144,6 +144,7 @@ return [
     'ReplayName' => 'Name',
     'ReplaySize' => 'Size',
     'ReplayCreated' => 'Created',
+    'nonegame_disabled' => 'You cannot create a match without a game selected because this is disabled by the administrator',
 
 
 ];

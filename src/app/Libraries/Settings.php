@@ -833,6 +833,32 @@ class Settings
         return \App\Setting::disableSystemsMatchMakingPublicuse();
     }
 
+    /**
+     * Is MatchMaking Nonegame Enabled
+     * @return Boolean
+     */
+    public static function isSystemsMatchMakingNonegameEnabled()
+    {
+        return \App\Setting::isSystemsMatchMakingNonegameEnabled();
+    }
+
+    /**
+     * Enable MatchMaking System Nonegame
+     * @return Boolean
+     */
+    public static function enableSystemsMatchMakingNonegame()
+    {
+        return \App\Setting::enableSystemsMatchMakingNonegame();
+    }
+
+    /**
+     * Disable MatchMaking System Nonegame
+     * @return Boolean
+     */
+    public static function disableSystemsMatchMakingNonegame()
+    {
+        return \App\Setting::disableSystemsMatchMakingNonegame();
+    }
 
     /**
      * Get MatchMaking System Maxopenperuser

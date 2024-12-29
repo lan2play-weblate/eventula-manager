@@ -3,6 +3,8 @@
 namespace App;
 
 use Storage;
+use Settings;
+use Auth;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -169,7 +171,12 @@ class Game extends Model
 
     public static function getMatchmakingGameSelectArray($publicOnly = true)
     {
-        $return[0] = 'None';
+        $return = [];
+        if( Settings::isSystemsMatchMakingNonegameEnabled() || Auth::user()->getAdmin() )
+        {
+            $return[0] = 'None';
+        }
+
         foreach (Game::where(['public' => $publicOnly, 'matchmaking_enabled' => true])->orderBy('name', 'ASC')->get() as $game) {
             $return[$game->id] = $game->name;
         }
