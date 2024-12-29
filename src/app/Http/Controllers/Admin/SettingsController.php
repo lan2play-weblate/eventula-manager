@@ -81,6 +81,7 @@ class SettingsController extends Controller
 
         return view('admin.settings.systems')
             ->with('isSystemsMatchMakingPublicuseEnabled', Settings::isSystemsMatchMakingPublicuseEnabled())
+            ->with('isSystemsMatchMakingNonegameEnabled', Settings::isSystemsMatchMakingNonegameEnabled())
             ->with('maxOpenPerUser', Settings::getSystemsMatchMakingMaxopenperuser())
             ->with('isMatchMakingEnabled', Settings::isMatchMakingEnabled())
             ->with('isCreditEnabled', Settings::isCreditEnabled())
@@ -181,6 +182,7 @@ class SettingsController extends Controller
 
         $rules = [
             'publicuse'                 => 'in:on,off',
+            'nonegame'                 => 'in:on,off',
             'maxopenperuser'            => 'numeric',
             'tournament_participation'    => 'filled|integer',
             'tournament_first'            => 'filled|integer',
@@ -192,6 +194,7 @@ class SettingsController extends Controller
         ];
         $messages = [
             'publicuse.in'                      => 'Publicuse must be true or false',
+            'nonegame.in'                      => 'Nonegame must be true or false',
             'autostart.in'                      => 'autostart must be true or false',
             'maxopenperuser.numeric'            => 'maxopenperuser must be a number',
             'tournament_participation.filled'    => 'Tournament Participantion cannot be empty',
@@ -218,6 +221,18 @@ class SettingsController extends Controller
         } else {
             if (!Settings::disableSystemsMatchMakingPublicuse()) {
                 Session::flash('alert-danger', "Could not Disable the MatchMaking System Publicuse!");
+                return Redirect::back();
+            }
+        }
+
+        if (($request->nonegame ? true : false)) {
+            if (!Settings::enableSystemsMatchMakingNonegame()) {
+                Session::flash('alert-danger', "Could not Enable the MatchMaking System Nonegame!");
+                return Redirect::back();
+            }
+        } else {
+            if (!Settings::disableSystemsMatchMakingNonegame()) {
+                Session::flash('alert-danger', "Could not Disable the MatchMaking System Nonegame!");
                 return Redirect::back();
             }
         }
@@ -812,7 +827,7 @@ class SettingsController extends Controller
 
         ];
         $messages = [
-            'auth_steam_require_email.in'                    => 'Publicuse must be true or false',
+            'auth_steam_require_email.in'                    => 'steam require email must be true or false',
 
         ];
         $this->validate($request, $rules, $messages);

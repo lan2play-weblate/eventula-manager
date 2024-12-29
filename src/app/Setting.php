@@ -1185,6 +1185,46 @@ class Setting extends Model
         return true;
     }
 
+    /**
+     * Is MatchMaking System Nonegame Enabled
+     * @return Boolean
+     */
+    public static function isSystemsMatchMakingNonegameEnabled()
+    {
+        return self::where('setting', 'systems_matchmaking_nonegame')->first()->value;
+    }
+
+    /**
+     * Enable MatchMaking System Nonegame
+     * @return Boolean
+     */
+    public static function enableSystemsMatchMakingNonegame()
+    {
+        if (!$matchmakingSystemNonegameEnabled = self::where('setting', 'systems_matchmaking_nonegame')->first()) {
+            return false;
+        }
+        $matchmakingSystemNonegameEnabled->value = true;
+        if (!$matchmakingSystemNonegameEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Disable MatchMaking System Nonegame
+     * @return Boolean
+     */
+    public static function disableSystemsMatchMakingNonegame()
+    {
+        if (!$matchmakingSystemNonegameEnabled = self::where('setting', 'systems_matchmaking_nonegame')->first()) {
+            return false;
+        }
+        $matchmakingSystemNonegameEnabled->value = false;
+        if (!$matchmakingSystemNonegameEnabled->save()) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Get MatchMaking System Maxopenperuser
