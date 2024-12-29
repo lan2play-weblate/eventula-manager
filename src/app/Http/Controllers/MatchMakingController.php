@@ -174,7 +174,7 @@ class MatchMakingController extends Controller
             if (Game::where('id', $request->game_id)->first()) {
                 $tempgame = Game::where('id', $request->game_id)->first();
 
-                if ($tempgame->gamematchapihandler != 0 && $tempgame->matchmaking_autoapi) {
+                if (isset($tempgame) && $tempgame->gamematchapihandler != 0 && $tempgame->matchmaking_autoapi) {
                     if (!Helpers::checkUserFields(User::where('id', '=', Auth::id())->first(), (new GameMatchApiHandler())->getGameMatchApiHandler($tempgame->gamematchapihandler)->getuserthirdpartyrequirements())) {
                         Session::flash('alert-danger', __('matchmaking.cannotcreatethirdparty'));
                         return Redirect::back();
@@ -356,7 +356,7 @@ class MatchMakingController extends Controller
         ];
         $this->validate($request, $rules, $messages);
 
-        if ($match->game->gamematchapihandler != 0 && $match->game->matchmaking_autoapi) {
+        if (isset($match->game) && $match->game->gamematchapihandler != 0 && $match->game->matchmaking_autoapi) {
             if (!Helpers::checkUserFields(User::where('id', '=', Auth::id())->first(), (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler)->getuserthirdpartyrequirements())) {
                 Session::flash('alert-danger', __('matchmaking.cannotjointhirdparty'));
                 return Redirect::back();
@@ -502,7 +502,7 @@ class MatchMakingController extends Controller
             return Redirect::back();
         }
 
-        if ($match->game->gamematchapihandler != 0 && $match->game->matchmaking_autoapi) {
+        if (isset($match->game) && $match->game->gamematchapihandler != 0 && $match->game->matchmaking_autoapi) {
             if (!Helpers::checkUserFields(User::where('id', '=', Auth::id())->first(), (new GameMatchApiHandler())->getGameMatchApiHandler($match->game->gamematchapihandler)->getuserthirdpartyrequirements())) {
                 Session::flash('alert-danger', __('matchmaking.cannotjointhirdparty'));
                 return Redirect::back();
