@@ -10,6 +10,7 @@ use Image;
 use File;
 use Helpers;
 use Validator;
+use URL;
 
 use App\Game;
 use App\GameCommandHandler;
@@ -249,8 +250,8 @@ class GameServerCommandsController extends Controller
         $availableParameters->gameServer = $gameServer;
         $availableParameters->match = $challongeMatch;
         $availableParameters->gamematchapiurl = new \stdClass();
-        $availableParameters->gamematchapiurl->matchconfigapi = config('app.url') . "/api/events/" . $tournament->event->slug . "/tournaments/" . $tournament->slug . "/" . $challongeMatch->id . "/configure/" . $tournament->getnummaps($request->challonge_match_id);
-        $availableParameters->gamematchapiurl->matchapibase = config('app.url') . "/api/events/" . $tournament->event->slug . "/tournaments/" . $tournament->slug . "/" . $challongeMatch->id;
+        $availableParameters->gamematchapiurl->matchconfigapi = URL::to('/') . "/api/events/" . $tournament->event->slug . "/tournaments/" . $tournament->slug . "/" . $challongeMatch->id . "/configure/" . $tournament->getnummaps($request->challonge_match_id);
+        $availableParameters->gamematchapiurl->matchapibase = URL::to('/') . "/api/events/" . $tournament->event->slug . "/tournaments/" . $tournament->slug . "/" . $challongeMatch->id;
 
 
         $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);
@@ -302,8 +303,8 @@ class GameServerCommandsController extends Controller
         $availableParameters->gameServer = $gameServer;
         $availableParameters->match = $match;
         $availableParameters->gamematchapiurl = new \stdClass();
-        $availableParameters->gamematchapiurl->matchconfigapi = config('app.url') . "/api/matchmaking/" . $match->id . "/configure/1";
-        $availableParameters->gamematchapiurl->matchapibase = config('app.url') . "/api/matchmaking/" . $match->id;
+        $availableParameters->gamematchapiurl->matchconfigapi = URL::to('/') . "/api/matchmaking/" . $match->id . "/configure/1";
+        $availableParameters->gamematchapiurl->matchapibase = URL::to('/') . "/api/matchmaking/" . $match->id;
 
 
         $command = Helpers::resolveServerCommandParameters($gameServerCommand->command, $request, $availableParameters);

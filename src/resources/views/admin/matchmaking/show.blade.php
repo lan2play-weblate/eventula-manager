@@ -53,7 +53,7 @@
 							</div>
 							<div class="col-sm">
 								<div class="input-group mb-3 mt-0" style="width: 100%">
-									<input class="form-control" id="teaminviteurl_{{$team->id}}" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $team->team_invite_tag }}">
+									<input class="form-control" id="teaminviteurl_{{$team->id}}" type="text" readonly value="{{ URL::to('/') }}/matchmaking/invite/?url={{ $team->team_invite_tag }}">
 									<button class="btn btn-primary" type="button" onclick="copyToClipBoard('teaminviteurl_{{$team->id}}')"><i class="far fa-clipboard"></i></button>
 								</div>
 							</div>
@@ -161,7 +161,7 @@
 					@if($match->status == "OPEN")
 						<p class="mb-0">Match Invite Url</p>
 						<div class="input-group mb-3 mt-0" style="width: 100%">
-							<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ config('app.url') }}/matchmaking/invite/?url={{ $match->invite_tag }}">
+							<input class="form-control" id="matchinviteurl" type="text" readonly value="{{ URL::to('/') }}/matchmaking/invite/?url={{ $match->invite_tag }}">
 							<button class="btn btn-primary" type="button" onclick="copyToClipBoard('matchinviteurl')"><i class="far fa-clipboard"></i></button>
 						</div>
 
