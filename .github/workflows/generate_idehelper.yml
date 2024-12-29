@@ -35,14 +35,15 @@ jobs:
       - name: Check for changes
         run: |
           if [[ -n "$(git status --porcelain)" ]]; then
-            echo "Changes detected. Preparing to commit.";
+            echo "Changes detected. Preparing to commit."
+            echo "has_changes=true" >> $GITHUB_ENV
           else
-            echo "No changes detected.";
-            exit 0;
+            echo "No changes detected. Skipping commit."
+            echo "has_changes=false" >> $GITHUB_ENV
           fi
 
       - name: Commit changes
-        if: success() && steps.check-for-changes.outcome == 'success'
+        if: env.has_changes == 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
