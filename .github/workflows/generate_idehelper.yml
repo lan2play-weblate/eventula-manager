@@ -51,6 +51,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           BRANCH_NAME="update-ide-helper-$(date +%Y%m%d%H%M%S)"
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_ENV
           git checkout -b $BRANCH_NAME
           git add .
           git commit -m "Regenerate IDE helper files [ci]"
@@ -63,7 +64,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: $BRANCH_NAME
+          branch: ${{ env.branch_name }}
           base: dev
           title: "Regenerate IDE helper files"
           body: |
