@@ -23,7 +23,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: spin up dev
-        run: make dev
+        run: make
       - name: make regenerate-idehelper
         run: make regenerate-idehelper       
       - name: Check for changes
