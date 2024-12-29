@@ -22,8 +22,14 @@ jobs:
         uses: docker/setup-qemu-action@v3.2.0
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - name: setup prereq
+        run: make env-file-dev; make docker-lan
+      - name: get dependencies
+        run: make composer-install-dev; make npm-install-gh
+      - name: make foldersctructure and layout images
+        run: make folder-structure-dev; make layout-images-dev    
       - name: spin up dev
-        run: make
+        run: make purge-cache; make generate-key-dev; make dev
       - name: make regenerate-idehelper
         run: make regenerate-idehelper       
       - name: Check for changes
