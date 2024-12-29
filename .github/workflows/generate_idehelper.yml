@@ -5,48 +5,59 @@ on:
     branches: 
       - dev
     paths-ignore:
-      - 'README.md'
-      - 'renovate.json'
-      - '.github/workflows/update-dockerhub.yml'
-      - '.github/workflows/website_build.yml'
-      - 'docs'
+        - 'README.md'
+        - 'renovate.json'
+        - '.github/workflows/update-dockerhub.yml'
+        - '.github/workflows/website_build.yml'
+        - 'docs'
   workflow_dispatch: # Allows action to be run manually from the Actions tab
 
 jobs:
-  regenerate-idehelper:
-      runs-on: 'ubuntu-latest'
-      steps:
+  build-docker:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Needed for pushing changes and creating a PR
+      pull-requests: write  # Needed for creating a pull request
+    steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3.2.0
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: setup prereq
-        run: make env-file-dev; make docker-lan
-      - name: get dependencies
+
+      - name: Get dependencies
         run: make composer-install-dev; make npm-install-gh
-      - name: make foldersctructure and layout images
-        run: make folder-structure-dev; make layout-images-dev    
-      - name: spin up dev
-        run: make purge-cache; make generate-key-dev; make dev; make wait-mysql; sleep 10
-      - name: make regenerate-idehelper
-        run: make regenerate-idehelper       
+
+      - name: Make regenerate-idehelper
+        run: make regenerate-idehelper
+
       - name: Check for changes
         run: |
           if [[ -n "$(git status --porcelain)" ]]; then
-            echo "Changes detected. Preparing to commit."
+            echo "Changes detected. Preparing to create a pull request."
             echo "has_changes=true" >> $GITHUB_ENV
           else
-            echo "No changes detected. Skipping commit."
+            echo "No changes detected. Skipping pull request."
             echo "has_changes=false" >> $GITHUB_ENV
           fi
 
-      - name: Commit changes
+      - name: Create new branch and push changes
         if: env.has_changes == 'true'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          BRANCH_NAME="update-ide-helper-$(date +%Y%m%d%H%M%S)"
+          git checkout -b $BRANCH_NAME
           git add .
-          git commit -m "Regenerate IDE helper files [ci]"
-          git push origin dev
+          git commit -m "Regenerate IDE helper files [skip ci]"
+          git push origin $BRANCH_NAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Pull Request
+        if: env.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.create_new_branch.outputs.branch }}
+          title: "Regenerate IDE helper files"
+          body: |
+            This PR regenerates IDE helper files.
+
