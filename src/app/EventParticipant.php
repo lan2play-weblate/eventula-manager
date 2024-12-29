@@ -3,6 +3,7 @@
 namespace App;
 
 use Auth;
+use URL;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Response;
@@ -139,11 +140,7 @@ class EventParticipant extends Model
      */
     public function generateQRCode($forcenewname = false)
     {
-        if (Str::startsWith(config('app.url'), ['http://', 'https://'])) {
-            $ticketUrl = config('app.url') . '/tickets/retrieve/' . $this->id;
-        } else {
-            $ticketUrl = 'https://' . config('app.url') . '/tickets/retrieve/' . $this->id;
-        }
+        $ticketUrl = URL::to('/') . '/tickets/retrieve/' . $this->id;
 
         if (isset($this->qrcode) && $this->qrcode != "" && !$forcenewname) {
             $qrCodeFullPath = $this->qrcode;

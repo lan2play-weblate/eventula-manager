@@ -65,7 +65,7 @@
 				<label>@lang('tickets.gift_url')</label>
 				<p>
 					<strong>
-						{{ config('app.url') }}/gift/accept/?url={{ $participant->gift_accepted_url }}
+						{{ URL::to('/') }}/gift/accept/?url={{ $participant->gift_accepted_url }}
 					</strong>
 				</p>
 				{{ Form::open(array('url'=>'/gift/' . $participant->id . '/revoke', 'id'=>'revokeGiftTicketForm')) }}
