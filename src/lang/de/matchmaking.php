@@ -140,4 +140,5 @@ return [
     'ReplayName' => 'Name',
     'ReplaySize' => 'Größe',
     'ReplayCreated' => 'Erstelldatum',
+    'nonegame_disabled' => 'Du kannst kein Match ohne ausgewähltes Spiel erstellen, da der Administrator dies deaktiviert hat.',
 ];

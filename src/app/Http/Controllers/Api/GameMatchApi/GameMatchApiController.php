@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\GameMatchApi;
 use DB;
 use Auth;
 use File;
+use URL;
 use Illuminate\Support\Facades\Storage;
 
 use App\Event;
@@ -67,7 +68,7 @@ class GameMatchApiController extends Controller
                 return "Error: Gameserver Secret Key is wrong!";
             }
             if (isset($matchserver->gameServer->gameserver_secret) && $tournament->match_autoapi) {
-                $apiurl = config('app.url') . "/api/events/" . $tournament->event->slug . "/tournaments/" . $tournament->slug . "/" . $challongeMatchId . "/";
+                $apiurl = URL::to('/') . "/api/events/" . $tournament->event->slug . "/tournaments/" . $tournament->slug . "/" . $challongeMatchId . "/";
                 $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0], $apiurl, $matchserver->gameServer->gameserver_secret);
             } else {
                 $result = $gamematchapihandler->getconfig($challongeMatchId, $nummaps, $tournament->team_size[0], null, null);
@@ -341,7 +342,7 @@ class GameMatchApiController extends Controller
                 return "Error: Gameserver Secret Key is wrong!";
             }
             if (isset($match->matchMakingServer->gameServer->gameserver_secret) && $match->game->matchmaking_autoapi) {
-                $apiurl = config('app.url') . "/api/matchmaking/" . $match->id . "/";
+                $apiurl = URL::to('/') . "/api/matchmaking/" . $match->id . "/";
                 $result = $gamematchapihandler->getconfig($match->id, $nummaps, $match->team_size, $apiurl, $match->matchMakingServer->gameServer->gameserver_secret);
             } else {
                 $result = $gamematchapihandler->getconfig($match->id, $nummaps, $match->team_size, null, null);

@@ -43,6 +43,10 @@
                                     Public use enabled (show Matchmaking in main Navigation)
                                 </div>
                                 <div class="mb-3">
+                                    {{ Form::checkbox('nonegame', null, $isSystemsMatchMakingNonegameEnabled, ['id' => 'nonegame']) }}
+                                    The gametype None is selectable in Matchmaking (for board games etc.)
+                                </div>
+                                <div class="mb-3">
                                     {{ Form::label('maxopenperuser', 'Maximal Open matches per user (0 unlimited)', ['id' => '', 'class' => '']) }}
                                     {{ Form::number('maxopenperuser', $maxOpenPerUser, ['id' => 'maxopenperuser', 'class' => 'form-control']) }}
                                 </div>

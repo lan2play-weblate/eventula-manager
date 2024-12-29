@@ -388,6 +388,14 @@ class SettingsTableSeeder extends Seeder
             ]
         );
         Setting::firstOrCreate(
+            ['setting'          => 'systems_matchmaking_nonegame'],
+            [
+                'value'         => true,
+                'default'       => true,
+                'description'   => 'The gametype None is selectable in Matchmaking (for board games etc.)'
+            ]
+        );
+        Setting::firstOrCreate(
             ['setting'          => 'systems_matchmaking_maxopenperuser'],
             [
                 'value'         => 0,

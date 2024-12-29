@@ -1,6 +1,7 @@
 <?php
 namespace App\Mail;
 
+use URL;
 use App\User;
 use App\Event;
 use Spatie\MailTemplates\TemplateMailable;
@@ -82,12 +83,12 @@ class EventulaMailingMail extends TemplateMailable
         $this->surname = $user->surname;
         $this->email = $user->email;
         $this->username = $user->username_nice;
-        $this->url = config('app.url');
+        $this->url = URL::to('/');
 
         if (isset($nextevent)) 
         {
             $this->nextevent_display_name = $nextevent->display_name;
-            $this->nextevent_url =  config('app.url')."/events/".$nextevent->slug;
+            $this->nextevent_url =  URL::to('/')."/events/".$nextevent->slug;
             $this->nextevent_capacity = $nextevent->capacity;
             $this->nextevent_desc_long = $nextevent->desc_long;
             $this->nextevent_desc_short = $nextevent->desc_short;

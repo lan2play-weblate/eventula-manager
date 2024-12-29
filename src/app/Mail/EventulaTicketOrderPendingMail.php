@@ -1,5 +1,6 @@
 <?php
 namespace App\Mail;
+use URL;
 use Storage; 
 use Helpers;
 use App\User;
@@ -58,7 +59,7 @@ class EventulaTicketOrderPendingMail extends TemplateMailable
         $this->surname = $user->surname;
         $this->email = $user->email;
         $this->username = $user->username_nice;
-        $this->url = rtrim(config('app.url'), "/") . "/";
+        $this->url = rtrim(URL::to('/'), "/") . "/";
 
         if (isset($purchase))
         {
