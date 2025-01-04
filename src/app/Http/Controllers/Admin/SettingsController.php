@@ -129,7 +129,6 @@ class SettingsController extends Controller
             ->with('stripePublicKey', ApiKey::where('key', 'stripe_public_key')->first()->value)
             ->with('stripeSecretKey', ApiKey::where('key', 'stripe_secret_key')->first()->value)
             ->with('challongeApiKey', ApiKey::where('key', 'challonge_api_key')->first()->value)
-            ->with('googleAnalyticsTrackingId', ApiKey::where('key', 'google_analytics_tracking_id')->first()->value)
             ->with('steamApiKey', ApiKey::where('key', 'steam_api_key')->first()->value);
     }
 
