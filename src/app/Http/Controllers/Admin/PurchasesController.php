@@ -95,7 +95,15 @@ class PurchasesController extends Controller
         }
         if (isset($purchase->user))
         {
-            Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
+            if ($purchase->getPurchaseContentType() == 'eventTickets')
+            {
+                Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
+
+            }
+            if ($purchase->getPurchaseContentType() == 'shopOrder')
+            {
+                
+            }
         }
 
         Session::flash('alert-success', 'Successfully updated purchase status!');

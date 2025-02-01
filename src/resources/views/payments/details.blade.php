@@ -77,7 +77,7 @@
 
 
 
-
+//TODO:
 						<h3 class="card-title">@lang('payments.delivery_details')</h3>
 					</div>
 					<div class="card-body">

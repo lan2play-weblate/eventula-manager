@@ -19,7 +19,7 @@ class PurchaseController extends Controller
     /**
      * set Purchase Success
      * @param Purchase $purchase
-     * @return View
+     * @return array
      */
     public function setSuccess(Purchase $purchase)
     {
@@ -40,7 +40,15 @@ class PurchaseController extends Controller
         }
         if (isset($purchase->user))
         {
-            Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
+            if ($purchase->getPurchaseContentType() == 'eventTickets')
+            {
+                Mail::to($purchase->user)->queue(new EventulaTicketOrderPaymentFinishedMail($purchase->user, $purchase));
+
+            }
+            if ($purchase->getPurchaseContentType() == 'shopOrder')
+            {
+                
+            }
         }
 
         return [
