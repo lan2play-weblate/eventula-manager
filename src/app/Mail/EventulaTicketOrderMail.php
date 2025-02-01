@@ -77,7 +77,7 @@ class EventulaTicketOrderMail extends TemplateMailable
         {
             $tempbasket = Helpers::formatBasket($basket);
             $this->basket = array(); 
-
+            //TODO: wrong quantity
             foreach($tempbasket->all() as $item)
             {
                 if (get_class($item) == "App\EventTicket")

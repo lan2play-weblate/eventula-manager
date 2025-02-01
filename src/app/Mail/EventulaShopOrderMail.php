@@ -99,6 +99,7 @@ class EventulaShopOrderMail extends TemplateMailable
             $this->shipping_address_2 = $purchase->order->shipping_address_2;
             $this->shipping_country = $purchase->order->shipping_country;
             $this->shipping_postcode = $purchase->order->shipping_postcode;
+            //TODO: empty
             $this->shipping_state = $purchase->order->shipping_state;
         }
 
@@ -106,6 +107,8 @@ class EventulaShopOrderMail extends TemplateMailable
             $tempbasket = Helpers::formatBasket($basket);
             $this->basket = array();
 
+            //TODO: empty quantity
+            
             foreach ($tempbasket->all() as $item) {
                 if (get_class($item) == "App\ShopItem")
                 {
