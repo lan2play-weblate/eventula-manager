@@ -16,10 +16,10 @@ use Illuminate\support\Collection;
 use Illuminate\Support\Facades\Log;
 
 
-class EventulaShopOrderMail extends TemplateMailable
+class EventulaShopOrderPendingMail extends TemplateMailable
 {
     /** @var string */
-    public const staticname = "Shop Order";
+    public const staticname = "Shop Order Pending";
 
     /** @var string */
     public $firstname;

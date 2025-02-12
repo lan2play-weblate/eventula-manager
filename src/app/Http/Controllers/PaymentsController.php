@@ -20,6 +20,7 @@ use App\EventParticipant;
 
 use App\Mail\EventulaTicketOrderMail;
 use App\Mail\EventulaShopOrderMail;
+use App\Mail\EventulaShopOrderPendingMail;
 use App\Mail\EventulaTicketOrderPendingMail;
 
 use App\Http\Requests;
@@ -382,6 +383,7 @@ class PaymentsController extends Controller
             }
             if ($purchase->getPurchaseContentType() == 'shopOrder')
             {
+                Mail::to(Auth::user())->queue(new EventulaShopOrderPendingMail(Auth::user(), $purchase, Session::get(Settings::getOrgName() . '-basket') ));
                 
             }
             return Redirect::to('/payment/pending/' . $purchase->id);
