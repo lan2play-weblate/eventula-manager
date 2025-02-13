@@ -16,6 +16,9 @@ use App\Mail\EventulaTicketOrderPendingMail;
 use App\Mail\EventulaTicketOrderPaymentFinishedMail;
 use App\Mail\EventulaShopOrderMail;
 use App\Mail\EventulaShopOrderPendingMail;
+use App\Mail\EventulaShopOrderPaymentFinishedMail;
+use App\Mail\EventulaShopOrderStatusMail;
+use App\Mail\EventulaShopOrderTrackingDetailsMail;
 
 use Faker\Factory as Faker;
 
@@ -664,6 +667,30 @@ class RequiredDatabaseSeeder extends Seeder
             ['mailable' => EventulaShopOrderPendingMail::class],
             [
                 'subject' => "shop order pending",
+                'html_template' => '<p>placeholder<p>',
+                'text_template' => "placeholder",
+            ]
+        );
+        MailTemplate::firstOrCreate(
+            ['mailable' => EventulaShopOrderPaymentFinishedMail::class],
+            [
+                'subject' => "shop payment finished",
+                'html_template' => '<p>placeholder<p>',
+                'text_template' => "placeholder",
+            ]
+        );
+        MailTemplate::firstOrCreate(
+            ['mailable' => EventulaShopOrderStatusMail::class],
+            [
+                'subject' => "shop status update",
+                'html_template' => '<p>placeholder<p>',
+                'text_template' => "placeholder",
+            ]
+        );
+        MailTemplate::firstOrCreate(
+            ['mailable' => EventulaShopOrderTrackingDetailsMail::class],
+            [
+                'subject' => "shop Tracking Details update",
                 'html_template' => '<p>placeholder<p>',
                 'text_template' => "placeholder",
             ]

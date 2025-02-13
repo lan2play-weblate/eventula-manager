@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Mail\EventulaTicketOrderPaymentFinishedMail;
-
+use App\Mail\EventulaShopOrderPaymentFinishedMail;
 
 class PurchaseController extends Controller
 {
@@ -47,7 +47,7 @@ class PurchaseController extends Controller
             }
             if ($purchase->getPurchaseContentType() == 'shopOrder')
             {
-                
+                Mail::to($purchase->user)->queue(new EventulaShopOrderPaymentFinishedMail($purchase->user, $purchase));
             }
         }
 

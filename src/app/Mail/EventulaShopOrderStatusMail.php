@@ -1,5 +1,6 @@
 <?php
 namespace App\Mail;
+use App\ShopOrderItem;
 use Storage;
 use URL;
 use Helpers;
@@ -15,11 +16,10 @@ use Spatie\MailTemplates\Models\MailTemplate;
 use Illuminate\support\Collection;
 use Illuminate\Support\Facades\Log;
 
-
-class EventulaShopOrderMail extends TemplateMailable
+class EventulaShopOrderStatusMail extends TemplateMailable
 {
     /** @var string */
-    public const staticname = "Shop Order";
+    public const staticname = "Shop Order Status";
 
     /** @var string */
     public $firstname;
@@ -42,10 +42,7 @@ class EventulaShopOrderMail extends TemplateMailable
     /** @var string */
     public $purchase_payment_method;
 
-    // /** @var ShopOrder */
-    // public ShopOrder $order;
-
-    /** @var array */
+     /** @var array */
     public array $basket;
 
     /** @var float */
@@ -77,7 +74,7 @@ class EventulaShopOrderMail extends TemplateMailable
 
 
 
-    public function __construct(User $user, Purchase $purchase, array $basket)
+    public function __construct(User $user, Purchase $purchase)
     {
         $this->firstname = $user->firstname;
         $this->surname = $user->surname;
@@ -103,24 +100,29 @@ class EventulaShopOrderMail extends TemplateMailable
             }
         }
 
-       
+        
 
-        if (isset($basket)) {
-            $tempbasket = Helpers::formatBasket($basket);
+        if (isset($purchase->order->items)) {            
             $this->basket = array();
 
+            Log::warning("items");
                       
-            foreach ($tempbasket->all() as $item) {
-                if (get_class($item) == "App\ShopItem")
+            foreach ($purchase->order->items as $item) {
+
+
+                if (get_class($item) == "App\ShopOrderItem")
                 {
-                $shitem = ShopItem::where('id', $item->id)->first();
+                $shitem = $item->item;
+                Log::warning(json_encode($item->item));
+
                 $shitem->quantity = $item->quantity;
                 $this->basket[] = new MustacheModelHelper($shitem);
                 }
             }
-
-            $this->basket_total = $tempbasket->total;
-            $this->basket_total_credit = $tempbasket->total_credit;
+            Log::warning(json_encode($this->basket));
+            
+            $this->basket_total = $purchase->order->getTotalPrice();
+            $this->basket_total_credit = $purchase->order->getTotalCreditPrice();
         }
     }
 }

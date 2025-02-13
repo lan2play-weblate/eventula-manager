@@ -13,6 +13,7 @@ use App\Purchase;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Mail\EventulaTicketOrderPaymentFinishedMail;
+use App\Mail\EventulaShopOrderPaymentFinishedMail;
 
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -102,7 +103,8 @@ class PurchasesController extends Controller
             }
             if ($purchase->getPurchaseContentType() == 'shopOrder')
             {
-                
+                Mail::to($purchase->user)->queue(new EventulaShopOrderPaymentFinishedMail($purchase->user, $purchase));
+
             }
         }
 

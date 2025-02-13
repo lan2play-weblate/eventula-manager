@@ -66,7 +66,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                            @elseif ($purchase->pgetPurchaseContentType() == 'eventTickets')
+                            @elseif ($purchase->getPurchaseContentType() == 'eventTickets')
                                 @foreach ($purchase->participants as $participant)
                                     <tr @class(['table-warning' => $participant->revoked])>
                                         <td>
